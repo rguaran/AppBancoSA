@@ -42,3 +42,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /SABanco/nbproject/private/
+/SABanco/build/
+/BancoSA/nbproject/private/
+/BancoSA/build/
+/BancoSA/dist/
