@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
 <head>
 
     <!-- Basic Page Needs
@@ -69,7 +70,7 @@
                 <div class='eleven columns'>
                     <ul class='mainMenu'>
                         <li><a href='index.jsp' title='Home'>Home</a></li>
-                        <li><a href='#' title='About us'>Seguros</a></li>
+                        <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
                         <li><a href='#' title='Pricing'>Préstamos</a></li>
                         <li><a href='#' title='Blog'>Blog</a></li>
                         <li><a href='#' title='Portfolio'>Portfolio</a></li>
@@ -99,22 +100,21 @@
                     <table width="100%">
                         <tr>
                             <td > <label >Seguro</label></td>
-                            <td> </td>
+                            
                         </tr>
-                        <tr><td><br></td><td></td></tr>
+                        <tr><td><br></td></tr>
                         <tr>
                             <td>
                                 <select name="item">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
+                                    <option value="Seguro1">Seguro 1</option>
+                                    <option value="Seguro2">Seguro 2</option>
                                 </select> 
                             </td>
-                            <td> </td>
+                            
                         </tr>
-                        <tr><td><br></td><td></td></tr>
+                        <tr><td><br></td></tr>
                         <tr>
-                            <td ></td>
+                            
                             <td><input  type="submit" value="Consultar" name="btnConsultar" id="btnConsultar"></td>
                         </tr>
                     </table>
