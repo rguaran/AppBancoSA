@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 22/06/2015, 09:29:20 PM
+    Document   : consultarSeguro
+    Created on : 24-Jun-2015, 10:09:53
     Author     : Rita
 --%>
 
@@ -69,7 +69,7 @@
                 <div class='eleven columns'>
                     <ul class='mainMenu'>
                         <li><a href='index.jsp' title='Home'>Home</a></li>
-                        <li><a href='consultarSeguro.jsp' title='About us'>Seguros</a></li>
+                        <li><a href='#' title='About us'>Seguros</a></li>
                         <li><a href='#' title='Pricing'>Préstamos</a></li>
                         <li><a href='#' title='Blog'>Blog</a></li>
                         <li><a href='#' title='Portfolio'>Portfolio</a></li>
@@ -93,30 +93,35 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Iniciar Sesión</h4>
-                <form name="frmLogin" action="Login" method="POST" >
+                <h4>Consultar Seguro</h4>
+                <p>Selecciona un seguro que desees consultar</p>
+                <form name="frmConsultarSeguro" method="POST" >
                     <table width="100%">
                         <tr>
-                            <td > <label >Usuario:</label></td>
-                            <td> <input type="text" name="txtUsuario" id="txtCodigo" required="" text="Usuario"></td>
+                            <td > <label >Seguro</label></td>
+                            <td> </td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td > <label>Contraseña:</label></td>
-                            <td> <input type="password" name="txtPass" id="txtPass" required="" text="Contraseña"></td>
+                            <td>
+                                <select name="item">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select> 
+                            </td>
+                            <td> </td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td ></td>
-                            <td><input  type="submit" value="Ingresar" name="btnIngresar" id="btnIngresar"></td>
+                            <td><input  type="submit" value="Consultar" name="btnConsultar" id="btnConsultar"></td>
                         </tr>
                     </table>
                 </form>
-                <center><% String res = (String) request.getAttribute("result");
-                            if (res!=null){}else{res="";}%> 
-                    <div><font color="red" ><%=res%> </font></div></center>
+                
             </center>
-            <center><a href='crearUsuario.jsp' class='button medium green'>Crear Usuario</a></center>
+            
 
         </div>
     </section>

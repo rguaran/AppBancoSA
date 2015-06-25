@@ -94,7 +94,7 @@
 		<div class='container'>
 		<center>
                 <h4>Crear nuevo usuario</h4>
-                <form method="post" >
+                <form name="frmcrearusuario" action="CrearUsuario" method="post" >
                     <table width="100%">
                         <tr>
                             <td > <label >DPI:</label></td>
@@ -133,11 +133,13 @@
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td ></td>
-                            <td><input  type="submit" value="Ingresar"></td>
+                            <td><input  type="submit" value="Crear" name="btnCrear" id="btnCrear"></td>
                         </tr>
                     </table>
                 </form>
             </center>
+                    <% String res = (String) request.getAttribute("result"); %> 
+                    <div><label><%=res%> </label></div>
 		</div>
 	</section>
 
