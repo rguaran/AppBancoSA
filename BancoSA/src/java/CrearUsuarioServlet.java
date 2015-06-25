@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+import control.Cuenta;
+import control.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -72,11 +74,14 @@ public class CrearUsuarioServlet extends HttpServlet {
         String apellido = request.getParameter("txtApellido");
         String correo = request.getParameter("txtCorreo");
         String direccion = request.getParameter("txtDireccion");
-        int telefono = Integer.parseInt(request.getParameter("txtTelefono"));
+        String telefono = request.getParameter("txtTelefono");
         String fechanac = request.getParameter("txtFechaNac");
         
-                
-                
+        Usuario NewUser;
+        NewUser = new Usuario(dpi,nombre,apellido,telefono,direccion,correo,"","",fechanac,"no",null);
+        
+        NewUser.CrearCuenta(new Cuenta(1, 8000.00, fechanac, null, null, null));
+        
         rd = request.getRequestDispatcher("/crearUsuario.jsp");
         
         rd.forward(request, response);
