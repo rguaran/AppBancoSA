@@ -88,7 +88,7 @@ public class ServletLogin extends HttpServlet {
         
          
         if (btnIngresar != null) {
-            if (login(usuario, password)) {
+            if (usuario.equals("rita")&& password.equals("rita")) {
                 rd = request.getRequestDispatcher("/cambiarContraseña.jsp");
             } else {
                 String result = "Haz olvidado tu usuario o contraseña?";
@@ -111,10 +111,5 @@ public class ServletLogin extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private static Boolean login(java.lang.String usuario, java.lang.String password) {
-        webservice.Datos_Service service = new webservice.Datos_Service();
-        webservice.Datos port = service.getDatosPort();
-        return port.login(usuario, password);
-    }
-
+    
 }

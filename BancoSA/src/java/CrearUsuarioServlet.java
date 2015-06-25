@@ -76,9 +76,7 @@ public class CrearUsuarioServlet extends HttpServlet {
         String fechanac = request.getParameter("txtFechaNac");
         
                 
-        String result = informacion(nombre, apellido, telefono, dpi);
-        request.setAttribute("result", result);
-        
+                
         rd = request.getRequestDispatcher("/crearUsuario.jsp");
         
         rd.forward(request, response);
@@ -94,10 +92,6 @@ public class CrearUsuarioServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private static String informacion(java.lang.String nombre, java.lang.String carrera, int matricula, java.lang.String anio) {
-        webservice.Datos_Service service = new webservice.Datos_Service();
-        webservice.Datos port = service.getDatosPort();
-        return port.informacion(nombre, carrera, matricula, anio);
-    }
+    
 
   }
