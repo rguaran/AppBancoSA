@@ -34,6 +34,7 @@ public class ServletLogin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        System.out.println("Prueba de codigooo jaljlajoj fjlajsdi pirulin pin pon");
         PrintWriter out = response.getWriter();
         try {
             /* TODO output your page here. You may use following sample code. */
