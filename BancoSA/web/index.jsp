@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
 <head>
 
     <!-- Basic Page Needs
@@ -69,7 +70,7 @@
                 <div class='eleven columns'>
                     <ul class='mainMenu'>
                         <li><a href='index.jsp' title='Home'>Home</a></li>
-                        <li><a href='consultarSeguro.jsp' title='About us'>Seguros</a></li>
+                        <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
                         <li><a href='#' title='Pricing'>Préstamos</a></li>
                         <li><a href='#' title='Blog'>Blog</a></li>
                         <li><a href='#' title='Portfolio'>Portfolio</a></li>
