@@ -71,7 +71,7 @@
                     <ul class='mainMenu'>
                         <li><a href='index.jsp' title='Home'>Home</a></li>
                         <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
-                        <li><a href='#' title='Pricing'>Préstamos</a></li>
+                        <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
                         <li><a href='#' title='Blog'>Blog</a></li>
                         <li><a href='#' title='Portfolio'>Portfolio</a></li>
                         <li><a href='#' title='Contact'>Contact</a></li>
@@ -95,7 +95,7 @@
         <div class='container'>
             <center>
                 <h4>Solicitar Seguro</h4>
-                <p>Selecciona un seguro que desees consultar</p>
+                
                 <form name="frmSolicitarSeguro" method="POST" >
                     <table width="100%">
                         <tr>
@@ -110,6 +110,16 @@
                         <tr>
                             <td><label>Monto</label> </td>
                             <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td><label>Cantidad de Cuotas</label> </td>
+                            <td><input type="text" required="" name="txtCuotas" id="txtCuotas"></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td><label>Prima</label> </td>
+                            <td><input type="text" required="" name="txtPrima" id="txtPrima"></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>

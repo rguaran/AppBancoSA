@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 22/06/2015, 09:29:20 PM
+    Document   : consultarPrestamo
+    Created on : 25-Jun-2015, 11:42:36
     Author     : Rita
 --%>
 
@@ -94,30 +94,34 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Iniciar Sesión</h4>
-                <form name="frmLogin" action="Login" method="POST" >
+                <h4>Consultar Préstamo</h4>
+                <p>Selecciona un préstamo que desees consultar</p>
+                <form name="frmConsultarSeguro" method="POST" >
                     <table width="100%">
                         <tr>
-                            <td > <label >Usuario:</label></td>
-                            <td> <input type="text" name="txtUsuario" id="txtCodigo" required="" text="Usuario"></td>
+                            <td > <label >Préstamo</label></td>
+                            
                         </tr>
-                        <tr><td><br></td><td></td></tr>
+                        <tr><td><br></td></tr>
                         <tr>
-                            <td > <label>Contraseña:</label></td>
-                            <td> <input type="password" name="txtPass" id="txtPass" required="" text="Contraseña"></td>
+                            <td>
+                                <select name="item">
+                                    <option value="prestamo1">prestamo 1</option>
+                                    <option value="prestamo2">prestamo 2</option>
+                                </select> 
+                            </td>
+                            
                         </tr>
-                        <tr><td><br></td><td></td></tr>
+                        <tr><td><br></td></tr>
                         <tr>
-                            <td ></td>
-                            <td><input  type="submit" value="Ingresar" name="btnIngresar" id="btnIngresar"></td>
+                            
+                            <td><input  type="submit" value="Consultar" name="btnConsultar" id="btnConsultar"></td>
                         </tr>
                     </table>
                 </form>
-                <center><% String res = (String) request.getAttribute("result");
-                            if (res!=null){}else{res="";}%> 
-                    <div><font color="red" ><%=res%> </font></div></center>
+                
             </center>
-            <center><a href='crearUsuario.jsp' class='button medium green'>Crear Usuario</a></center>
+            
 
         </div>
     </section>

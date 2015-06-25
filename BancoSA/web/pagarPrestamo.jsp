@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : 22/06/2015, 09:29:20 PM
+    Document   : pagarPrestamo
+    Created on : 25-Jun-2015, 11:42:56
     Author     : Rita
 --%>
 
@@ -94,30 +94,35 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Iniciar Sesión</h4>
-                <form name="frmLogin" action="Login" method="POST" >
+                <h4>Pagar Préstamo</h4>
+                <p>Selecciona el prestamo que desees realizar el pago</p>
+                <form name="frmPagarPrestamo" method="POST" >
                     <table width="100%">
                         <tr>
-                            <td > <label >Usuario:</label></td>
-                            <td> <input type="text" name="txtUsuario" id="txtCodigo" required="" text="Usuario"></td>
+                            <td> <label>Préstamo</label></td>
+                            
                         </tr>
-                        <tr><td><br></td><td></td></tr>
+                        <tr><td><br></td></tr>
                         <tr>
-                            <td > <label>Contraseña:</label></td>
-                            <td> <input type="password" name="txtPass" id="txtPass" required="" text="Contraseña"></td>
+                            <td>
+                                <select name="item">
+                                    <option value="Prestamo1">Prestamo 1</option>
+                                    <option value="Prestamo2">Prestamo 2</option>
+                                </select> 
+                            </td>
+                            
                         </tr>
-                        <tr><td><br></td><td></td></tr>
+                        <tr><td><br></td></tr>
                         <tr>
-                            <td ></td>
-                            <td><input  type="submit" value="Ingresar" name="btnIngresar" id="btnIngresar"></td>
+                            
+                            <td><input  type="submit" value="Pagar" name="btnPagarPrestamo" id="btnPagarPrestamo"></td>
                         </tr>
                     </table>
                 </form>
-                <center><% String res = (String) request.getAttribute("result");
-                            if (res!=null){}else{res="";}%> 
-                    <div><font color="red" ><%=res%> </font></div></center>
+                
+                
             </center>
-            <center><a href='crearUsuario.jsp' class='button medium green'>Crear Usuario</a></center>
+            
 
         </div>
     </section>
