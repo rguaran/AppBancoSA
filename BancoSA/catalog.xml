@@ -4,6 +4,8 @@
     <system systemId="http://localhost:8080/pruebawebservice/datos?xsd=1" uri="src/conf/xml-resources/web-service-references/datos/wsdl/localhost_8080/pruebawebservice/datos.xsd_1.xsd"/>
     <system systemId="http://192.168.1.13:8080/Servicios/Servicios?wsdl" uri="src/conf/xml-resources/web-service-references/Servicios/wsdl/192.168.1.13_8080/Servicios/Servicios.wsdl"/>
     <system systemId="http://192.168.1.13:8080/Servicios/Servicios?xsd=1" uri="src/conf/xml-resources/web-service-references/Servicios/wsdl/192.168.1.13_8080/Servicios/Servicios.xsd_1.xsd"/>
+    <system systemId="http://192.168.43.176:8080/Servicios/Servicios3?wsdl" uri="src/conf/xml-resources/web-service-references/Servicios3_1/wsdl/192.168.43.176_8080/Servicios/Servicios3.wsdl"/>
+    <system systemId="http://192.168.43.176:8080/Servicios/Servicios3?xsd=1" uri="src/conf/xml-resources/web-service-references/Servicios3_1/wsdl/192.168.43.176_8080/Servicios/Servicios3.xsd_1.xsd"/>
     <system systemId="http://192.168.43.176:8080/Servicios/Servicios?wsdl" uri="src/conf/xml-resources/web-service-references/Servicios/wsdl/192.168.43.176_8080/Servicios/Servicios.wsdl"/>
     <system systemId="http://192.168.43.176:8080/Servicios/Servicios?xsd=1" uri="src/conf/xml-resources/web-service-references/Servicios/wsdl/192.168.43.176_8080/Servicios/Servicios.xsd_1.xsd"/>
 </catalog>
