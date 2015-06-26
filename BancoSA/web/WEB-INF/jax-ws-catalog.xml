@@ -2,4 +2,6 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://localhost:8080/pruebawebservice/datos?wsdl" uri="wsdl/localhost_8080/pruebawebservice/datos.wsdl"/>
     <system systemId="http://localhost:8080/pruebawebservice/datos?xsd=1" uri="wsdl/localhost_8080/pruebawebservice/datos.xsd_1.xsd"/>
+    <system systemId="http://192.168.1.13:8080/Servicios/Servicios?wsdl" uri="wsdl/192.168.1.13_8080/Servicios/Servicios.wsdl"/>
+    <system systemId="http://192.168.1.13:8080/Servicios/Servicios?xsd=1" uri="wsdl/192.168.1.13_8080/Servicios/Servicios.xsd_1.xsd"/>
 </catalog>

@@ -115,7 +115,7 @@
                 </form>
                 <center><% String res = (String) request.getAttribute("result");
                             if (res!=null){}else{res="";}%> 
-                    <div><font color="red" ><%=res%> </font></div></center>
+                    <div><font color="red" >${requestScope['result']}</font></div></center>
             </center>
             <center><a href='crearUsuario.jsp' class='button medium green'>Crear Usuario</a></center>
 
