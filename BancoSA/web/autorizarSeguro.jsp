@@ -1,6 +1,6 @@
 <%-- 
-    Document   : solicitarSeguro
-    Created on : 24-Jun-2015, 10:23:02
+    Document   : autorizarSeguro
+    Created on : 26-Jun-2015, 03:15:28
     Author     : Rita
 --%>
 
@@ -94,42 +94,13 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Solicitar Seguro</h4>
+                <h4>Autorizar Seguro</h4>
                 
-                <form name="frmSolicitarSeguro" method="POST" >
+                <form name="frmSolicitarPrestamo" method="POST" >
                     <table width="100%">
                         <tr>
-                            <td> <label>Tipo</label></td>
-                            <td><select name="item">
-                                    <option value="Vida">Vida</option>
-                                    <option value="Automovil">Automóvil</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><label>Monto</label> </td>
-                            <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><label>Cantidad de Cuotas</label> </td>
-                            <td><input type="text" required="" name="txtCuotas" id="txtCuotas"></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><label>Prima</label> </td>
-                            <td><input type="text" required="" name="txtPrima" id="txtPrima"></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><label>Pagar Automáticamente</label></td>
-                            <td><input type="checkbox" name="checkTipoPagoSeguro" value="PagarAutomaticamente"> </td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
                             <td ></td>
-                            <td><input  type="submit" value="Solicitar" name="btnSolicitar" id="btnSolicitar"></td>
+                            <td><input  type="submit" value="Obtener" name="btnObtenerSeguros" id="btnObtenerSeguros"></td>
                         </tr>
                     </table>
                 </form>
@@ -170,7 +141,7 @@
             <a id='top' href='#'>&uarr;</a>	
         </div>
     </footer>
-
+ 
     <script type="text/javascript">
         var toper = $('a#top');
 

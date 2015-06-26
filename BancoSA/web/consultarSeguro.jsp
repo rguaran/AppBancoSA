@@ -73,7 +73,7 @@
                         <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
                         <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
                         <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
-                        <li><a href='#' title='Portfolio'>Portfolio</a></li>
+                        <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
                         <li><a href='#' title='Contact'>Contact</a></li>
                     </ul>
                 </div>

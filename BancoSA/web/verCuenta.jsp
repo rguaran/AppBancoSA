@@ -1,6 +1,6 @@
 <%-- 
-    Document   : solicitarSeguro
-    Created on : 24-Jun-2015, 10:23:02
+    Document   : verCuenta
+    Created on : 26-Jun-2015, 03:08:39
     Author     : Rita
 --%>
 
@@ -94,45 +94,56 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Solicitar Seguro</h4>
+                <h4>Informacion de Cuenta</h4>
                 
-                <form name="frmSolicitarSeguro" method="POST" >
+                
                     <table width="100%">
                         <tr>
-                            <td> <label>Tipo</label></td>
-                            <td><select name="item">
-                                    <option value="Vida">Vida</option>
-                                    <option value="Automovil">Automóvil</option>
-                                </select>
-                            </td>
+                            <td> <label>Saldo Actual</label></td>
+                            <td></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td><label>Monto</label> </td>
-                            <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
+                            <td><label>Nombre</label> </td>
+                            <td></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td><label>Cantidad de Cuotas</label> </td>
-                            <td><input type="text" required="" name="txtCuotas" id="txtCuotas"></td>
+                            <td><label>Apellido</label> </td>
+                            <td></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td><label>Prima</label> </td>
-                            <td><input type="text" required="" name="txtPrima" id="txtPrima"></td>
+                            <td><label>DPI</label> </td>
+                            <td></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td><label>Pagar Automáticamente</label></td>
-                            <td><input type="checkbox" name="checkTipoPagoSeguro" value="PagarAutomaticamente"> </td>
+                            <td><label>Telefono</label> </td>
+                            <td></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td ></td>
-                            <td><input  type="submit" value="Solicitar" name="btnSolicitar" id="btnSolicitar"></td>
+                            <td><label>Direccion</label> </td>
+                            <td></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td><label>Correo</label> </td>
+                            <td></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td><label>fechanac</label> </td>
+                            <td></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </table>
-                </form>
+                
                 
             </center>
             
@@ -170,7 +181,7 @@
             <a id='top' href='#'>&uarr;</a>	
         </div>
     </footer>
-
+ 
     <script type="text/javascript">
         var toper = $('a#top');
 

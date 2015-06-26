@@ -98,17 +98,12 @@
                 <form>
                     <table width="100%">
                         <tr>
-                            <td><a href='menuSeguro.jsp' class='button medium green'>Crear Cuenta</a></td>
+                            <td><a href='crearCuenta.jsp' class='button medium green'>Crear Cuenta</a></td>
                             <td> </td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td><a href='menuPrestamo.jsp' class='button medium green'>Consultar Cuenta</a></td>
-                            <td></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><a href='menuTransaccion.jsp' class='button medium green'>Transacciones</a></td>
+                            <td><a href='consultarCuenta.jsp' class='button medium green'>Consultar Cuenta</a></td>
                             <td></td>
                         </tr>
                     </table>
