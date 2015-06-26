@@ -5,6 +5,8 @@
  */
 
 import com.sun.corba.se.spi.protocol.RequestDispatcherDefault;
+import control.Cuenta;
+import control.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -13,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
 /**
@@ -57,17 +60,15 @@ public class ServletLogin extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-       /* RequestDispatcher rd = null;
-        String usuario = request.getParameter("txtUsuario");
-        String password = request.getParameter("txtPass");
-
-        if (usuario.equals("rita") && password.equals("rita")) {
-            rd = request.getRequestDispatcher("/menu.jsp");
-        } else {
-            rd = request.getRequestDispatcher("/index.jsp");
-        }
-
-        rd.forward(request, response);*/
+       RequestDispatcher rd = null;
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("usuario", "");
+        session.setAttribute("password", "");
+        rd= request.getRequestDispatcher("/index.jsp");
+        
+        
+        rd.forward(request, response);
     }
 
     /**
@@ -90,6 +91,10 @@ public class ServletLogin extends HttpServlet {
          
         if (btnIngresar != null) {
             if (usuario.equals("rita")&& password.equals("rita")) {
+                HttpSession session = request.getSession();
+                session.setAttribute("usuario", usuario);
+                session.setAttribute("password", password);
+                System.out.println(session.getAttribute("usuario"));
                 rd = request.getRequestDispatcher("/cambiarContraseña.jsp");
             } else {
                 String result = "Haz olvidado tu usuario o contraseña?";

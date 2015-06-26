@@ -1,6 +1,6 @@
 <%-- 
-    Document   : consultarSeguro
-    Created on : 24-Jun-2015, 10:09:53
+    Document   : realizarTransaccion
+    Created on : 25-Jun-2015, 17:42:46
     Author     : Rita
 --%>
 
@@ -94,28 +94,32 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Consultar Seguro</h4>
-                <p>Selecciona un seguro que desees consultar</p>
-                <form name="frmConsultarSeguro" method="POST" >
+                <h4>Solicitar Prestamo</h4>
+                
+                <form name="frmSolicitarPrestamo" method="POST" >
                     <table width="100%">
                         <tr>
-                            <td > <label >Seguro</label></td>
-                            
-                        </tr>
-                        <tr><td><br></td></tr>
-                        <tr>
-                            <td>
-                                <select name="item">
-                                    <option value="Seguro1">Seguro 1</option>
-                                    <option value="Seguro2">Seguro 2</option>
-                                </select> 
+                            <td> <label>Tipo</label></td>
+                            <td><select name="item">
+                                    <option value="tipo 1">Tipo 1</option>
+                                    <option value="tipo 2">Tipo 2</option>
+                                </select>
                             </td>
-                            
                         </tr>
-                        <tr><td><br></td></tr>
+                        <tr><td><br></td><td></td></tr>
                         <tr>
-                            
-                            <td><input  type="submit" value="Consultar" name="btnConsultar" id="btnConsultar"></td>
+                            <td><label>Monto</label> </td>
+                            <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td><label>Cantidad de Cuotas</label> </td>
+                            <td><input type="text" required="" name="txtCuotas" id="txtCuotas"></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td ></td>
+                            <td><input  type="submit" value="Solicitar" name="btnSolicitar" id="btnSolicitar"></td>
                         </tr>
                     </table>
                 </form>
@@ -156,7 +160,7 @@
             <a id='top' href='#'>&uarr;</a>	
         </div>
     </footer>
-
+ 
     <script type="text/javascript">
         var toper = $('a#top');
 

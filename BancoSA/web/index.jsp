@@ -70,11 +70,15 @@
                 <div class='eleven columns'>
                     <ul class='mainMenu'>
                         <li><a href='index.jsp' title='Home'>Home</a></li>
-                        <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
-                        <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
-                        <li><a href='#' title='Blog'>Blog</a></li>
-                        <li><a href='#' title='Portfolio'>Portfolio</a></li>
-                        <li><a href='#' title='Contact'>Contact</a></li>
+                        <%String userr= (String)session.getAttribute("usuario");
+                            if (!userr.equals("")){
+                                out.println("<li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>");
+                                out.println("<li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>");
+                                out.println("<li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>");
+                                out.println("<li><a href='#' title='Portfolio'>Portfolio</a></li>");
+                                out.println("<li><a href='#' title='Contact'>Contact</a></li>");
+                            }
+                        %>
                     </ul>
                 </div>
             </div>
@@ -93,31 +97,48 @@
 
     <section class='gray'>
         <div class='container'>
+            <%if (userr.equals("")){%>
             <center>
-                <h4>Iniciar Sesión</h4>
-                <form name="frmLogin" action="Login" method="POST" >
-                    <table width="100%">
-                        <tr>
-                            <td > <label >Usuario:</label></td>
-                            <td> <input type="text" name="txtUsuario" id="txtCodigo" required="" text="Usuario"></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td > <label>Contraseña:</label></td>
-                            <td> <input type="password" name="txtPass" id="txtPass" required="" text="Contraseña"></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td ></td>
-                            <td><input  type="submit" value="Ingresar" name="btnIngresar" id="btnIngresar"></td>
-                        </tr>
-                    </table>
-                </form>
-                <center><% String res = (String) request.getAttribute("result");
-                            if (res!=null){}else{res="";}%> 
-                    <div><font color="red" ><%=res%> </font></div></center>
+            <%
+            out.println("    <h4>Iniciar Sesión</h4>");
+            out.println("    <form name=\"frmLogin\" action=\"Login\" method=\"POST\" >");
+            out.println("        <table width=\"100%\">");
+            out.println("            <tr>");
+            out.println("                <td > <label >Usuario:</label></td>");
+            out.println("                <td> <input type=\"text\" name=\"txtUsuario\" id=\"txtCodigo\" required=\"\" text=\"Usuario\"></td>");
+            out.println("            </tr>");
+            out.println("            <tr><td><br></td><td></td></tr>");
+            out.println("            <tr>");
+            out.println("                <td > <label>Contraseña:</label></td>");
+            out.println("                <td> <input type=\"password\" name=\"txtPass\" id=\"txtPass\" required=\"\" text=\"Contraseña\"></td>");
+            out.println("            </tr>");
+            out.println("            <tr><td><br></td><td></td></tr>");
+            out.println("            <tr>");
+            out.println("                <td ></td>");
+            out.println("                <td><input  type=\"submit\" value=\"Ingresar\" name=\"btnIngresar\" id=\"btnIngresar\"></td>");
+            out.println("            </tr>");
+            out.println("        </table>");
+            out.println("     </form>");
+            out.println("     <center><a href='crearUsuario.jsp' class='button medium green'>Crear Usuario</a></center>");
+            }else{
+            out.println("    <h4>Cerrar Sesión</h4>");
+            out.println("    <form name=\"frmLogout\" action=\"Login\" method=\"GET\" >");
+            out.println("        <table width=\"100%\">");
+            out.println("            <tr>");
+            out.println("                <td ></td>");
+            out.println("                <td><input  type=\"submit\" value=\"Cerrar Sesión\" name=\"btnLogout\" id=\"btnLogout\"></td>");
+            out.println("            </tr>");
+            out.println("        </table>");
+            out.println("     </form>");
+            }
+            
+            %>
+           
+                <center>
+                    <div><font color="red" >${requestScope['result']}</font></div>
+                </center>
             </center>
-            <center><a href='crearUsuario.jsp' class='button medium green'>Crear Usuario</a></center>
+            
 
         </div>
     </section>
@@ -152,32 +173,7 @@
             <a id='top' href='#'>&uarr;</a>	
         </div>
     </footer>
-    <script type="text/javascript">
-        var form = $('form');
-
-        $(document).ready(function () {
-            form.validate({
-                ignore: "",
-                rules: {
-                    'message': {
-                        required: true,
-                    },
-                    'name': {
-                        required: true,
-                    },
-                    'mail': {
-                        required: true,
-                        email: true
-                    }
-                },
-                errorPlacement: function (error, element) {
-                }
-
-            });
-        });
-    </script>
-
-
+ 
     <script type="text/javascript">
         var toper = $('a#top');
 

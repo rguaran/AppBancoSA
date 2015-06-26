@@ -72,7 +72,7 @@
 						<li><a href='index.jsp' title='Home'>Home</a></li>
 						<li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
 						<li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
-						<li><a href='#' title='Blog'>Blog</a></li>
+						<li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
 						<li><a href='#' title='Portfolio'>Portfolio</a></li>
 						<li><a href='#' title='Contact'>Contact</a></li>
 					</ul>
@@ -139,9 +139,7 @@
                     </table>
                 </form>
             </center>
-                    <% String res = (String) request.getAttribute("result"); %> 
-                    <div><label><%=res%> </label></div>
-		</div>
+                
 	</section>
 
 	
@@ -174,30 +172,6 @@
 		<a id='top' href='#'>&uarr;</a>	
 		</div>
 	</footer>
-	<script type="text/javascript">	
-		var form = $('form');
-	
-		$(document).ready(function(){
-		    form.validate({
-		    	ignore: "",
-	            rules: {
-	            	'message': {
-	                    required: true,	                 
-	                },
-	            	'name': {
-	                    required: true,	                 
-	                },
-	                'mail': {
-	                    required: true,
-	                    email: true
-	                }			                
-	            },
-	            errorPlacement: function(error, element){}
-
-		    });
-		  });     
-	</script>
-
 
 	<script type="text/javascript">
 		var toper = $('a#top');

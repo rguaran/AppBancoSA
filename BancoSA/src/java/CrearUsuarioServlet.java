@@ -82,6 +82,8 @@ public class CrearUsuarioServlet extends HttpServlet {
         
         NewUser.CrearCuenta(new Cuenta(1, 8000.00, fechanac, null, null, null));
         
+        
+        
         rd = request.getRequestDispatcher("/crearUsuario.jsp");
         
         rd.forward(request, response);
