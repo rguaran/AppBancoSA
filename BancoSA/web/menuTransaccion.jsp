@@ -109,16 +109,7 @@
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                        
-                            <td><a href='pagarSeguro.jsp' class='button medium green'>Consultar Transacciones</a></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </form>
-                <form name="frmconusltartrans" method="POST"> 
-                     <table width="100%">
-                        <tr>
-                            <td><input type="submit" name="btnConsultarTrans" id="btnConsultarTrans"></td>
+                            <td><a href='consultarTransacciones.jsp' class='button medium green'>Consultar Transacciones</a></td>
                             <td></td>
                         </tr>
                     </table>

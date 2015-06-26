@@ -94,15 +94,15 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Solicitar Prestamo</h4>
+                <h4>Realizar Transacción</h4>
                 
-                <form name="frmSolicitarPrestamo" method="POST" >
+                <form name="frmTransaccion" method="POST" >
                     <table width="100%">
                         <tr>
-                            <td> <label>Tipo</label></td>
+                            <td> <label>Cuenta Origen</label></td>
                             <td><select name="item">
-                                    <option value="tipo 1">Tipo 1</option>
-                                    <option value="tipo 2">Tipo 2</option>
+                                    <option value="tipo 1">Cuenta 1</option>
+                                    <option value="tipo 2">Cuenta 2</option>
                                 </select>
                             </td>
                         </tr>
@@ -113,13 +113,17 @@
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td><label>Cantidad de Cuotas</label> </td>
-                            <td><input type="text" required="" name="txtCuotas" id="txtCuotas"></td>
+                            <td><label>Cuenta Destino</label> </td>
+                            <td><select name="item2">
+                                    <option value="tipo 1">Cuenta 1</option>
+                                    <option value="tipo 2">Cuenta 2</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td ></td>
-                            <td><input  type="submit" value="Solicitar" name="btnSolicitar" id="btnSolicitar"></td>
+                            <td><input  type="submit" value="Aceptar" name="btnAceptar" id="btnAceptar"></td>
                         </tr>
                     </table>
                 </form>
