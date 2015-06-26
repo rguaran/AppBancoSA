@@ -1,9 +1,10 @@
 <%-- 
-    Document   : menu
-    Created on : 23-Jun-2015, 02:24:51
+    Document   : seleccionarCuenta
+    Created on : 26-Jun-2015, 16:04:40
     Author     : Rita
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -94,25 +95,41 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Menu de Seguros</h4>
-                <center><div>
-                            <form action="solicitarSeguro" method="GET">
-                                <input type="submit" value="Solicitar Seguro" name="btnSolicitarSeguro">
-                            </form>
-                </div></center>
-                <center><div>
-                            <form action="consultarSeguro" method="GET">
-                                <input type="submit" value="Consultar Seguro" name="btnConsultarSeguro">
-                            </form>
-                </div></center>
-                <form >
+                <h4>Seleccione una cuenta y que desea consultar</h4>
+                <form method="POST" >
                     <table width="100%">
                         <tr>
-                            <td><a href='pagarSeguro.jsp' class='button medium green'>Pagar Seguro</a></td>
+                            <td> <label>Cuenta</label></td>
+                            <td>
+                                <select name="selectCuentasSeguro" id="selectCuentasSeguro">
+                                    <c:forEach var="user" items="${listaCuentas}">
+                                        <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td> <label>Consultar</label></td>
+                            <td><input type="text" name="txtConsultar" id="txtConsultar" required=""></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td> <label>Consultar?</label></td>
+                            <td><select name="consultar">
+                                    <option value="Seguro">Seguro</option>
+                                    <option value="Prestamo">Prestamo</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td><input  type="submit" value="" name="btnSolicitar" id="btnSolicitar"></td>
                             <td></td>
                         </tr>
                     </table>
                 </form>
+                                
             </center>
         </div>
     </section>

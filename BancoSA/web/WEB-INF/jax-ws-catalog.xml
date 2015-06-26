@@ -6,4 +6,6 @@
     <system systemId="http://192.168.1.13:8080/Servicios/Servicios?xsd=1" uri="wsdl/192.168.1.13_8080/Servicios/Servicios.xsd_1.xsd"/>
     <system systemId="http://192.168.43.176:8080/Servicios/Servicios?wsdl" uri="wsdl/192.168.43.176_8080/Servicios/Servicios.wsdl"/>
     <system systemId="http://192.168.43.176:8080/Servicios/Servicios?xsd=1" uri="wsdl/192.168.43.176_8080/Servicios/Servicios.xsd_1.xsd"/>
+    <system systemId="http://192.168.43.176:8080/Servicios/Servicios3?wsdl" uri="wsdl/192.168.43.176_8080/Servicios/Servicios3.wsdl"/>
+    <system systemId="http://192.168.43.176:8080/Servicios/Servicios3?xsd=1" uri="wsdl/192.168.43.176_8080/Servicios/Servicios3.xsd_1.xsd"/>
 </catalog>

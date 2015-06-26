@@ -112,7 +112,7 @@ public class Usuario {
         this.confirmado = confirmado;
     }
 
-    public ArrayList getCuentas() {
+    public ArrayList<Cuenta> getCuentas() {
         return cuentas;
     }
 

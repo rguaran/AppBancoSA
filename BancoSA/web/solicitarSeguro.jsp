@@ -3,7 +3,7 @@
     Created on : 24-Jun-2015, 10:23:02
     Author     : Rita
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -98,6 +98,17 @@
                 
                 <form name="frmSolicitarSeguro" method="POST" >
                     <table width="100%">
+                        <tr>
+                            <td> <label>Cuenta</label></td>
+                            <td>
+                                <select name="selectCuentasSeguro" id="selectCuentasSeguro">
+                                    <c:forEach var="user" items="${listaCuentas}">
+                                        <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
                         <tr>
                             <td> <label>Tipo</label></td>
                             <td><select name="item">

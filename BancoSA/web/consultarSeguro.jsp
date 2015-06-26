@@ -98,8 +98,10 @@
                 <p>Selecciona un seguro que desees consultar</p>
                 <form name="frmConsultarSeguro" method="POST" >
                     <table width="100%">
+                        
+                        <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td > <label >Seguro</label></td>
+                            <td> <label>Seguro</label></td>
                             
                         </tr>
                         <tr><td><br></td></tr>

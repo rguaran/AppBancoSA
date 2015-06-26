@@ -3,7 +3,7 @@
     Created on : 25-Jun-2015, 11:42:21
     Author     : Rita
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -96,8 +96,19 @@
             <center>
                 <h4>Solicitar Prestamo</h4>
                 
-                <form name="frmSolicitarPrestamo" method="POST" >
+                <form name="frmSolicitarPrestamo" action="solicitarPrestamo" method="POST" >
                     <table width="100%">
+                        <tr>
+                            <td> <label>Cuenta</label></td>
+                            <td>
+                                <select name="selectCuentas" id="selectCuentas">
+                                    <c:forEach var="user" items="${listaCuentas}">
+                                        <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
                         <tr>
                             <td> <label>Tipo</label></td>
                             <td><select name="item">
@@ -113,7 +124,7 @@
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td><label>Cantidad de Cuotas</label> </td>
+                            <td><label>Número de Cuotas</label> </td>
                             <td><input type="text" required="" name="txtCuotas" id="txtCuotas"></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>

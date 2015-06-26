@@ -94,14 +94,14 @@
         <div class='container'>
             <center>
                 <h4>Menu de Préstamos</h4>
+                    
+                    <center><div>
+                            <form action="solicitarPrestamo" method="GET">
+                                <input type="submit" value="Solicitar Prestamo" name="btnSolicitarPrestamo">
+                            </form>
+                    </div></center>
                 
-                <form>
                     <table width="100%">
-                        <tr>
-                            <td><a href='solicitarPrestamo.jsp' class='button medium green'>Solicitar Préstamo</a></td>
-                            <td> </td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
                         <tr>
                             <td><a href='consultarPrestamo.jsp' class='button medium green'>Consultar Préstamo</a></td>
                             <td></td>
