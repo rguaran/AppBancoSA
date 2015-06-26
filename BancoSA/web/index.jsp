@@ -104,63 +104,6 @@
         <section class='gray'>
             <div class='container'>
 
-<<<<<<< HEAD
-                <div class='eleven columns'>
-                    <ul class='mainMenu'>
-                        <li><a href='index.jsp' title='Home'>Home</a></li>
-                        <% String userr=""; 
-                            if(session.isNew()){}else{ userr=(String)session.getAttribute("usuario");}                        
-                            if (!userr.equals("")){
-                                out.println("<li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>");
-                                out.println("<li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>");
-                                out.println("<li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>");
-                                out.println("<li><a href='#' title='Portfolio'>Portfolio</a></li>");
-                                out.println("<li><a href='#' title='Contact'>Contact</a></li>");
-                            }
-                        %>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div class='container'>
-            <div class='slogan'>
-                <div class='ten columns'>
-                    <h1>Bancosa</h1>
-                    <h2>In Bancosa we trust.</h2>
-                </div>
-            </div>
-        </div>	
-    </header>
-
-
-    <section class='gray'>
-        <div class='container'>
-            <%if (userr.equals("")){%>
-            <center>
-
-            
-                <center>
-                    <div><font color="red" >${requestScope['result']}</font></div>
-                </center>
-
-                
-            </center>
-            
-
-        </div>
-    </section>
-
-
-    <footer>
-        <div class='container'>
-
-            <div class='eight columns'>
-                <h5>Proyecto SA</h5>
-                <p>Mario Leonel Rodas  201114264</p>
-                <p>Rita Mariela Guarán 201114613</p>
-            </div>
-=======
                 <center>
                     <c:choose>
                         <c:when test="${usuario == '' || usuario==null}">
@@ -202,7 +145,7 @@
                 <center>
                     <div><font color="red" >${requestScope['result']}</font></div>
                 </center>
->>>>>>> origin/master
+
 
 
             </div>
