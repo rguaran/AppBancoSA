@@ -70,11 +70,7 @@
                 <div class='eleven columns'>
                     <ul class='mainMenu'>
                         <li><a href='index.jsp' title='Home'>Home</a></li>
-                        <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
-                        <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
-                        <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
-                        <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
-                        <li><a href='#' title='Contact'>Contact</a></li>
+                        
                     </ul>
                 </div>
             </div>
@@ -96,7 +92,7 @@
             <center>
                 <h4>Cambiar Contraseña</h4> <%String user = (String)session.getAttribute("usuario"); %>
                 <p><%=user%> Hemos detectado que es la primera vez que accedes, por favor actualiza tu contraseña.</p>
-                <form name="frmnuevacontrasenia" method="POST" >
+                <form name="frmnuevacontrasenia" action="confirmarContrasenia"  method="POST" >
                     <table width="100%">
                         <tr>
                             <td > <label>Nueva Contraseña:</label></td>

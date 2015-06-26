@@ -17,10 +17,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author MarioR
+ * @author Rita
  */
-@WebServlet(urlPatterns = {"/confirmarContrasenia"})
-public class confirmarContrasenia extends HttpServlet {
+@WebServlet(urlPatterns = {"/CrearCuenta"})
+public class CrearCuentaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -68,24 +68,26 @@ public class confirmarContrasenia extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        
         RequestDispatcher rd = null;
-        String newPass = request.getParameter("txtNewPass");
+        String monto = request.getParameter("txtInicial");
         HttpSession session = request.getSession();
-        
-        String respuesta = confirmarCuenta((String)session.getAttribute("usuario"), newPass);
-        
-        Administracion admin = new Administracion();
-        String bandera = admin.getCadenaEtiquetas(respuesta, "<Resultado>");
-        
-        if (bandera.equals("True")){
-            rd = request.getRequestDispatcher("/menu.jsp");
+        String usuario = session.getAttribute("usuario").toString();
+        if(Double.parseDouble(monto)<=0){
+            // Error //
         }else{
-            //error
+            Administracion admon = new Administracion();
+            String respuesta;
+            respuesta = getIdUsuario(usuario);
+            String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
+            respuesta = crearCuenta(Integer.parseInt(idUsuario));
+            String idCuenta = admon.getCadenaEtiquetas(respuesta, "<idCuenta>");
+            String resDep = depositoInicial(Integer.parseInt(idCuenta),Double.parseDouble(monto));
+            
+            request.getRequestDispatcher("/menu.jsp").forward(request, response);
         }
         
-        //rd = request.getRequestDispatcher("/crearUsuario.jsp");        
-        rd.forward(request, response);
+        //processRequest(request, response);
     }
 
     /**
@@ -98,10 +100,22 @@ public class confirmarContrasenia extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private static String confirmarCuenta(java.lang.String usuario, java.lang.String password) {
+    private static String getIdUsuario(java.lang.String usuario) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
-        return port.confirmarCuenta(usuario, password);
+        return port.getIdUsuario(usuario);
+    }
+
+    private static String crearCuenta(int crearCuenta) {
+        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
+        WSclientes.Servicios port = service.getServiciosPort();
+        return port.crearCuenta(crearCuenta);
+    }
+
+    private static String depositoInicial(int idCuenta, double monto) {
+        WSclientes2.Servicios3_Service service = new WSclientes2.Servicios3_Service();
+        WSclientes2.Servicios3 port = service.getServicios3Port();
+        return port.depositoInicial(idCuenta, monto);
     }
 
 }

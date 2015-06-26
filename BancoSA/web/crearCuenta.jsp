@@ -96,7 +96,7 @@
             <center>
                 <h4>Crear Cuenta</h4>
                 
-                <form name="frmCrearCuenta" method="POST" >
+                <form name="frmCrearCuenta" action="CrearCuenta" method="POST" >
                     <table width="100%">
                         <tr>
                             <td><label>Saldo Inicial</label> </td>
@@ -105,7 +105,7 @@
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td ></td>
-                            <td><input  type="submit" value="Crear" name="btnCrear" id="btnCrear"></td>
+                            <td><input  type="submit" value="Crear" name="btnCrearCuenta" id="btnCrearCuenta"></td>
                         </tr>
                     </table>
                 </form>

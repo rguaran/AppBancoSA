@@ -115,7 +115,7 @@ public class ServletLogin extends HttpServlet {
             session.setAttribute("password", password);
             String confirmado = getCadenaEtiquetas(resp, etqconfirmado);
             if( confirmado.equals("True") ){
-                rd = request.getRequestDispatcher("/crearUsuario.jsp");
+                rd = request.getRequestDispatcher("/menu.jsp");
             }else{
                 rd = request.getRequestDispatcher("/cambiarContraseña.jsp");
             }

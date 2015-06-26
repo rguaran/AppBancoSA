@@ -111,6 +111,10 @@
                             <td><a href='menuTransaccion.jsp' class='button medium green'>Transacciones</a></td>
                             <td></td>
                         </tr>
+                        <tr>
+                            <td><a href='menuCuenta.jsp' class='button medium green'>Cuentas</a></td>
+                            <td></td>
+                        </tr>
                     </table>
                 </form>
             </center>
