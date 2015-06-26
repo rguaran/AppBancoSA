@@ -84,7 +84,7 @@ public class CrearUsuarioServlet extends HttpServlet {
         String direccion = request.getParameter("txtDireccion");
         String telefono = request.getParameter("txtTelefono");
         String fechanac = request.getParameter("txtFechaNac");
-        
+       /*
         String respRegistro = registro(dpi, nombre, apellido, correo, direccion, telefono, fechanac);
         
         String etqbandera="<bandera>", etqusuario="<usuario>", etqpassword="<password>";
@@ -92,35 +92,33 @@ public class CrearUsuarioServlet extends HttpServlet {
         int lon = etqbandera.length();
         int fin;
         char resultado = respRegistro.charAt(pos + lon);
-        
-        String result;
-         
+        */
+        String result="";
+        /*String flag; 
         if( resultado == '2' ){
             result = "¡Correo ya registrado, revisa tu información!";
-            request.setAttribute("mensaje", result);
-            request.setAttribute("flag", "3");
-            rd = request.getRequestDispatcher("/crearUsuario.jsp");
+            //request.setAttribute("mensaje", result);
+            //request.setAttribute("flag", "3");
+            //rd = request.getRequestDispatcher("/crearUsuario.jsp");
         }else if( resultado == '3' ){
             result = "¡DPI ya registrado, revisa tu información!";
-            request.setAttribute("mensaje", result);
-            request.setAttribute("flag", "2");
-            rd = request.getRequestDispatcher("/crearUsuario.jsp");
+            //request.setAttribute("mensaje", result);
+            //request.setAttribute("flag", "2");
+            //rd = request.getRequestDispatcher("/crearUsuario.jsp");
         }else{
             String usuario = getCadenaEtiquetas(respRegistro, etqusuario);
             String password = getCadenaEtiquetas(respRegistro, etqpassword);
             result = "¡Exito! Recibiras un correo con información de ingreso";
-            request.setAttribute("mensaje", result);
-            request.setAttribute("flag", "1");
-            rd = request.getRequestDispatcher("/crearUsuario.jsp");            
+            //request.setAttribute("mensaje", result);
+            //request.setAttribute("flag", "1");
+            //rd = request.getRequestDispatcher("/crearUsuario.jsp");            
         }
-        
         
         Usuario NewUser;
         NewUser = new Usuario(dpi,nombre,apellido,telefono,direccion,correo,"","",fechanac,"no",null);
-        
         NewUser.CrearCuenta(new Cuenta(1, 8000.00, fechanac, null, null, null));
-        
-        
+        */
+        request.setAttribute("mensaje", result);
         
         rd = request.getRequestDispatcher("/crearUsuario.jsp");
         
@@ -137,11 +135,11 @@ public class CrearUsuarioServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private static String registro(java.lang.String dpi, java.lang.String nombre, java.lang.String apellido, java.lang.String correo, java.lang.String direccion, java.lang.String telefono, java.lang.String fechaNac) {
+    /*private static String registro(java.lang.String dpi, java.lang.String nombre, java.lang.String apellido, java.lang.String correo, java.lang.String direccion, java.lang.String telefono, java.lang.String fechaNac) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
         return port.registro(dpi, nombre, apellido, correo, direccion, telefono, fechaNac);
-    }
+    }*/
 
     
 

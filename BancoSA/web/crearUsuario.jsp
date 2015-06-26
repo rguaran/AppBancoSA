@@ -70,11 +70,6 @@
 				<div class='eleven columns'>
 					<ul class='mainMenu'>
 						<li><a href='index.jsp' title='Home'>Home</a></li>
-						<li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
-						<li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
-						<li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
-						<li><a href='#' title='Portfolio'>Portfolio</a></li>
-						<li><a href='#' title='Contact'>Contact</a></li>
 					</ul>
 				</div>
 			</div>
@@ -139,19 +134,19 @@
                     </table>
                 </form>
             </center>
-<<<<<<< HEAD
-                
-=======
-                </div>
-            <% String res = (String) request.getAttribute("flag");
-                       String mensaje = (String) request.getAttribute("mensaje");
+        
+                    <center><div><font color="blue" > ${requestScope['mensaje']} </font></div></center>
+                    
+            <%/* String res = (String) request.getAttribute("flag");
+                   String mensaje = (String) request.getAttribute("mensaje");
                        if( res.equals("3") ){ 
                         out.println("<center><div><font color=\"blue\" >"+mensaje+"</font></div></center>");
                        }else{ 
-                        out.println("<center><div><font color=\"blue\" >"+mensaje+"</font></div></center>");                       
-                    %> 
->>>>>>> dee593adb125781c4820e9c071a726720a17c4b9
-	</section>
+                        out.println("<center><div><font color=\"blue\" >"+mensaje+"</font></div></center>");
+                       } */
+            %>
+        </div>
+        </section>
 
 	
 	<footer>
