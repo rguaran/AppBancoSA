@@ -112,12 +112,12 @@
                                 <table width="100%">
                                     <tr>
                                         <td > <label >Usuario:</label></td>
-                                        <td> <input type="text" name="txtUsuario" id="txtCodigo" required="" text="Usuario"></td>
+                                        <td><input type="text" name="txtUsuario" id="txtUsuario" required=""> </td>
                                     </tr>
                                     <tr><td><br></td><td></td></tr>
                                     <tr>
                                         <td > <label>Contraseña:</label></td>
-                                        <td> <input type="password" name="txtPass" id="txtPass" required="" text="Contraseña"></td>
+                                        <td><input type="text" name="txtPass" id="txtPass" required=""> </td>
                                     </tr>
                                     <tr><td><br></td><td></td></tr>
                                     <tr>
