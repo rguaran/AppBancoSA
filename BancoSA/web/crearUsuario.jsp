@@ -134,9 +134,11 @@
                     </table>
                 </form>
             </center>
+
 </div>
             <center>
                 <div> ${requestScope['mensaje']}</div></center>               
+
 
 	</section>
 <footer>

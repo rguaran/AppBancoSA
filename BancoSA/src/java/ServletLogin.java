@@ -71,8 +71,8 @@ public class ServletLogin extends HttpServlet {
        RequestDispatcher rd = null;
         
         HttpSession session = request.getSession();
-        session.setAttribute("usuario", "");
-        session.setAttribute("password", "");
+        session.setAttribute("usuario", null);
+        session.setAttribute("password", null);
         rd= request.getRequestDispatcher("/index.jsp");
         
         
@@ -95,6 +95,7 @@ public class ServletLogin extends HttpServlet {
         String usuario = request.getParameter("txtUsuario");
         String password = request.getParameter("txtPass");
         String btnIngresar = request.getParameter("btnIngresar");
+
         
         String resp = login(usuario, password);
         String etqbandera="<Bandera>", etqconfirmado="<Confirmado>";
@@ -119,16 +120,21 @@ public class ServletLogin extends HttpServlet {
                 rd = request.getRequestDispatcher("/cambiarContraseña.jsp");
             }
         }
+       
+        
         /*
+        HttpSession session = request.getSession();
+         
         
         if (btnIngresar != null) {
             if (usuario.equals("rita")&& password.equals("rita")) {
-                HttpSession session = request.getSession();
                 session.setAttribute("usuario", usuario);
                 session.setAttribute("password", password);
                 System.out.println(session.getAttribute("usuario"));
                 rd = request.getRequestDispatcher("/cambiarContraseña.jsp");
             } else {
+                //session.setAttribute("usuario", "");
+                //session.setAttribute("password", "");
                 String result = "Haz olvidado tu usuario o contraseña?";
                 request.setAttribute("result", result);
                 rd = request.getRequestDispatcher("/index.jsp");

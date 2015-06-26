@@ -84,7 +84,7 @@ public class CrearUsuarioServlet extends HttpServlet {
         String direccion = request.getParameter("txtDireccion");
         String telefono = request.getParameter("txtTelefono");
         String fechanac = request.getParameter("txtFechaNac");
-        
+       
         String respRegistro = registro(dpi, nombre, apellido, correo, direccion, telefono, fechanac);
         
         String etqbandera="<bandera>", etqusuario="<usuario>", etqpassword="<password>";
@@ -92,6 +92,7 @@ public class CrearUsuarioServlet extends HttpServlet {
         int lon = etqbandera.length();
         int fin;
         char resultado = respRegistro.charAt(pos + lon);
+
         
         String result="";
         String flag=""; 
@@ -101,13 +102,20 @@ public class CrearUsuarioServlet extends HttpServlet {
         }else if( resultado == '3' ){
             result = "¡DPI ya registrado, revisa tu información!";
             request.setAttribute("mensaje", "<font color=\"red\" >"+result+"</font>");
-        }else{
+        } else{
             String usuario = getCadenaEtiquetas(respRegistro, etqusuario);
             String password = getCadenaEtiquetas(respRegistro, etqpassword);
             result = "¡Exito! Recibiras un correo con información de ingreso";
+
             request.setAttribute("mensaje", "<font color=\"blue\" >"+result+"</font>");                     
         }
-        rd = request.getRequestDispatcher("/crearUsuario.jsp");        
+        
+       
+        request.setAttribute("mensaje", result);
+        
+        rd = request.getRequestDispatcher("/crearUsuario.jsp");
+        
+
         rd.forward(request, response);
     }
 
