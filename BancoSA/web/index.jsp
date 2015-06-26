@@ -101,41 +101,7 @@
             <%if (userr.equals("")){%>
             <center>
 
-            <%
-            out.println("    <h4>Iniciar Sesión</h4>");
-            out.println("    <form name=\"frmLogin\" action=\"Login\" method=\"POST\" >");
-            out.println("        <table width=\"100%\">");
-            out.println("            <tr>");
-            out.println("                <td > <label >Usuario:</label></td>");
-            out.println("                <td> <input type=\"text\" name=\"txtUsuario\" id=\"txtCodigo\" required=\"\" text=\"Usuario\"></td>");
-            out.println("            </tr>");
-            out.println("            <tr><td><br></td><td></td></tr>");
-            out.println("            <tr>");
-            out.println("                <td > <label>Contraseña:</label></td>");
-            out.println("                <td> <input type=\"password\" name=\"txtPass\" id=\"txtPass\" required=\"\" text=\"Contraseña\"></td>");
-            out.println("            </tr>");
-            out.println("            <tr><td><br></td><td></td></tr>");
-            out.println("            <tr>");
-            out.println("                <td ></td>");
-            out.println("                <td><input  type=\"submit\" value=\"Ingresar\" name=\"btnIngresar\" id=\"btnIngresar\"></td>");
-            out.println("            </tr>");
-            out.println("        </table>");
-            out.println("     </form>");
-            out.println("     <center><a href='crearUsuario.jsp' class='button medium green'>Crear Usuario</a></center>");
-            }else{
-            out.println("    <h4>Cerrar Sesión</h4>");
-            out.println("    <form name=\"frmLogout\" action=\"Login\" method=\"GET\" >");
-            out.println("        <table width=\"100%\">");
-            out.println("            <tr>");
-            out.println("                <td ></td>");
-            out.println("                <td><input  type=\"submit\" value=\"Cerrar Sesión\" name=\"btnLogout\" id=\"btnLogout\"></td>");
-            out.println("            </tr>");
-            out.println("        </table>");
-            out.println("     </form>");
-            }
             
-            %>
-           
                 <center>
                     <div><font color="red" >${requestScope['result']}</font></div>
                 </center>

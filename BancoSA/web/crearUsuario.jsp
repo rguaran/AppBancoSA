@@ -70,11 +70,6 @@
 				<div class='eleven columns'>
 					<ul class='mainMenu'>
 						<li><a href='index.jsp' title='Home'>Home</a></li>
-						<li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
-						<li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
-						<li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
-						<li><a href='#' title='Portfolio'>Portfolio</a></li>
-						<li><a href='#' title='Contact'>Contact</a></li>
 					</ul>
 				</div>
 			</div>
@@ -139,14 +134,12 @@
                     </table>
                 </form>
             </center>
-                </div>
+</div>
             <center>
                 <div> ${requestScope['mensaje']}</div></center>               
 
 	</section>
-
-	
-	<footer>
+<footer>
 		<div class='container'>
 			
 			<div class='eight columns'>
