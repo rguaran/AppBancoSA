@@ -34,6 +34,14 @@ public class ServletLogin extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    public String getCadenaEtiquetas(String cadena, String etiqueta){
+        int pos = cadena.indexOf(etiqueta);
+        int lon = etiqueta.length();
+        String cierre = "</"+etiqueta.substring(1, etiqueta.length());
+        int fin = cadena.indexOf(cierre);
+        return cadena.substring(pos + lon, fin);
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -88,7 +96,31 @@ public class ServletLogin extends HttpServlet {
         String password = request.getParameter("txtPass");
         String btnIngresar = request.getParameter("btnIngresar");
         
-         
+        String resp = login(usuario, password);
+        String etqbandera="<Bandera>", etqconfirmado="<Confirmado>";
+        String bandera = getCadenaEtiquetas(resp, etqbandera);
+        
+        if( bandera.equals("2") ){
+            String result = "Usuario inexistente";
+            request.setAttribute("result", result);
+            rd = request.getRequestDispatcher("/index.jsp");
+        }else if( bandera.equals("3") ){
+            String result = "La contraseña es incorrecta. ¿Ya confirmaste tu cuenta?";
+            request.setAttribute("result", result);
+            rd = request.getRequestDispatcher("/index.jsp");
+        }else{
+            HttpSession session = request.getSession();
+            session.setAttribute("usuario", usuario);
+            session.setAttribute("password", password);
+            String confirmado = getCadenaEtiquetas(resp, etqconfirmado);
+            if( confirmado.equals("True") ){
+                rd = request.getRequestDispatcher("/crearUsuario.jsp");
+            }else{
+                rd = request.getRequestDispatcher("/cambiarContraseña.jsp");
+            }
+        }
+        /*
+        
         if (btnIngresar != null) {
             if (usuario.equals("rita")&& password.equals("rita")) {
                 HttpSession session = request.getSession();
@@ -102,6 +134,7 @@ public class ServletLogin extends HttpServlet {
                 rd = request.getRequestDispatcher("/index.jsp");
             }
         }
+        */
         
         rd.forward(request, response);
         
@@ -116,6 +149,12 @@ public class ServletLogin extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private static String login(java.lang.String usuario, java.lang.String password) {
+        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
+        WSclientes.Servicios port = service.getServiciosPort();
+        return port.login(usuario, password);
+    }
 
     
 }

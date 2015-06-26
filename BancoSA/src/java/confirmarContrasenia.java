@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-import control.Cuenta;
-import control.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -17,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Rita
+ * @author MarioR
  */
-@WebServlet(urlPatterns = {"/CrearUsuario"})
-public class CrearUsuarioServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/confirmarContrasenia"})
+public class confirmarContrasenia extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,14 +40,6 @@ public class CrearUsuarioServlet extends HttpServlet {
         }
     }
 
-    public String getCadenaEtiquetas(String cadena, String etiqueta){
-        int pos = cadena.indexOf(etiqueta);
-        int lon = etiqueta.length();
-        String cierre = "</"+etiqueta.substring(1, etiqueta.length());
-        int fin = cadena.indexOf(cierre);
-        return cadena.substring(pos + lon, fin);
-    }
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -62,7 +52,7 @@ public class CrearUsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
     }
 
     /**
@@ -76,38 +66,12 @@ public class CrearUsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //processRequest(request, response);
         RequestDispatcher rd = null;
-        String dpi = request.getParameter("txtDPI");
-        String nombre = request.getParameter("txtNombre");
-        String apellido = request.getParameter("txtApellido");
-        String correo = request.getParameter("txtCorreo");
-        String direccion = request.getParameter("txtDireccion");
-        String telefono = request.getParameter("txtTelefono");
-        String fechanac = request.getParameter("txtFechaNac");
+        String newPass = request.getParameter("txtNewPass");
         
-        String respRegistro = registro(dpi, nombre, apellido, correo, direccion, telefono, fechanac);
         
-        String etqbandera="<bandera>", etqusuario="<usuario>", etqpassword="<password>";
-        int pos = respRegistro.indexOf(etqbandera);
-        int lon = etqbandera.length();
-        int fin;
-        char resultado = respRegistro.charAt(pos + lon);
-        
-        String result="";
-        String flag=""; 
-        if( resultado == '2' ){
-            result = "¡Correo ya registrado, revisa tu información!";
-            request.setAttribute("mensaje", "<font color=\"red\" >"+result+"</font>");
-        }else if( resultado == '3' ){
-            result = "¡DPI ya registrado, revisa tu información!";
-            request.setAttribute("mensaje", "<font color=\"red\" >"+result+"</font>");
-        }else{
-            String usuario = getCadenaEtiquetas(respRegistro, etqusuario);
-            String password = getCadenaEtiquetas(respRegistro, etqpassword);
-            result = "¡Exito! Recibiras un correo con información de ingreso";
-            request.setAttribute("mensaje", "<font color=\"blue\" >"+result+"</font>");                     
-        }
-        rd = request.getRequestDispatcher("/crearUsuario.jsp");        
+        //rd = request.getRequestDispatcher("/crearUsuario.jsp");        
         rd.forward(request, response);
     }
 
@@ -121,12 +85,10 @@ public class CrearUsuarioServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private static String registro(java.lang.String dpi, java.lang.String nombre, java.lang.String apellido, java.lang.String correo, java.lang.String direccion, java.lang.String telefono, java.lang.String fechaNac) {
+    private static String confirmarCuenta(java.lang.String usuario, java.lang.String password) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
-        return port.registro(dpi, nombre, apellido, correo, direccion, telefono, fechaNac);
+        return port.confirmarCuenta(usuario, password);
     }
 
-    
-
-  }
+}
