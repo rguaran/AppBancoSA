@@ -99,6 +99,7 @@
         <div class='container'>
             <%if (userr.equals("")){%>
             <center>
+<<<<<<< HEAD
             <%
             out.println("    <h4>Iniciar Sesión</h4>");
             out.println("    <form name=\"frmLogin\" action=\"Login\" method=\"POST\" >");
@@ -137,6 +138,30 @@
                 <center>
                     <div><font color="red" >${requestScope['result']}</font></div>
                 </center>
+=======
+                <h4>Iniciar Sesión</h4>
+                <form name="frmLogin" action="Login" method="POST" >
+                    <table width="100%">
+                        <tr>
+                            <td > <label >Usuario:</label></td>
+                            <td> <input type="text" name="txtUsuario" id="txtCodigo" required="" text="Usuario"></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td > <label>Contraseña:</label></td>
+                            <td> <input type="password" name="txtPass" id="txtPass" required="" text="Contraseña"></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td ></td>
+                            <td><input  type="submit" value="Ingresar" name="btnIngresar" id="btnIngresar"></td>
+                        </tr>
+                    </table>
+                </form>
+                <center><% String res = (String) request.getAttribute("result");
+                            if (res!=null){}else{res="";}%> 
+                    <div><font color="red" >${requestScope['result']}</font></div></center>
+>>>>>>> dee593adb125781c4820e9c071a726720a17c4b9
             </center>
             
 

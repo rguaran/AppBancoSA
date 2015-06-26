@@ -139,7 +139,18 @@
                     </table>
                 </form>
             </center>
+<<<<<<< HEAD
                 
+=======
+                </div>
+            <% String res = (String) request.getAttribute("flag");
+                       String mensaje = (String) request.getAttribute("mensaje");
+                       if( res.equals("3") ){ 
+                        out.println("<center><div><font color=\"blue\" >"+mensaje+"</font></div></center>");
+                       }else{ 
+                        out.println("<center><div><font color=\"blue\" >"+mensaje+"</font></div></center>");                       
+                    %> 
+>>>>>>> dee593adb125781c4820e9c071a726720a17c4b9
 	</section>
 
 	
