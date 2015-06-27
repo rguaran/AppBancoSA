@@ -118,10 +118,25 @@ public class solicitarPrestamoServlet extends HttpServlet {
         String valorDDLTP = request.getParameter("selectTP");
         String cantidad = request.getParameter("txtMonto");
         
-        
-        String resSolicitar = solicitarPrestamo(Integer.parseInt(valorDDLCuenta), Double.parseDouble(cantidad),0, Integer.parseInt(valorDDLTP));
+        String resTipo = getDesgloseTipoPrestamo(Integer.parseInt(valorDDLTP));
+        int minimo = Integer.parseInt(admon.getCadenaEtiquetas(resTipo, "<minimo>"));
+        int maximo = Integer.parseInt(admon.getCadenaEtiquetas(resTipo, "<maximo>"));
+        int tasa = Integer.parseInt(admon.getCadenaEtiquetas(resTipo, "<tasa>"));
+        double monto = Double.parseDouble(cantidad);
         
         String result="";
+        if( !(minimo <= monto && monto <= maximo) ){
+            result = "<font color=\"red\">La cantidad especificada no cumple con el rango de ese tipo de prestamo</font>";
+            request.setAttribute("result", result);
+        }else{
+            String resSolicitar = solicitarPrestamo(Integer.parseInt(valorDDLCuenta), Double.parseDouble(cantidad),0, Integer.parseInt(valorDDLTP));
+             result = "<font color=\"blue\">Prestamo solicitado, espera la aprobación. Prestamo "+resSolicitar+" </font>";
+             request.setAttribute("result", result);
+        }
+        
+        
+        
+        
         /*String idPrestamo = admon.getCadenaEtiquetas(resSolicitar, "");
         
         if (resSolicitar.equals("true")){
@@ -130,8 +145,7 @@ public class solicitarPrestamoServlet extends HttpServlet {
             result = "<font color=\"red\">Prestamo No se pudo solicitar</font>";
         }*/
         
-        result = "<font color=\"blue\">Prestamo solicitado, espera la aprobación. Prestamo "+resSolicitar+" </font>";
-        request.setAttribute("result", result);
+       
         
         request.getRequestDispatcher("/menuPrestamo.jsp").forward(request, response);
     }
@@ -174,6 +188,12 @@ public class solicitarPrestamoServlet extends HttpServlet {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
         return port.solicitarPrestamo(idCuenta, cantidad, cuotas, idTipoPrestamo);
+    }
+
+    private static String getDesgloseTipoPrestamo(int idTipoPrestamo) {
+        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
+        WSclientes.Servicios port = service.getServiciosPort();
+        return port.getDesgloseTipoPrestamo(idTipoPrestamo);
     }
 
 }
