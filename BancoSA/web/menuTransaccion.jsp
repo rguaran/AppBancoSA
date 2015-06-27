@@ -147,7 +147,7 @@
                     </div>
                 </center>
                 <center>
-                    <div><font color="blue" >${requestScope['result']}</font></div>
+                    <div>${requestScope['result']}</div>
                 </center>
             </div>
         </section>

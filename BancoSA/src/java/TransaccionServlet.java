@@ -104,14 +104,14 @@ public class TransaccionServlet extends HttpServlet {
         String respuesta="";
         
         if (bandera.equals("1")){ //monto>saldo
-            respuesta = "El monto a pagar es mayor al saldo disponible";
+            respuesta = "<font color=\"red\">El monto a pagar es mayor al saldo disponible</font>";
         } else if (bandera.equals("2")) { // la cuenta destino no existe
-            respuesta = "La cuenta destino no existe"; 
+            respuesta = "<font color=\"red\">La cuenta destino no existe</font>"; 
         } else if (bandera.equals("3")){ //exito en operacion
-            respuesta = "La operación se realizó con éxito";
+            respuesta = "<font color=\"blue\">La operación se realizó con éxito";
             String saldorestante = admon.getCadenaEtiquetas(resTransferecia, "<saldo>");
             NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es","MX"));
-            respuesta += ", su saldo restante es de " + formatoSaldo.format( Double.parseDouble(saldorestante) );
+            respuesta += ", su saldo restante es de " + formatoSaldo.format( Double.parseDouble(saldorestante) ) + "</font>";
         }
         
         request.setAttribute("result", respuesta);
