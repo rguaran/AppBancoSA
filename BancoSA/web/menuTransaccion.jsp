@@ -95,25 +95,7 @@
             <div class='container'>
                 <center>
                     <h4>Menu de Transacciones</h4>
-
-                    <form >
-                        <table width="100%">
-                            <tr>
-                                <td><a href='realizarTInterbanco.jsp' class='button medium green'>Realizar Transaccion Interbancaria</a></td>
-                                <td></td>
-                            </tr>
-                            <tr><td><br></td><td></td></tr>
-                            <tr>
-                                <td><a href='pagarSeguro.jsp' class='button medium green'>Pagar Seguro</a></td>
-                                <td></td>
-                            </tr>
-                            <tr><td><br></td><td></td></tr>
-                            <tr>
-                                <td><a href='consultarTransacciones.jsp' class='button medium green'>Consultar Transacciones</a></td>
-                                <td></td>
-                            </tr>
-                        </table>
-                    </form>                
+                
                 </center>
                 <center>
                     <div>

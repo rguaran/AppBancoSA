@@ -1,10 +1,11 @@
 <%-- 
-    Document   : menuCuenta
-    Created on : 25-Jun-2015, 22:50:56
+    Document   : consultarPrestamo
+    Created on : 25-Jun-2015, 11:42:36
     Author     : Rita
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -93,25 +94,36 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Menu de Cuenta</h4>
-                
-                <form>
+                <h4>Consultar Información de Cuentas</h4>
+                <p>Selecciona una cuenta de la cual quieres obtener informacion</p>
+                <form name="frmConsultarCuenta" method="POST" >
                     <table width="100%">
                         <tr>
-                            <td><a href='crearCuenta.jsp' class='button medium green'>Crear Cuenta</a></td>
-                            <td> </td>
+                            <td > <label >Cuenta</label></td>
+                            
                         </tr>
-                        <tr><td><br></td><td></td></tr>                        
+                        <tr><td><br></td></tr>
+                        <tr>
+                            <td>
+                                <select name="selectCuentas" id="selectCuentas">
+                                    <c:forEach var="user" items="${listaCuentas}">
+                                        <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr><td><br></td></tr>
+                        <tr>
+                            
+                            <td><input  type="submit" value="Consultar" name="btnConsultar" id="btnConsultar"></td>
+                        </tr>
                     </table>
                 </form>
-                <center>
-                    <div>
-                        <form action="consultarCuenta" method="GET">
-                            <input type="submit" value="Consultar Cuenta" name="btnTransferencia">
-                        </form>
-                    </div>
-                </center>
+                
             </center>
+            
+
         </div>
     </section>
 
@@ -167,4 +179,3 @@
 
 </body>
 </html>
-

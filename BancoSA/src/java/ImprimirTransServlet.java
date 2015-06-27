@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
+import com.itextpdf.text.BaseColor;
 import control.Administracion;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -12,6 +14,25 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+
+
+import javax.swing.text.Position;
+import javax.swing.text.Segment;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import control.Transaccion;
+import java.awt.Desktop;
+import java.io.FileNotFoundException;
 
 /**
  *
@@ -67,9 +88,9 @@ public class ImprimirTransServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String valorDDLCuenta = request.getParameter("btnImprimir");
-        //String valor = request.getParameter("lblTrans");
+        
         System.out.println(valorDDLCuenta);
-       // System.out.println(valor);
+       
         int pos = valorDDLCuenta.indexOf(" ");
         String idTrans = valorDDLCuenta.substring(pos + 1);
         
@@ -82,6 +103,36 @@ public class ImprimirTransServlet extends HttpServlet {
         String prestamo = admon.getCadenaEtiquetas(infoTrans, "<idPrestamo>");
         String tipo = admon.getCadenaEtiquetas(infoTrans, "<tipo>");
         String fecha = admon.getCadenaEtiquetas(infoTrans, "<fecha>");
+        
+        Document document = new Document();
+    try
+    {
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("C://pdf//ReciboTransaccion"+idTrans+".pdf"));
+        document.open();
+        document.add(new Paragraph("Transaccion: " + idTrans));
+        document.add(new Paragraph("Cuenta Origen: " + idSalida));
+        if (!idDestino.equals("-1")){
+            document.add(new Paragraph("Cuenta Destino: " + idDestino));}
+        document.add(new Paragraph("Monto: " + monto));
+        if (!seguro.equals("-1")){
+            document.add(new Paragraph("Seguro: " + seguro));}
+        if (!prestamo.equals("-1")){
+            document.add(new Paragraph("Prestamo: " + prestamo));}
+         
+        document.add(new Paragraph("Tipo: " + tipo));
+        document.add(new Paragraph("Fecha: " + fecha));
+         
+        document.close();
+        writer.close();
+      } catch (DocumentException e)
+      {
+        e.printStackTrace();
+      } catch (FileNotFoundException e)
+      {
+        e.printStackTrace();
+      }
+        
+        
         
         request.getRequestDispatcher("/menuTransaccion.jsp").forward(request, response);
     }
@@ -101,5 +152,7 @@ public class ImprimirTransServlet extends HttpServlet {
         WSclientes.Servicios port = service.getServiciosPort();
         return port.getInfoTransaccion(idTrans);
     }
+    
+        
 
 }

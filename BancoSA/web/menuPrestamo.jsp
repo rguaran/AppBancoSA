@@ -106,9 +106,9 @@
                                 <input type="submit" value="Consultar Prestamo" name="btnSeleccionarPrestamo">
                             </form>
                     </div></center>
-                
+                    
             </center>
-            <div>${requestScope['result']}</div>
+            <div><center>${requestScope['result']}</center></div>
         </div>
     </section>
 

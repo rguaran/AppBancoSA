@@ -74,7 +74,7 @@ public class autorizarPrestamoServlet extends HttpServlet {
         String Imprimir = "<form name=\"frmAutorizar\" action=\"AutorizarServlet\" method=\"POST\">"
                  + "<table width=\"100%\"><tr><th>ID Prestamo</th><th>Autorizar</th></tr>";
         for(String s: listaIDSPrestamos){
-            Imprimir += "<td>"+s+"</td><td><input  type=\"submit\" value=\"Autorizar "+ s +"\" name=\"btnAutorizar\" id=\"btnAutorizar\"></td>";
+            Imprimir += "<tr><td>"+s+"</td><td><input  type=\"submit\" value=\"Autorizar "+ s +"\" name=\"btnAutorizar\" id=\"btnAutorizar\"></td></tr>";
         }
         
         Imprimir += "</table></form>";
