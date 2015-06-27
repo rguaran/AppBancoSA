@@ -3,7 +3,7 @@
     Created on : 24-Jun-2015, 10:47:13
     Author     : Rita
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -101,18 +101,21 @@
                         <tr>
                             <td> <label>Seguro</label></td>
                             
-                        </tr>
+                        </tr>                        
                         <tr><td><br></td></tr>
                         <tr>
                             <td>
-                                <select name="item">
-                                    <option value="Seguro1">Seguro 1</option>
-                                    <option value="Seguro2">Seguro 2</option>
-                                </select> 
-                            </td>
-                            
+                                <input type="text" name="txtSeguro" id="txtSeguro" required=""> </td>
                         </tr>
                         <tr><td><br></td></tr>
+                        <td> <label>Cuenta</label></td>
+                            <td>
+                                <select name="selectCuentas" id="selectCuentas">
+                                    <c:forEach var="user" items="${listaCuentas}">
+                                        <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
                         <tr>
                             
                             <td><input  type="submit" value="Pagar" name="btnPagarSeguro" id="btnPagarSeguro"></td>
