@@ -108,9 +108,10 @@ public class PagarPrestamoServlet extends HttpServlet {
             request.setAttribute("result", "<font color=\"red\" >"+result+"</font>");            
         }else{
             result = "¡Debitado exitosamente!";
+            request.setAttribute("result", "<font color=\"blue\" >"+result+"</font>"); 
         }
         
-        request.getRequestDispatcher("/pagarPrestamo.jsp").forward(request, response);
+        request.getRequestDispatcher("/menuTransaccion.jsp").forward(request, response);
     }
 
     /**
