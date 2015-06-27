@@ -3,7 +3,7 @@
     Created on : 25-Jun-2015, 11:42:56
     Author     : Rita
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -94,28 +94,41 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Pagar Préstamo</h4>
+                <h1>Pagar Préstamo</h1>
                 <p>Selecciona el prestamo que desees realizar el pago</p>
                 <form name="frmPagarPrestamo" method="POST" >
                     <table width="100%">
                         <tr>
-                            <td> <label>Préstamo</label></td>
-                            
+                            <td> <label>No. Préstamo</label></td>
+                            <td></td>                            
                         </tr>
                         <tr><td><br></td></tr>
                         <tr>
                             <td>
-                                <select name="item">
-                                    <option value="Prestamo1">Prestamo 1</option>
-                                    <option value="Prestamo2">Prestamo 2</option>
-                                </select> 
-                            </td>
-                            
+                                <input type="text" name="txtPrestamo" id="txtPrestamo" required=""> </td>
+                            <td></td>
+                        </tr>
+                        <tr><td><br></td></tr>
+                        
+                        <tr>
+                            <td> <label>Perteneciente a la cuenta con No.</label></td><td></td>                            
                         </tr>
                         <tr><td><br></td></tr>
                         <tr>
+                            <td>
+                                <select name="selectCuentas" id="selectCuentas">
+                                    <c:forEach var="user" items="${listaCuentas}">
+                                        <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
+                                    </c:forEach>
+                                </select>
+                            </td>
+                            <td></td>
+                        </tr>
+                        
+                        <tr><td><br></td></tr>
+                        <tr>
                             
-                            <td><input  type="submit" value="Pagar" name="btnPagarPrestamo" id="btnPagarPrestamo"></td>
+                            <td><input  type="submit" value="Realizar Pago" name="btnPagarPrestamo" id="btnPagarPrestamo"></td>
                         </tr>
                     </table>
                 </form>

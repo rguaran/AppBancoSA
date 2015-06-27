@@ -40,6 +40,10 @@
 
 <xs:element name="getCuentasUsuarioResponse" type="tns:getCuentasUsuarioResponse"/>
 
+<xs:element name="getDesgloseTipoPrestamo" type="tns:getDesgloseTipoPrestamo"/>
+
+<xs:element name="getDesgloseTipoPrestamoResponse" type="tns:getDesgloseTipoPrestamoResponse"/>
+
 <xs:element name="getIdTipoTrans" type="tns:getIdTipoTrans"/>
 
 <xs:element name="getIdTipoTransResponse" type="tns:getIdTipoTransResponse"/>
@@ -91,6 +95,10 @@
 <xs:element name="getSegurosPorAprobar" type="tns:getSegurosPorAprobar"/>
 
 <xs:element name="getSegurosPorAprobarResponse" type="tns:getSegurosPorAprobarResponse"/>
+
+<xs:element name="getTiposSeguro" type="tns:getTiposSeguro"/>
+
+<xs:element name="getTiposSeguroResponse" type="tns:getTiposSeguroResponse"/>
 
 <xs:element name="getTransaccionesCuenta" type="tns:getTransaccionesCuenta"/>
 
@@ -235,6 +243,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="getDesgloseTipoPrestamo">
+<xs:sequence>
+<xs:element name="idTipoPrestamo" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getDesgloseTipoPrestamoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="getIdsTipoTrans">
 <xs:sequence/>
 </xs:complexType>
@@ -270,6 +290,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="getIdUsuario">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdUsuarioResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="getIdTipoTrans">
 <xs:sequence>
 <xs:element name="tipo" type="xs:string" minOccurs="0"/>
@@ -282,13 +314,11 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getIdUsuario">
-<xs:sequence>
-<xs:element name="usuario" type="xs:string" minOccurs="0"/>
-</xs:sequence>
+<xs:complexType name="getTiposSeguro">
+<xs:sequence/>
 </xs:complexType>
 
-<xs:complexType name="getIdUsuarioResponse">
+<xs:complexType name="getTiposSeguroResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

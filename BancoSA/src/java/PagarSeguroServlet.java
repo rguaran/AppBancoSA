@@ -5,9 +5,11 @@
  */
 
 import control.Administracion;
+import control.Cuenta;
+import control.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,10 +19,10 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Rita
+ * @author MarioR
  */
-@WebServlet(urlPatterns = {"/CrearCuenta"})
-public class CrearCuentaServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/PagarSeguroServlet"})
+public class PagarSeguroServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,12 +36,8 @@ public class CrearCuentaServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            
-        } finally {
-            out.close();
-        }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -54,7 +52,30 @@ public class CrearCuentaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        HttpSession session = request.getSession();
+        String user = session.getAttribute("usuario").toString();
+           
+        String respuesta;
+        respuesta = getIdUsuario(user);
+        Administracion admon = new Administracion();
+        String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
+        respuesta = getCuentasUsuario(Integer.parseInt(idUsuario));
+        ArrayList<String> listacuentas = admon.getLista(respuesta, "<cuenta>");
+        
+        Usuario userr = new Usuario();
+        userr.setNombreUsuario(user);
+        
+        Cuenta cuenta;
+        for (String s : listacuentas ){
+            cuenta = new Cuenta();
+            cuenta.setIdCuenta(Integer.parseInt(s));
+            userr.CrearCuenta(cuenta);
+        }
+        
+        request.setAttribute("listaCuentas", userr.getCuentas());
+        
+        request.getRequestDispatcher("/pagarSeguro.jsp").forward(request, response);
     }
 
     /**
@@ -68,26 +89,7 @@ public class CrearCuentaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        RequestDispatcher rd = null;
-        String monto = request.getParameter("txtInicial");
-        HttpSession session = request.getSession();
-        String usuario = session.getAttribute("usuario").toString();
-        if(Double.parseDouble(monto)<=0){
-            // Error //
-        }else{
-            Administracion admon = new Administracion();
-            String respuesta;
-            respuesta = getIdUsuario(usuario);
-            String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
-            respuesta = crearCuenta(Integer.parseInt(idUsuario));
-            String idCuenta = admon.getCadenaEtiquetas(respuesta, "<idCuenta>");
-            String resDep = depositoInicial(Integer.parseInt(idCuenta),Double.parseDouble(monto));
-            
-            request.getRequestDispatcher("/menu.jsp").forward(request, response);
-        }
-        
-        //processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -106,19 +108,10 @@ public class CrearCuentaServlet extends HttpServlet {
         return port.getIdUsuario(usuario);
     }
 
-    private static String crearCuenta(int crearCuenta) {
+    private static String getCuentasUsuario(int idUsuario) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
-        return port.crearCuenta(crearCuenta);
+        return port.getCuentasUsuario(idUsuario);
     }
-
-    private static String depositoInicial(int idCuenta, double monto) {
-        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
-        WSclientes.Servicios port = service.getServiciosPort();
-        return port.depositoInicial(idCuenta, monto);
-    }
-
-    
-   
 
 }
