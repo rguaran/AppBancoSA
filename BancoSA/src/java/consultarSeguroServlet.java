@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Rita
  */
-@WebServlet(urlPatterns = {"/consultarSeguro"})
+@WebServlet(urlPatterns = {"/consultarSeguroServlet"})
 public class consultarSeguroServlet extends HttpServlet {
 Administracion admon = new Administracion();
     /**

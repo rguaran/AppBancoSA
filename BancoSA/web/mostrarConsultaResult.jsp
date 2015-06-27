@@ -1,9 +1,9 @@
 <%-- 
-    Document   : solicitarSeguro
-    Created on : 24-Jun-2015, 10:23:02
+    Document   : mostrarConsultaResult
+    Created on : 26-Jun-2015, 18:33:01
     Author     : Rita
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -94,60 +94,8 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Solicitar Seguro</h4>
-                
-                <form name="frmSolicitarSeguro" method="POST" >
-                    <table width="100%">
-                        <tr>
-                            <td> <label>Cuenta</label></td>
-                            <td>
-                                <select name="selectCuentasSeguro" id="selectCuentasSeguro">
-                                    <c:forEach var="user" items="${listaCuentas}">
-                                        <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
-                                    </c:forEach>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td> <label>Tipo</label></td>
-                            <td><select name="item">
-                                    <option value="Vida">Vida</option>
-                                    <option value="Auto">Automóvil</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><label>Monto</label> </td>
-                            <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><label>Cantidad de Cuotas</label> </td>
-                            <td><input type="text" required="" name="txtCuotas" id="txtCuotas"></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><label>Prima</label> </td>
-                            <td><input type="text" required="" name="txtPrima" id="txtPrima"></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><label>Pagar Automáticamente</label></td>
-                            <td><input type="checkbox" name="checkTipoPagoSeguro" value="PagarAutomaticamente"> </td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td ></td>
-                            <td><input  type="submit" value="Solicitar" name="btnSolicitar" id="btnSolicitar"></td>
-                        </tr>
-                    </table>
-                </form>
-                
+                ${requestScope['Imprimir']}
             </center>
-            
-
         </div>
     </section>
 
@@ -181,7 +129,7 @@
             <a id='top' href='#'>&uarr;</a>	
         </div>
     </footer>
-
+ 
     <script type="text/javascript">
         var toper = $('a#top');
 

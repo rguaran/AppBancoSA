@@ -101,6 +101,7 @@ public class ServletLogin extends HttpServlet {
         String etqbandera="<Bandera>", etqconfirmado="<Confirmado>";
         String bandera = getCadenaEtiquetas(resp, etqbandera);
         
+        
         if( bandera.equals("2") ){
             String result = "Usuario inexistente";
             request.setAttribute("result", result);
@@ -160,6 +161,12 @@ public class ServletLogin extends HttpServlet {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
         return port.login(usuario, password);
+    }
+
+    private static String solicitarPrestamo(int idCuenta, double cantidad, int cuotas, int idTipoPrestamo) {
+        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
+        WSclientes.Servicios port = service.getServiciosPort();
+        return port.solicitarPrestamo(idCuenta, cantidad, cuotas, idTipoPrestamo);
     }
 
     

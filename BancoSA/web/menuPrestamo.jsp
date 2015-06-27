@@ -101,18 +101,12 @@
                             </form>
                     </div></center>
                 
-                    <table width="100%">
-                        <tr>
-                            <td><a href='consultarPrestamo.jsp' class='button medium green'>Consultar Préstamo</a></td>
-                            <td></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><a href='pagarPrestamo.jsp' class='button medium green'>Pagar Préstamo</a></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </form>
+                    <center><div>
+                            <form action="seleccionarCuenta" method="GET">
+                                <input type="submit" value="Consultar Prestamo" name="btnSeleccionarPrestamo">
+                            </form>
+                    </div></center>
+                
             </center>
         </div>
     </section>

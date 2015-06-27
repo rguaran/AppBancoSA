@@ -111,21 +111,18 @@
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td> <label>Tipo</label></td>
-                            <td><select name="item">
-                                    <option value="tipo 1">Tipo 1</option>
-                                    <option value="tipo 2">Tipo 2</option>
+                            <td>
+                                <select name="selectTP" id="selectTP">
+                                    <c:forEach var="user" items="${listaTP}">
+                                        <option value="${user.getIdTipo()}">${user.getNombreTipo()}</option>
+                                    </c:forEach>
                                 </select>
                             </td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td><label>Monto</label> </td>
+                            <td><label>Cantidad</label> </td>
                             <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td><label>Número de Cuotas</label> </td>
-                            <td><input type="text" required="" name="txtCuotas" id="txtCuotas"></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
@@ -137,7 +134,6 @@
                 
             </center>
             
-
         </div>
     </section>
 

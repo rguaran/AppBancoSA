@@ -96,12 +96,12 @@
         <div class='container'>
             <center>
                 <h4>Seleccione una cuenta y que desea consultar</h4>
-                <form method="POST" >
+                <form action="seleccionarCuenta" method="POST" >
                     <table width="100%">
                         <tr>
                             <td> <label>Cuenta</label></td>
                             <td>
-                                <select name="selectCuentasSeguro" id="selectCuentasSeguro">
+                                <select name="selectCuentas" id="selectCuentas">
                                     <c:forEach var="user" items="${listaCuentas}">
                                         <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
                                     </c:forEach>
@@ -117,14 +117,14 @@
                         <tr>
                             <td> <label>Consultar?</label></td>
                             <td><select name="consultar">
-                                    <option value="Seguro">Seguro</option>
                                     <option value="Prestamo">Prestamo</option>
+                                    <option value="Seguro">Seguro</option>
                                 </select>
                             </td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td><input  type="submit" value="" name="btnSolicitar" id="btnSolicitar"></td>
+                            <td><input  type="submit" value="Consultar" name="btnSolicitar" id="btnSolicitar"></td>
                             <td></td>
                         </tr>
                     </table>

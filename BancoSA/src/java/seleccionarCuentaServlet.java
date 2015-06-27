@@ -4,14 +4,10 @@
  * and open the template in the editor.
  */
 
-import control.Administracion;
-import control.Cuenta;
-import control.TipoPrestamo;
-import control.Usuario;
+import control.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,10 +19,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author Rita
  */
-@WebServlet(urlPatterns = {"/solicitarPrestamo"})
-public class solicitarPrestamoServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/seleccionarCuenta"})
+public class seleccionarCuentaServlet extends HttpServlet {
+
     Administracion admon = new Administracion();
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,6 +37,7 @@ public class solicitarPrestamoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            
         } finally {
             out.close();
         }
@@ -58,7 +55,6 @@ public class solicitarPrestamoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //RequestDispatcher rd = null;
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
                 
@@ -80,24 +76,7 @@ public class solicitarPrestamoServlet extends HttpServlet {
         
         request.setAttribute("listaCuentas", userr.getCuentas());
         
-        //*************************tipos de prestamos
-        
-        String listaidsTiposPrestamo = getIdsTipoPrestamo();
-        ArrayList<String> listaTP = admon.getLista(listaidsTiposPrestamo, "<id>");
-        String infoTT; 
-        
-        ArrayList<TipoPrestamo> TPs = new ArrayList<TipoPrestamo>();
-        TipoPrestamo tp;
-        for (String s : listaTP){
-            infoTT = getInfoTipoPrestamo(Integer.parseInt(s));
-            tp = new TipoPrestamo(Integer.parseInt(s), infoTT);
-            TPs.add(tp);
-        }
-        
-        request.setAttribute("listaTP", TPs);
-        
-        request.getRequestDispatcher("/solicitarPrestamo.jsp").forward(request, response);
-        
+        request.getRequestDispatcher("/seleccionarCuenta.jsp").forward(request, response);
     }
 
     /**
@@ -112,17 +91,48 @@ public class solicitarPrestamoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String user = session.getAttribute("usuario").toString();
         
         String valorDDLCuenta = request.getParameter("selectCuentas");
-        String valorDDLTP = request.getParameter("selectTP");
-        String cantidad = request.getParameter("txtMonto");
+        String valorAconsultar = request.getParameter("txtConsultar");
+        String valorDDLConsultar = request.getParameter("consultar");
+        
+        String Imprimir="";
+        if (valorDDLConsultar.equals("Seguro")){
+            String infoSeguro = getInfoSeguro(Integer.parseInt(valorDDLCuenta), Integer.parseInt(valorAconsultar));
+            String bandera = admon.getCadenaEtiquetas(infoSeguro, "<bandera>");
+            String total = admon.getCadenaEtiquetas(infoSeguro, "<total>");
+            String cuotas= admon.getCadenaEtiquetas(infoSeguro, "<cuotas>");
+            String prima= admon.getCadenaEtiquetas(infoSeguro, "<prima>");
+            String fecha = admon.getCadenaEtiquetas(infoSeguro, "<fecha>");
+            String tipo = admon.getCadenaEtiquetas(infoSeguro, "<tipo>");
+            
+            
+        } else if (valorDDLConsultar.equals("Prestamo")) {
+            String infoPrestamo = getInfoPrestamo(Integer.parseInt(valorDDLCuenta), Integer.parseInt(valorAconsultar));
+            String bandera = admon.getCadenaEtiquetas(infoPrestamo, "<bandera>");
+                        
+            if (bandera.equals("2")){// correcto
+                String cantidad = admon.getCadenaEtiquetas(infoPrestamo, "<cantidad>");
+                String cuotas_pagadas = admon.getCadenaEtiquetas(infoPrestamo, "<cuotasPagadas>");
+                String cuotas_pendientes = admon.getCadenaEtiquetas(infoPrestamo, "<cuotasPendientes>");
+                String total_pagado = admon.getCadenaEtiquetas(infoPrestamo, "<totalPagado>");
+                String total_pendiente = admon.getCadenaEtiquetas(infoPrestamo, "<totalPendiente>");
+                String fecha = admon.getCadenaEtiquetas(infoPrestamo, "<fecha>");
+            
+                Imprimir += "<table width=\"100%\"><tr><th>Prestamo</th><th>Descripcion</th></tr>"
+                    + "<tr><td>Cantidad</td><td>"+cantidad+"</td></tr><tr><td>Cuotas Pagadas</td><td>"+cuotas_pagadas+"</td></tr><tr><td>"
+                    + "Cuotas pendientes</td><td>"+cuotas_pendientes+"</td></tr><tr><td>Total Pagado</td><td>"+total_pagado+"</td></tr><tr><td>"
+                    + "Total pendiente</td><td>"+total_pendiente+"</td></tr><tr><td>fecha</td><td>"+fecha+"</td></tr></table>";
+            }else if (bandera.equals("1")) { //no existe
+                Imprimir += "No existe el préstamo";
+            }
+            
+            request.setAttribute("Imprimir", Imprimir);
+            
+            request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
+        }    
         
         
-        String resSolicitar = solicitarPrestamo(Integer.parseInt(valorDDLCuenta), Double.parseDouble(cantidad),0, Integer.parseInt(valorDDLTP));
-        
-        request.setAttribute("resSolicitar", resSolicitar);
-        request.getRequestDispatcher("/menuPrestamo.jsp").forward(request, response);
     }
 
     /**
@@ -147,22 +157,18 @@ public class solicitarPrestamoServlet extends HttpServlet {
         return port.getCuentasUsuario(idUsuario);
     }
 
-    private static String getIdsTipoPrestamo() {
+    private static String getInfoSeguro(int idCuenta, int idPrestamo) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
-        return port.getIdsTipoPrestamo();
+        return port.getInfoSeguro(idCuenta, idPrestamo);
     }
 
-    private static String getInfoTipoPrestamo(int idTipoPrestamo) {
+    private static String getInfoPrestamo(int idCuenta, int idPrestamo) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
-        return port.getInfoTipoPrestamo(idTipoPrestamo);
+        return port.getInfoPrestamo(idCuenta, idPrestamo);
     }
 
-    private static String solicitarPrestamo(int idCuenta, double cantidad, int cuotas, int idTipoPrestamo) {
-        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
-        WSclientes.Servicios port = service.getServiciosPort();
-        return port.solicitarPrestamo(idCuenta, cantidad, cuotas, idTipoPrestamo);
-    }
+       
 
 }
