@@ -114,11 +114,7 @@
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td><label>Cuenta Destino</label> </td>
-                            <td><select name="item2">
-                                    <option value="tipo 1">Cuenta 1</option>
-                                    <option value="tipo 2">Cuenta 2</option>
-                                </select>
-                            </td>
+                            <td><input type="text" required="" name="txtCuentaDestino" id="txtCuentaDestino"></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
