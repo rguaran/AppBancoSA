@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+import control.Administracion;
+import control.Correo;
 import control.Cuenta;
 import control.Usuario;
 import java.io.IOException;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/CrearUsuario"})
 public class CrearUsuarioServlet extends HttpServlet {
 
+    Administracion admon = new Administracion();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -92,8 +95,8 @@ public class CrearUsuarioServlet extends HttpServlet {
         int lon = etqbandera.length();
         int fin;
         char resultado = respRegistro.charAt(pos + lon);
-
         
+                       
         String result="";
         String flag=""; 
         if( resultado == '2' ){
@@ -106,7 +109,8 @@ public class CrearUsuarioServlet extends HttpServlet {
             String usuario = getCadenaEtiquetas(respRegistro, etqusuario);
             String password = getCadenaEtiquetas(respRegistro, etqpassword);
             result = "¡Exito! Recibiras un correo con información de ingreso";
-
+            Correo correos = new Correo();
+            correos.EnviarCorreo(correo, usuario, password);
             request.setAttribute("mensaje", "<font color=\"blue\" >"+result+"</font>");                     
         }
         
