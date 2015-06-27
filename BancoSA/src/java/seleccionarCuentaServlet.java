@@ -124,7 +124,7 @@ public class seleccionarCuentaServlet extends HttpServlet {
                     + "Cuotas pendientes</td><td>"+cuotas_pendientes+"</td></tr><tr><td>Total Pagado</td><td>"+total_pagado+"</td></tr><tr><td>"
                     + "Total pendiente</td><td>"+total_pendiente+"</td></tr><tr><td>fecha</td><td>"+fecha+"</td></tr></table>";
             }else if (bandera.equals("1")) { //no existe
-                Imprimir += "No existe el préstamo";
+                Imprimir += "<font color=\"red\" >No existe el prestamo</font>";
             }
             
             request.setAttribute("Imprimir", Imprimir);

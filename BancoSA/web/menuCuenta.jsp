@@ -111,6 +111,9 @@
                         </form>
                     </div>
                 </center>
+                <center>
+                    <div><font color="red" >${requestScope['result']}</font></div>
+                </center>
             </center>
         </div>
     </section>

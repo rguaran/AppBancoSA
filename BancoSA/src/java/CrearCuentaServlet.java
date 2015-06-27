@@ -73,8 +73,11 @@ public class CrearCuentaServlet extends HttpServlet {
         String monto = request.getParameter("txtInicial");
         HttpSession session = request.getSession();
         String usuario = session.getAttribute("usuario").toString();
+        
         if(Double.parseDouble(monto)<=0){
             // Error //
+            request.setAttribute("result", "Error: El monto debe de ser mayor o igual a $500.00");
+            request.getRequestDispatcher("/menuCuenta.jsp").forward(request, response);
         }else{
             Administracion admon = new Administracion();
             String respuesta;
