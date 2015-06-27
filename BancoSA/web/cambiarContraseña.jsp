@@ -106,6 +106,9 @@
                     </table>
                 </form>
             </center>
+             <center>
+                    <div>${requestScope['result']}</div>
+                </center>
         </div>
     </section>
 

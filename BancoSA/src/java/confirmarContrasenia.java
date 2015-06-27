@@ -71,7 +71,12 @@ public class confirmarContrasenia extends HttpServlet {
         //processRequest(request, response);
         RequestDispatcher rd = null;
         String newPass = request.getParameter("txtNewPass");
-        HttpSession session = request.getSession();
+        
+        if(newPass.length()<6){
+            request.setAttribute("result", "<font color=\"red\" >La contraseña debe ser de al menos 6 dígitos</font>");
+            request.getRequestDispatcher("/cambiarContraseña.jsp").forward(request, response);
+        }else{
+            HttpSession session = request.getSession();
         
         String respuesta = confirmarCuenta((String)session.getAttribute("usuario"), newPass);
         
@@ -79,13 +84,15 @@ public class confirmarContrasenia extends HttpServlet {
         String bandera = admin.getCadenaEtiquetas(respuesta, "<Resultado>");
         
         if (bandera.equals("True")){
-            rd = request.getRequestDispatcher("/menu.jsp");
+            request.getRequestDispatcher("/menu.jsp").forward(request, response);
         }else{
             //error
         }
+        }
+        
         
         //rd = request.getRequestDispatcher("/crearUsuario.jsp");        
-        rd.forward(request, response);
+        
     }
 
     /**

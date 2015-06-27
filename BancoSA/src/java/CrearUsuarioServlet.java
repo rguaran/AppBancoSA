@@ -115,7 +115,7 @@ public class CrearUsuarioServlet extends HttpServlet {
         }
         
        
-        request.setAttribute("mensaje", result);
+        //request.setAttribute("mensaje", result);
         
         rd = request.getRequestDispatcher("/crearUsuario.jsp");
         
