@@ -110,7 +110,7 @@
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td><label>Monto</label> </td>
+                            <td><label id="lblTrans">Monto</label> </td>
                             <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>

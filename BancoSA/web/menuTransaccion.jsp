@@ -99,22 +99,12 @@
                     <form >
                         <table width="100%">
                             <tr>
-                                <td><a href='realizarTransaccion.jsp' class='button medium green'>Realizar Transferencia</a></td>
-                                <td> </td>
-                            </tr>
-                            <tr><td><br></td><td></td></tr>
-                            <tr>
                                 <td><a href='realizarTInterbanco.jsp' class='button medium green'>Realizar Transaccion Interbancaria</a></td>
                                 <td></td>
                             </tr>
                             <tr><td><br></td><td></td></tr>
                             <tr>
                                 <td><a href='pagarSeguro.jsp' class='button medium green'>Pagar Seguro</a></td>
-                                <td></td>
-                            </tr>
-                            <tr><td><br></td><td></td></tr>
-                            <tr>
-                                <td><a href='pagarPrestamo.jsp' class='button medium green'>Pagar Prestamo</a></td>
                                 <td></td>
                             </tr>
                             <tr><td><br></td><td></td></tr>
@@ -143,6 +133,13 @@
                     <div>
                         <form action="TransaccionServlet" method="GET">
                             <input type="submit" value="Realizar Transferencia" name="btnTransferencia">
+                        </form>
+                    </div>
+                </center>
+                <center>
+                    <div>
+                        <form action="consultarTransaccionesServlet" method="GET">
+                            <input type="submit" value="Consultar Transacciones" name="btnConsultarTransacciones">
                         </form>
                     </div>
                 </center>

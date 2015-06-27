@@ -1,6 +1,6 @@
 <%-- 
-    Document   : seleccionarCuenta
-    Created on : 26-Jun-2015, 16:04:40
+    Document   : seleccionarCuentaTransacciones
+    Created on : 27-Jun-2015, 08:06:54
     Author     : Rita
 --%>
 
@@ -95,8 +95,8 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Seleccione una cuenta y que desea consultar</h4>
-                <form action="seleccionarCuenta" method="POST" >
+                <h4>Seleccione una cuenta para consultar sus transacciones</h4>
+                <form action="consultarTransaccionesServlet" method="POST" >
                     <table width="100%">
                         <tr>
                             <td> <label>Cuenta</label></td>
@@ -105,20 +105,6 @@
                                     <c:forEach var="user" items="${listaCuentas}">
                                         <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
                                     </c:forEach>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td> <label>Consultar</label></td>
-                            <td><input type="text" name="txtConsultar" id="txtConsultar" required=""></td>
-                        </tr>
-                        <tr><td><br></td><td></td></tr>
-                        <tr>
-                            <td> <label>Consultar?</label></td>
-                            <td><select name="consultar">
-                                    <option value="Prestamo">Prestamo</option>
-                                    <option value="Seguro">Seguro</option>
                                 </select>
                             </td>
                         </tr>

@@ -108,6 +108,7 @@
                     </div></center>
                 
             </center>
+            <div>${requestScope['result']}</div>
         </div>
     </section>
 

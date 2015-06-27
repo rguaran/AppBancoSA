@@ -88,6 +88,10 @@
 
 <xs:element name="getInfoTransaccionResponse" type="tns:getInfoTransaccionResponse"/>
 
+<xs:element name="getPrestamosAAprobar" type="tns:getPrestamosAAprobar"/>
+
+<xs:element name="getPrestamosAAprobarResponse" type="tns:getPrestamosAAprobarResponse"/>
+
 <xs:element name="getPrestamosPorAprobar" type="tns:getPrestamosPorAprobar"/>
 
 <xs:element name="getPrestamosPorAprobarResponse" type="tns:getPrestamosPorAprobarResponse"/>
@@ -176,6 +180,16 @@
 </xs:complexType>
 
 <xs:complexType name="depositoInicialResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPrestamosAAprobar">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getPrestamosAAprobarResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -290,18 +304,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="getIdUsuario">
-<xs:sequence>
-<xs:element name="usuario" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="getIdUsuarioResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="getIdTipoTrans">
 <xs:sequence>
 <xs:element name="tipo" type="xs:string" minOccurs="0"/>
@@ -309,6 +311,18 @@
 </xs:complexType>
 
 <xs:complexType name="getIdTipoTransResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdUsuario">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdUsuarioResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

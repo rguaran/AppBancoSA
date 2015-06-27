@@ -4,23 +4,23 @@
 <xsd:import namespace="http://services/" schemaLocation="http://192.168.1.13:8080/Servicios/Servicios?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="getDesgloseTipoPrestamo">
-<part name="parameters" element="tns:getDesgloseTipoPrestamo"/>
+<message name="getPrestamosAAprobar">
+<part name="parameters" element="tns:getPrestamosAAprobar"/>
 </message>
-<message name="getDesgloseTipoPrestamoResponse">
-<part name="parameters" element="tns:getDesgloseTipoPrestamoResponse"/>
-</message>
-<message name="hello">
-<part name="parameters" element="tns:hello"/>
-</message>
-<message name="helloResponse">
-<part name="parameters" element="tns:helloResponse"/>
+<message name="getPrestamosAAprobarResponse">
+<part name="parameters" element="tns:getPrestamosAAprobarResponse"/>
 </message>
 <message name="Registro">
 <part name="parameters" element="tns:Registro"/>
 </message>
 <message name="RegistroResponse">
 <part name="parameters" element="tns:RegistroResponse"/>
+</message>
+<message name="hello">
+<part name="parameters" element="tns:hello"/>
+</message>
+<message name="helloResponse">
+<part name="parameters" element="tns:helloResponse"/>
 </message>
 <message name="Login">
 <part name="parameters" element="tns:Login"/>
@@ -39,66 +39,6 @@
 </message>
 <message name="RealizarTransaccionResponse">
 <part name="parameters" element="tns:RealizarTransaccionResponse"/>
-</message>
-<message name="VerInfoCuenta">
-<part name="parameters" element="tns:VerInfoCuenta"/>
-</message>
-<message name="VerInfoCuentaResponse">
-<part name="parameters" element="tns:VerInfoCuentaResponse"/>
-</message>
-<message name="getIdsTipoSeguro">
-<part name="parameters" element="tns:getIdsTipoSeguro"/>
-</message>
-<message name="getIdsTipoSeguroResponse">
-<part name="parameters" element="tns:getIdsTipoSeguroResponse"/>
-</message>
-<message name="getIdsEstado">
-<part name="parameters" element="tns:getIdsEstado"/>
-</message>
-<message name="getIdsEstadoResponse">
-<part name="parameters" element="tns:getIdsEstadoResponse"/>
-</message>
-<message name="getIdsTipoPrestamo">
-<part name="parameters" element="tns:getIdsTipoPrestamo"/>
-</message>
-<message name="getIdsTipoPrestamoResponse">
-<part name="parameters" element="tns:getIdsTipoPrestamoResponse"/>
-</message>
-<message name="getIdsTipoTrans">
-<part name="parameters" element="tns:getIdsTipoTrans"/>
-</message>
-<message name="getIdsTipoTransResponse">
-<part name="parameters" element="tns:getIdsTipoTransResponse"/>
-</message>
-<message name="getIdsBancos">
-<part name="parameters" element="tns:getIdsBancos"/>
-</message>
-<message name="getIdsBancosResponse">
-<part name="parameters" element="tns:getIdsBancosResponse"/>
-</message>
-<message name="getIdUsuario">
-<part name="parameters" element="tns:getIdUsuario"/>
-</message>
-<message name="getIdUsuarioResponse">
-<part name="parameters" element="tns:getIdUsuarioResponse"/>
-</message>
-<message name="getCuentasUsuario">
-<part name="parameters" element="tns:getCuentasUsuario"/>
-</message>
-<message name="getCuentasUsuarioResponse">
-<part name="parameters" element="tns:getCuentasUsuarioResponse"/>
-</message>
-<message name="crearCuenta">
-<part name="parameters" element="tns:crearCuenta"/>
-</message>
-<message name="crearCuentaResponse">
-<part name="parameters" element="tns:crearCuentaResponse"/>
-</message>
-<message name="solicitarPrestamo">
-<part name="parameters" element="tns:solicitarPrestamo"/>
-</message>
-<message name="solicitarPrestamoResponse">
-<part name="parameters" element="tns:solicitarPrestamoResponse"/>
 </message>
 <message name="solicitarSeguro">
 <part name="parameters" element="tns:solicitarSeguro"/>
@@ -196,18 +136,84 @@
 <message name="getTiposSeguroResponse">
 <part name="parameters" element="tns:getTiposSeguroResponse"/>
 </message>
+<message name="getDesgloseTipoPrestamo">
+<part name="parameters" element="tns:getDesgloseTipoPrestamo"/>
+</message>
+<message name="getDesgloseTipoPrestamoResponse">
+<part name="parameters" element="tns:getDesgloseTipoPrestamoResponse"/>
+</message>
+<message name="VerInfoCuenta">
+<part name="parameters" element="tns:VerInfoCuenta"/>
+</message>
+<message name="VerInfoCuentaResponse">
+<part name="parameters" element="tns:VerInfoCuentaResponse"/>
+</message>
+<message name="getIdsTipoSeguro">
+<part name="parameters" element="tns:getIdsTipoSeguro"/>
+</message>
+<message name="getIdsTipoSeguroResponse">
+<part name="parameters" element="tns:getIdsTipoSeguroResponse"/>
+</message>
+<message name="getIdsEstado">
+<part name="parameters" element="tns:getIdsEstado"/>
+</message>
+<message name="getIdsEstadoResponse">
+<part name="parameters" element="tns:getIdsEstadoResponse"/>
+</message>
+<message name="getIdsTipoPrestamo">
+<part name="parameters" element="tns:getIdsTipoPrestamo"/>
+</message>
+<message name="getIdsTipoPrestamoResponse">
+<part name="parameters" element="tns:getIdsTipoPrestamoResponse"/>
+</message>
+<message name="getIdsTipoTrans">
+<part name="parameters" element="tns:getIdsTipoTrans"/>
+</message>
+<message name="getIdsTipoTransResponse">
+<part name="parameters" element="tns:getIdsTipoTransResponse"/>
+</message>
+<message name="getIdsBancos">
+<part name="parameters" element="tns:getIdsBancos"/>
+</message>
+<message name="getIdsBancosResponse">
+<part name="parameters" element="tns:getIdsBancosResponse"/>
+</message>
+<message name="getIdUsuario">
+<part name="parameters" element="tns:getIdUsuario"/>
+</message>
+<message name="getIdUsuarioResponse">
+<part name="parameters" element="tns:getIdUsuarioResponse"/>
+</message>
+<message name="getCuentasUsuario">
+<part name="parameters" element="tns:getCuentasUsuario"/>
+</message>
+<message name="getCuentasUsuarioResponse">
+<part name="parameters" element="tns:getCuentasUsuarioResponse"/>
+</message>
+<message name="crearCuenta">
+<part name="parameters" element="tns:crearCuenta"/>
+</message>
+<message name="crearCuentaResponse">
+<part name="parameters" element="tns:crearCuentaResponse"/>
+</message>
+<message name="solicitarPrestamo">
+<part name="parameters" element="tns:solicitarPrestamo"/>
+</message>
+<message name="solicitarPrestamoResponse">
+<part name="parameters" element="tns:solicitarPrestamoResponse"/>
+</message>
 <portType name="Servicios">
-<operation name="getDesgloseTipoPrestamo">
-<input wsam:Action="http://services/Servicios/getDesgloseTipoPrestamoRequest" message="tns:getDesgloseTipoPrestamo"/>
-<output wsam:Action="http://services/Servicios/getDesgloseTipoPrestamoResponse" message="tns:getDesgloseTipoPrestamoResponse"/>
-</operation>
-<operation name="hello">
-<input wsam:Action="http://services/Servicios/helloRequest" message="tns:hello"/>
-<output wsam:Action="http://services/Servicios/helloResponse" message="tns:helloResponse"/>
+<operation name="getPrestamosAAprobar">
+<input wsam:Action="http://services/Servicios/getPrestamosAAprobarRequest" message="tns:getPrestamosAAprobar"/>
+<output wsam:Action="http://services/Servicios/getPrestamosAAprobarResponse" message="tns:getPrestamosAAprobarResponse"/>
 </operation>
 <operation name="Registro">
 <input wsam:Action="http://services/Servicios/RegistroRequest" message="tns:Registro"/>
 <output wsam:Action="http://services/Servicios/RegistroResponse" message="tns:RegistroResponse"/>
+</operation>
+<operation name="hello">
+<input wsam:Action="http://services/Servicios/helloRequest" message="tns:hello"/>
+<output wsam:Action="http://services/Servicios/helloResponse" message="tns:helloResponse"/>
 </operation>
 <operation name="Login">
 <input wsam:Action="http://services/Servicios/LoginRequest" message="tns:Login"/>
@@ -220,46 +226,6 @@
 <operation name="RealizarTransaccion">
 <input wsam:Action="http://services/Servicios/RealizarTransaccionRequest" message="tns:RealizarTransaccion"/>
 <output wsam:Action="http://services/Servicios/RealizarTransaccionResponse" message="tns:RealizarTransaccionResponse"/>
-</operation>
-<operation name="VerInfoCuenta">
-<input wsam:Action="http://services/Servicios/VerInfoCuentaRequest" message="tns:VerInfoCuenta"/>
-<output wsam:Action="http://services/Servicios/VerInfoCuentaResponse" message="tns:VerInfoCuentaResponse"/>
-</operation>
-<operation name="getIdsTipoSeguro">
-<input wsam:Action="http://services/Servicios/getIdsTipoSeguroRequest" message="tns:getIdsTipoSeguro"/>
-<output wsam:Action="http://services/Servicios/getIdsTipoSeguroResponse" message="tns:getIdsTipoSeguroResponse"/>
-</operation>
-<operation name="getIdsEstado">
-<input wsam:Action="http://services/Servicios/getIdsEstadoRequest" message="tns:getIdsEstado"/>
-<output wsam:Action="http://services/Servicios/getIdsEstadoResponse" message="tns:getIdsEstadoResponse"/>
-</operation>
-<operation name="getIdsTipoPrestamo">
-<input wsam:Action="http://services/Servicios/getIdsTipoPrestamoRequest" message="tns:getIdsTipoPrestamo"/>
-<output wsam:Action="http://services/Servicios/getIdsTipoPrestamoResponse" message="tns:getIdsTipoPrestamoResponse"/>
-</operation>
-<operation name="getIdsTipoTrans">
-<input wsam:Action="http://services/Servicios/getIdsTipoTransRequest" message="tns:getIdsTipoTrans"/>
-<output wsam:Action="http://services/Servicios/getIdsTipoTransResponse" message="tns:getIdsTipoTransResponse"/>
-</operation>
-<operation name="getIdsBancos">
-<input wsam:Action="http://services/Servicios/getIdsBancosRequest" message="tns:getIdsBancos"/>
-<output wsam:Action="http://services/Servicios/getIdsBancosResponse" message="tns:getIdsBancosResponse"/>
-</operation>
-<operation name="getIdUsuario">
-<input wsam:Action="http://services/Servicios/getIdUsuarioRequest" message="tns:getIdUsuario"/>
-<output wsam:Action="http://services/Servicios/getIdUsuarioResponse" message="tns:getIdUsuarioResponse"/>
-</operation>
-<operation name="getCuentasUsuario">
-<input wsam:Action="http://services/Servicios/getCuentasUsuarioRequest" message="tns:getCuentasUsuario"/>
-<output wsam:Action="http://services/Servicios/getCuentasUsuarioResponse" message="tns:getCuentasUsuarioResponse"/>
-</operation>
-<operation name="crearCuenta">
-<input wsam:Action="http://services/Servicios/crearCuentaRequest" message="tns:crearCuenta"/>
-<output wsam:Action="http://services/Servicios/crearCuentaResponse" message="tns:crearCuentaResponse"/>
-</operation>
-<operation name="solicitarPrestamo">
-<input wsam:Action="http://services/Servicios/solicitarPrestamoRequest" message="tns:solicitarPrestamo"/>
-<output wsam:Action="http://services/Servicios/solicitarPrestamoResponse" message="tns:solicitarPrestamoResponse"/>
 </operation>
 <operation name="solicitarSeguro">
 <input wsam:Action="http://services/Servicios/solicitarSeguroRequest" message="tns:solicitarSeguro"/>
@@ -325,19 +291,54 @@
 <input wsam:Action="http://services/Servicios/getTiposSeguroRequest" message="tns:getTiposSeguro"/>
 <output wsam:Action="http://services/Servicios/getTiposSeguroResponse" message="tns:getTiposSeguroResponse"/>
 </operation>
+<operation name="getDesgloseTipoPrestamo">
+<input wsam:Action="http://services/Servicios/getDesgloseTipoPrestamoRequest" message="tns:getDesgloseTipoPrestamo"/>
+<output wsam:Action="http://services/Servicios/getDesgloseTipoPrestamoResponse" message="tns:getDesgloseTipoPrestamoResponse"/>
+</operation>
+<operation name="VerInfoCuenta">
+<input wsam:Action="http://services/Servicios/VerInfoCuentaRequest" message="tns:VerInfoCuenta"/>
+<output wsam:Action="http://services/Servicios/VerInfoCuentaResponse" message="tns:VerInfoCuentaResponse"/>
+</operation>
+<operation name="getIdsTipoSeguro">
+<input wsam:Action="http://services/Servicios/getIdsTipoSeguroRequest" message="tns:getIdsTipoSeguro"/>
+<output wsam:Action="http://services/Servicios/getIdsTipoSeguroResponse" message="tns:getIdsTipoSeguroResponse"/>
+</operation>
+<operation name="getIdsEstado">
+<input wsam:Action="http://services/Servicios/getIdsEstadoRequest" message="tns:getIdsEstado"/>
+<output wsam:Action="http://services/Servicios/getIdsEstadoResponse" message="tns:getIdsEstadoResponse"/>
+</operation>
+<operation name="getIdsTipoPrestamo">
+<input wsam:Action="http://services/Servicios/getIdsTipoPrestamoRequest" message="tns:getIdsTipoPrestamo"/>
+<output wsam:Action="http://services/Servicios/getIdsTipoPrestamoResponse" message="tns:getIdsTipoPrestamoResponse"/>
+</operation>
+<operation name="getIdsTipoTrans">
+<input wsam:Action="http://services/Servicios/getIdsTipoTransRequest" message="tns:getIdsTipoTrans"/>
+<output wsam:Action="http://services/Servicios/getIdsTipoTransResponse" message="tns:getIdsTipoTransResponse"/>
+</operation>
+<operation name="getIdsBancos">
+<input wsam:Action="http://services/Servicios/getIdsBancosRequest" message="tns:getIdsBancos"/>
+<output wsam:Action="http://services/Servicios/getIdsBancosResponse" message="tns:getIdsBancosResponse"/>
+</operation>
+<operation name="getIdUsuario">
+<input wsam:Action="http://services/Servicios/getIdUsuarioRequest" message="tns:getIdUsuario"/>
+<output wsam:Action="http://services/Servicios/getIdUsuarioResponse" message="tns:getIdUsuarioResponse"/>
+</operation>
+<operation name="getCuentasUsuario">
+<input wsam:Action="http://services/Servicios/getCuentasUsuarioRequest" message="tns:getCuentasUsuario"/>
+<output wsam:Action="http://services/Servicios/getCuentasUsuarioResponse" message="tns:getCuentasUsuarioResponse"/>
+</operation>
+<operation name="crearCuenta">
+<input wsam:Action="http://services/Servicios/crearCuentaRequest" message="tns:crearCuenta"/>
+<output wsam:Action="http://services/Servicios/crearCuentaResponse" message="tns:crearCuentaResponse"/>
+</operation>
+<operation name="solicitarPrestamo">
+<input wsam:Action="http://services/Servicios/solicitarPrestamoRequest" message="tns:solicitarPrestamo"/>
+<output wsam:Action="http://services/Servicios/solicitarPrestamoResponse" message="tns:solicitarPrestamoResponse"/>
+</operation>
 </portType>
 <binding name="ServiciosPortBinding" type="tns:Servicios">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="getDesgloseTipoPrestamo">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="hello">
+<operation name="getPrestamosAAprobar">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -347,6 +348,15 @@
 </output>
 </operation>
 <operation name="Registro">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="hello">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -374,96 +384,6 @@
 </output>
 </operation>
 <operation name="RealizarTransaccion">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="VerInfoCuenta">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="getIdsTipoSeguro">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="getIdsEstado">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="getIdsTipoPrestamo">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="getIdsTipoTrans">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="getIdsBancos">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="getIdUsuario">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="getCuentasUsuario">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="crearCuenta">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="solicitarPrestamo">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -608,6 +528,105 @@
 </output>
 </operation>
 <operation name="getTiposSeguro">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getDesgloseTipoPrestamo">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="VerInfoCuenta">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getIdsTipoSeguro">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getIdsEstado">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getIdsTipoPrestamo">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getIdsTipoTrans">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getIdsBancos">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getIdUsuario">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="getCuentasUsuario">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="crearCuenta">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="solicitarPrestamo">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

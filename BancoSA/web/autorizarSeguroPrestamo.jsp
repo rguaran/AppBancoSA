@@ -94,17 +94,26 @@
     <section class='gray'>
         <div class='container'>
             <center>
-                <h4>Autorizar Seguro</h4>
+                <h4>Autorizar Seguro o Prestamo</h4>
                 
                 <form name="frmSolicitarPrestamo" method="POST" >
                     <table width="100%">
                         <tr>
                             <td ></td>
-                            <td><input  type="submit" value="Obtener" name="btnObtenerSeguros" id="btnObtenerSeguros"></td>
+                            <td><input  type="submit" value="Autorizar Seguro" name="btnObtenerSeguros" id="btnObtenerSeguros"></td>
                         </tr>
                     </table>
                 </form>
-                
+                <center>
+                    <div>
+                        <form action="autorizarPrestamo" method="POST">
+                            <input type="submit" value="Autorizar Prestamo" name="btnAutorizarPrestamo">
+                        </form>
+                    </div>
+                </center>
+                <center>
+                    <div><font color="blue" >${requestScope['res']}</font></div>
+                </center>
             </center>
             
 

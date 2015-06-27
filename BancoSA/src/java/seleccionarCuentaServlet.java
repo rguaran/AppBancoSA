@@ -119,7 +119,7 @@ public class seleccionarCuentaServlet extends HttpServlet {
                 String total_pendiente = admon.getCadenaEtiquetas(infoPrestamo, "<totalPendiente>");
                 String fecha = admon.getCadenaEtiquetas(infoPrestamo, "<fecha>");
             
-                Imprimir += "<table width=\"100%\"><tr><th>Prestamo</th><th>Descripcion</th></tr>"
+                Imprimir += "<table width=\"100%\"><tr><th>Prestamo "+valorDDLConsultar+"</th><th>Descripcion</th></tr>"
                     + "<tr><td>Cantidad</td><td>"+cantidad+"</td></tr><tr><td>Cuotas Pagadas</td><td>"+cuotas_pagadas+"</td></tr><tr><td>"
                     + "Cuotas pendientes</td><td>"+cuotas_pendientes+"</td></tr><tr><td>Total Pagado</td><td>"+total_pagado+"</td></tr><tr><td>"
                     + "Total pendiente</td><td>"+total_pendiente+"</td></tr><tr><td>fecha</td><td>"+fecha+"</td></tr></table>";

@@ -6,12 +6,11 @@
 
 import control.Administracion;
 import control.Cuenta;
-import control.TipoPrestamo;
+import control.Transaccion;
 import control.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,10 +22,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author Rita
  */
-@WebServlet(urlPatterns = {"/solicitarPrestamo"})
-public class solicitarPrestamoServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/consultarTransaccionesServlet"})
+public class consultarTransaccionesServlet extends HttpServlet {
+
     Administracion admon = new Administracion();
-    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,6 +40,7 @@ public class solicitarPrestamoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            
         } finally {
             out.close();
         }
@@ -58,7 +58,6 @@ public class solicitarPrestamoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //RequestDispatcher rd = null;
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
                 
@@ -80,24 +79,7 @@ public class solicitarPrestamoServlet extends HttpServlet {
         
         request.setAttribute("listaCuentas", userr.getCuentas());
         
-        //*************************tipos de prestamos
-        
-        String listaidsTiposPrestamo = getIdsTipoPrestamo();
-        ArrayList<String> listaTP = admon.getLista(listaidsTiposPrestamo, "<id>");
-        String infoTT; 
-        
-        ArrayList<TipoPrestamo> TPs = new ArrayList<TipoPrestamo>();
-        TipoPrestamo tp;
-        for (String s : listaTP){
-            infoTT = getInfoTipoPrestamo(Integer.parseInt(s));
-            tp = new TipoPrestamo(Integer.parseInt(s), infoTT);
-            TPs.add(tp);
-        }
-        
-        request.setAttribute("listaTP", TPs);
-        
-        request.getRequestDispatcher("/solicitarPrestamo.jsp").forward(request, response);
-        
+        request.getRequestDispatcher("/seleccionarCuentaTransacciones.jsp").forward(request, response);
     }
 
     /**
@@ -111,24 +93,58 @@ public class solicitarPrestamoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String user = session.getAttribute("usuario").toString();
-        
         String valorDDLCuenta = request.getParameter("selectCuentas");
-        String valorDDLTP = request.getParameter("selectTP");
-        String cantidad = request.getParameter("txtMonto");
         
+        String getTransacciones = getTransaccionesCuenta(Integer.parseInt(valorDDLCuenta));
         
-        String resSolicitar = solicitarPrestamo(Integer.parseInt(valorDDLCuenta), Double.parseDouble(cantidad),0, Integer.parseInt(valorDDLTP));
-        String result="";
-        if (resSolicitar.equals("True")){
-            result = "<font color=\"blue\">Prestamo solicitado, espera la aprobación</font>";
-        }else if (resSolicitar.equals("False")){
-            result = "<font color=\"red\">Prestamo No se pudo solicitar</font>";
-        }
+         ArrayList<String> listaIdsTrans = admon.getLista(getTransacciones, "<id>");
+         ArrayList<Transaccion> listaTrans = new ArrayList<Transaccion>();
+         Transaccion transaccion;
+         String infoTrans;
+         String monto;
+         String idSalida;
+         String idDestino;
+         String seguro;
+         String prestamo;
+         String tipo;
+         String fecha;         
+         
+         for (String s: listaIdsTrans){
+             infoTrans = getInfoTransaccion(Integer.parseInt(s));
+             monto = admon.getCadenaEtiquetas(infoTrans, "<monto>");
+             idSalida = admon.getCadenaEtiquetas(infoTrans, "<idSalida>");
+             idDestino = admon.getCadenaEtiquetas(infoTrans, "<idDestino>");
+             seguro = admon.getCadenaEtiquetas(infoTrans, "<idSeguro>");
+             prestamo = admon.getCadenaEtiquetas(infoTrans, "<idPrestamo>");
+             tipo = admon.getCadenaEtiquetas(infoTrans, "<tipo>");
+             fecha = admon.getCadenaEtiquetas(infoTrans, "<fecha>");
+             
+             transaccion = new Transaccion(Integer.parseInt(s), Double.parseDouble(monto), Integer.parseInt(idSalida), Integer.parseInt(idDestino),Integer.parseInt(seguro),Integer.parseInt(prestamo),tipo,fecha);
+             listaTrans.add(transaccion);
+         }
+         
+         String Imprimir = "<form name=\"frmVerTransaccion\" action=\"ImprimirTrans\" method=\"POST\">"
+                 + "<table width=\"100%\"><tr><th>ID Transaccion</th><th>Descripcion</th><th>Imprimir PDF</th></tr>";
+         
+         for (Transaccion t: listaTrans){
+             Imprimir += "<tr><td>"+t.getIdTransaccion()+"</td>";
+             if (t.getSeguro()== -1 && t.getPrestamo()== -1){ //es una transferencia
+                 Imprimir += "<td>Cuenta origen: "+t.getIdSalida()+"; monto: "+t.getMonto()+"; Cuenta Destino: "+t.getIdDestino()+";"
+                         + " fecha: "+t.getFecha()+"; tipo: "+t.getTipo()+"</td><td><input  type=\"submit\" value=\"Imprimir "+ t.getIdTransaccion() +"\" name=\"btnImprimir\" id=\"btnImprimir\"></td>";
+             }else if (t.getSeguro()!= -1 && t.getPrestamo()== -1 && t.getIdDestino()==-1){ // es un seguro
+                 Imprimir += "<td>Cuenta origen: "+t.getIdSalida()+"; monto: "+t.getMonto()+";"
+                         + " fecha: "+t.getFecha()+"; tipo: "+t.getTipo()+"; Seguro: "+t.getSeguro()+"</td><td><input  type=\"submit\" value=\"Imprimir "+ t.getIdTransaccion() +"\" name=\"btnImprimir\" id=\"btnImprimir\"></td>";
+             }else if (t.getSeguro()== -1 && t.getPrestamo()!= -1 && t.getIdDestino()==-1){ // es un prestamo
+                 Imprimir += "<td>Cuenta origen: "+t.getIdSalida()+"; monto: "+t.getMonto()+";"
+                         + " fecha: "+t.getFecha()+"; tipo: "+t.getTipo()+"; Prestamo: "+t.getPrestamo()+"</td><td><input  type=\"submit\" value=\"Imprimir "+ t.getIdTransaccion() +"\" name=\"btnImprimir\" id=\"btnImprimir\"></td>";
+             }
+             
+         }
         
-        request.setAttribute("result", result);
-        request.getRequestDispatcher("/menuPrestamo.jsp").forward(request, response);
+         Imprimir += "</table></form>";
+         request.setAttribute("Imprimir", Imprimir);
+         
+        request.getRequestDispatcher("/mostrarConsultaResult.jsp").forward(request, response);
     }
 
     /**
@@ -153,22 +169,16 @@ public class solicitarPrestamoServlet extends HttpServlet {
         return port.getCuentasUsuario(idUsuario);
     }
 
-    private static String getIdsTipoPrestamo() {
+    private static String getTransaccionesCuenta(int idCuenta) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
-        return port.getIdsTipoPrestamo();
+        return port.getTransaccionesCuenta(idCuenta);
     }
 
-    private static String getInfoTipoPrestamo(int idTipoPrestamo) {
+    private static String getInfoTransaccion(int idTrans) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
-        return port.getInfoTipoPrestamo(idTipoPrestamo);
-    }
-
-    private static String solicitarPrestamo(int idCuenta, double cantidad, int cuotas, int idTipoPrestamo) {
-        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
-        WSclientes.Servicios port = service.getServiciosPort();
-        return port.solicitarPrestamo(idCuenta, cantidad, cuotas, idTipoPrestamo);
+        return port.getInfoTransaccion(idTrans);
     }
 
 }
