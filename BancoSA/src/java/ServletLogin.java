@@ -95,7 +95,7 @@ public class ServletLogin extends HttpServlet {
         String usuario = request.getParameter("txtUsuario");
         String password = request.getParameter("txtPass");
         String btnIngresar = request.getParameter("btnIngresar");
-
+        usuario = usuario.trim();
         
         String resp = login(usuario, password);
         String etqbandera="<Bandera>", etqconfirmado="<Confirmado>";

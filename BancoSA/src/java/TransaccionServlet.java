@@ -27,6 +27,7 @@ import javax.servlet.http.HttpSession;
 public class TransaccionServlet extends HttpServlet {
 
     Administracion admon = new Administracion();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,7 +39,7 @@ public class TransaccionServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,25 +56,25 @@ public class TransaccionServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
-                
+
         String respuesta;
         respuesta = getIdUsuario(user);
         String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
         respuesta = getCuentasUsuario(Integer.parseInt(idUsuario));
         ArrayList<String> listacuentas = admon.getLista(respuesta, "<cuenta>");
-        
+
         Usuario userr = new Usuario();
         userr.setNombreUsuario(user);
-        
+
         Cuenta cuenta;
-        for (String s : listacuentas ){
+        for (String s : listacuentas) {
             cuenta = new Cuenta();
             cuenta.setIdCuenta(Integer.parseInt(s));
             userr.CrearCuenta(cuenta);
         }
-        
+
         request.setAttribute("listaCuentas", userr.getCuentas());
-        
+
         request.getRequestDispatcher("/realizarTransaccion.jsp").forward(request, response);
     }
 
@@ -90,32 +91,39 @@ public class TransaccionServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
-        
+
         String valorDDLCuenta = request.getParameter("selectCuentas");
         String cantidad = request.getParameter("txtMonto");
         String cuentaDestino = request.getParameter("txtCuentaDestino");
+
+        String respuesta = "";
         
-        String residTipoTrans = getIdTipoTrans("Envio local");
-        String idTT = admon.getCadenaEtiquetas(residTipoTrans, "<id>");
-        
-        String resTransferecia = transferirSaldoLocal(Integer.parseInt(valorDDLCuenta), Integer.parseInt(cuentaDestino), Double.parseDouble(cantidad), Integer.parseInt(idTT));
-        
-        String bandera = admon.getCadenaEtiquetas(resTransferecia, "<bandera>");
-        String respuesta="";
-        
-        if (bandera.equals("1")){ //monto>saldo
-            respuesta = "<font color=\"red\">El monto a pagar es mayor al saldo disponible</font>";
-        } else if (bandera.equals("2")) { // la cuenta destino no existe
-            respuesta = "<font color=\"red\">La cuenta destino no existe</font>"; 
-        } else if (bandera.equals("3")){ //exito en operacion
-            respuesta = "<font color=\"blue\">La operación se realizó con éxito";
-            String saldorestante = admon.getCadenaEtiquetas(resTransferecia, "<saldo>");
-            NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es","MX"));
-            respuesta += ", su saldo restante es de " + formatoSaldo.format( Double.parseDouble(saldorestante) ) + "</font>";
+        if (Integer.parseInt(cuentaDestino) == Integer.parseInt(valorDDLCuenta)) {
+            respuesta = "<font color=\"red\">La cuenta destino no puede ser igual que la cuenta origen</font>";
+            request.setAttribute("result", respuesta);
+        } else {
+            String residTipoTrans = getIdTipoTrans("Envio local");
+            String idTT = admon.getCadenaEtiquetas(residTipoTrans, "<id>");
+
+            String resTransferecia = transferirSaldoLocal(Integer.parseInt(valorDDLCuenta), Integer.parseInt(cuentaDestino), Double.parseDouble(cantidad), Integer.parseInt(idTT));
+
+            String bandera = admon.getCadenaEtiquetas(resTransferecia, "<bandera>");
+            
+
+            if (bandera.equals("1")) { //monto>saldo
+                respuesta = "<font color=\"red\">El monto a pagar es mayor al saldo disponible</font>";
+                request.setAttribute("result", respuesta);
+            } else if (bandera.equals("2")) { // la cuenta destino no existe
+                respuesta = "<font color=\"red\">La cuenta destino no existe</font>";
+                request.setAttribute("result", respuesta);
+            } else if (bandera.equals("3")) { //exito en operacion
+                respuesta = "<font color=\"blue\">La operación se realizó con éxito";
+                String saldorestante = admon.getCadenaEtiquetas(resTransferecia, "<saldo>");
+                NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
+                respuesta += ", su saldo restante es de " + formatoSaldo.format(Double.parseDouble(saldorestante)) + "</font>";
+                request.setAttribute("result", respuesta);
+            }
         }
-        
-        request.setAttribute("result", respuesta);
-        
         request.getRequestDispatcher("/menuTransaccion.jsp").forward(request, response);
     }
 
