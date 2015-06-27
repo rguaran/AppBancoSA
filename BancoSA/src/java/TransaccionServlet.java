@@ -9,7 +9,9 @@ import control.Cuenta;
 import control.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -86,7 +88,35 @@ public class TransaccionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String user = session.getAttribute("usuario").toString();
+        
+        String valorDDLCuenta = request.getParameter("selectCuentas");
+        String cantidad = request.getParameter("txtMonto");
+        String cuentaDestino = request.getParameter("txtCuentaDestino");
+        
+        String residTipoTrans = getIdTipoTrans("Envio local");
+        String idTT = admon.getCadenaEtiquetas(residTipoTrans, "<id>");
+        
+        String resTransferecia = transferirSaldoLocal(Integer.parseInt(valorDDLCuenta), Integer.parseInt(cuentaDestino), Double.parseDouble(cantidad), Integer.parseInt(idTT));
+        
+        String bandera = admon.getCadenaEtiquetas(resTransferecia, "<bandera>");
+        String respuesta="";
+        
+        if (bandera.equals("1")){ //monto>saldo
+            respuesta = "El monto a pagar es mayor al saldo disponible";
+        } else if (bandera.equals("2")) { // la cuenta destino no existe
+            respuesta = "La cuenta destino no existe"; 
+        } else if (bandera.equals("3")){ //exito en operacion
+            respuesta = "La operación se realizó con éxito";
+            String saldorestante = admon.getCadenaEtiquetas(resTransferecia, "<saldo>");
+            NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es","MX"));
+            respuesta += ", su saldo restante es de " + formatoSaldo.format( Double.parseDouble(saldorestante) );
+        }
+        
+        request.setAttribute("result", respuesta);
+        
+        request.getRequestDispatcher("/menuTransaccion.jsp").forward(request, response);
     }
 
     /**
@@ -109,6 +139,18 @@ public class TransaccionServlet extends HttpServlet {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
         return port.getCuentasUsuario(idUsuario);
+    }
+
+    private static String transferirSaldoLocal(int idCuenta, int idDestino, double monto, int idTT) {
+        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
+        WSclientes.Servicios port = service.getServiciosPort();
+        return port.transferirSaldoLocal(idCuenta, idDestino, monto, idTT);
+    }
+
+    private static String getIdTipoTrans(java.lang.String tipo) {
+        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
+        WSclientes.Servicios port = service.getServiciosPort();
+        return port.getIdTipoTrans(tipo);
     }
 
 }

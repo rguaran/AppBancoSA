@@ -3,7 +3,7 @@
     Created on : 25-Jun-2015, 17:42:46
     Author     : Rita
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -96,13 +96,15 @@
             <center>
                 <h4>Realizar Transacción</h4>
                 
-                <form name="frmTransaccion" method="POST" >
+                <form name="frmTransaccion" action="TransaccionServlet" method="POST" >
                     <table width="100%">
                         <tr>
                             <td> <label>Cuenta Origen</label></td>
-                            <td><select name="item">
-                                    <option value="tipo 1">Cuenta 1</option>
-                                    <option value="tipo 2">Cuenta 2</option>
+                            <td>
+                                <select name="selectCuentas" id="selectCuentas">
+                                    <c:forEach var="user" items="${listaCuentas}">
+                                        <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
+                                    </c:forEach>
                                 </select>
                             </td>
                         </tr>

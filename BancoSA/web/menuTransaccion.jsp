@@ -139,6 +139,16 @@
                         </form>
                     </div>
                 </center>
+                <center>
+                    <div>
+                        <form action="TransaccionServlet" method="GET">
+                            <input type="submit" value="Realizar Transferencia" name="btnTransferencia">
+                        </form>
+                    </div>
+                </center>
+                <center>
+                    <div><font color="blue" >${requestScope['result']}</font></div>
+                </center>
             </div>
         </section>
 
