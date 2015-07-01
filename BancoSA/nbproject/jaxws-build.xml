@@ -28,8 +28,8 @@
     </target>
     <target name="wsimport-client-Servicios" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/Servicios"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/Servicios" destdir="${build.generated.dir}/jax-wsCache/Servicios" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/Servicios/wsdl/192.168.1.13_8080/Servicios/Servicios.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://192.168.1.13:8080/Servicios/Servicios?wsdl" xnocompile="true" xendorsed="true" package="WSclientes">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/Servicios/wsdl/192.168.1.13_8080/Servicios/Servicios.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/Servicios" destdir="${build.generated.dir}/jax-wsCache/Servicios" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/Servicios/wsdl/10.42.0.66_8080/Servicios/Servicios.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://10.42.0.66:8080/Servicios/Servicios?wsdl" xnocompile="true" xendorsed="true" package="WSclientes">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/Servicios/wsdl/10.42.0.66_8080/Servicios/Servicios.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/Servicios"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">

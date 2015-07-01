@@ -120,6 +120,13 @@
                 </center>
                 <center>
                     <div>
+                        <form action="TransaccionInterbanco" method="GET">
+                            <input type="submit" value="Realizar Transaccion Interbanco" name="btnTransaccion">
+                        </form>
+                    </div>
+                </center>
+                <center>
+                    <div>
                         <form action="consultarTransaccionesServlet" method="GET">
                             <input type="submit" value="Consultar Transacciones" name="btnConsultarTransacciones">
                         </form>

@@ -96,16 +96,19 @@
             <center>
                 <h4>Realizar Transacción Interbancaria</h4>
                 
-                <form name="frmTransaccion" method="POST" >
+                <form name="frmTransaccion" action="TransaccionInterbanco" method="POST" >
                     <table width="100%">
                         <tr>
                             <td> <label>Cuenta Origen</label></td>
-                            <td><select name="item">
-                                    <option value="tipo 1">Cuenta 1</option>
-                                    <option value="tipo 2">Cuenta 2</option>
+                            <td>
+                                <select name="selectCuentas" id="selectCuentas">
+                                    <c:forEach var="user" items="${listaCuentas}">
+                                        <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
+                                    </c:forEach>
                                 </select>
                             </td>
                         </tr>
+                        <tr><td><br></td><td></td></tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td><label>Monto</label> </td>
@@ -114,10 +117,14 @@
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td><label>Banco Destino</label> </td>
-                            <td><select name="item2">
-                                    <option value="tipo 1">Banco 1</option>
-                                    <option value="tipo 2">Banco 2</option>
+                            <td>
+                                <td>
+                                <select name="selectBancos" id="selectBancos">
+                                    <c:forEach var="banco" items="${listaBancos}">
+                                        <option value="${banco}">${banco}</option>
+                                    </c:forEach>
                                 </select>
+                                </td>
                             </td>
                         </tr>
                         <tr><td><br></td><td></td></tr>

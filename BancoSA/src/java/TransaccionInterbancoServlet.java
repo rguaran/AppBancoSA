@@ -4,28 +4,27 @@
  * and open the template in the editor.
  */
 
-import com.sun.corba.se.spi.protocol.RequestDispatcherDefault;
+import control.Administracion;
 import control.Cuenta;
 import control.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
-import javax.xml.ws.Service;
 
 /**
  *
  * @author Rita
  */
-@WebServlet(urlPatterns = {"/Login"})
-public class ServletLogin extends HttpServlet {
+@WebServlet(urlPatterns = {"/TransaccionInterbanco"})
+public class TransaccionInterbancoServlet extends HttpServlet {
 
+    Administracion admon = new Administracion();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -35,22 +34,12 @@ public class ServletLogin extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    public String getCadenaEtiquetas(String cadena, String etiqueta){
-        int pos = cadena.indexOf(etiqueta);
-        int lon = etiqueta.length();
-        String cierre = "</"+etiqueta.substring(1, etiqueta.length());
-        int fin = cadena.indexOf(cierre);
-        return cadena.substring(pos + lon, fin);
-    }
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        System.out.println("Prueba de codigooo jaljlajoj fjlajsdi pirulin pin pon");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-
+           
         } finally {
             out.close();
         }
@@ -68,16 +57,32 @@ public class ServletLogin extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-       RequestDispatcher rd = null;
-        
         HttpSession session = request.getSession();
-        session.setAttribute("usuario", null);
-        session.setAttribute("password", null);
-        rd= request.getRequestDispatcher("/index.jsp");
+        String user = session.getAttribute("usuario").toString();
+
+        String respuesta;
+        respuesta = getIdUsuario(user);
+        String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
+        respuesta = getCuentasUsuario(Integer.parseInt(idUsuario));
+        ArrayList<String> listacuentas = admon.getLista(respuesta, "<cuenta>");
+
+        Usuario userr = new Usuario();
+        userr.setNombreUsuario(user);
+
+        Cuenta cuenta;
+        for (String s : listacuentas) {
+            cuenta = new Cuenta();
+            cuenta.setIdCuenta(Integer.parseInt(s));
+            userr.CrearCuenta(cuenta);
+        }
         
+        String resListaBancos = "";
+        ArrayList<String> listabancos = admon.getLista(resListaBancos, "");
+
+        request.setAttribute("listaCuentas", userr.getCuentas());
+        request.setAttribute("listaBancos", listabancos);
         
-        rd.forward(request, response);
+        request.getRequestDispatcher("/realizarTInterbanco.jsp").forward(request, response);
     }
 
     /**
@@ -91,41 +96,7 @@ public class ServletLogin extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        RequestDispatcher rd = null;
-        String usuario = request.getParameter("txtUsuario");
-        String password = request.getParameter("txtPass");
-        
-        usuario = usuario.trim();
-        
-        String resp = login(usuario, password);
-        String etqbandera="<Bandera>", etqconfirmado="<Confirmado>";
-        String bandera = getCadenaEtiquetas(resp, etqbandera);
-        
-        
-        if( bandera.equals("2") ){
-            String result = "Usuario inexistente";
-            request.setAttribute("result", result);
-            rd = request.getRequestDispatcher("/index.jsp");
-        }else if( bandera.equals("3") ){
-            String result = "La contraseña es incorrecta. ¿Ya confirmaste tu cuenta?";
-            request.setAttribute("result", result);
-            rd = request.getRequestDispatcher("/index.jsp");
-        }else{
-            HttpSession session = request.getSession();
-            session.setAttribute("usuario", usuario);
-            session.setAttribute("password", password);
-            String confirmado = getCadenaEtiquetas(resp, etqconfirmado);
-            if( confirmado.equals("True") ){
-                rd = request.getRequestDispatcher("/menu.jsp");
-            }else{
-                rd = request.getRequestDispatcher("/cambiarContraseña.jsp");
-            }
-        }
-       
-            
-     rd.forward(request, response);
-        
+        processRequest(request, response);
     }
 
     /**
@@ -138,11 +109,16 @@ public class ServletLogin extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private static String login(java.lang.String usuario, java.lang.String password) {
+    private static String getIdUsuario(java.lang.String usuario) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
-        return port.login(usuario, password);
+        return port.getIdUsuario(usuario);
     }
 
-       
+    private static String getCuentasUsuario(int idUsuario) {
+        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
+        WSclientes.Servicios port = service.getServiciosPort();
+        return port.getCuentasUsuario(idUsuario);
+    }
+
 }
