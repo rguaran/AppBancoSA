@@ -23,8 +23,39 @@
                     <file>${file.reference.mail.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
+                <library dirs="200">
+                    <file>${libs.jaxrpc16.classpath}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.axis-1.4_1.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.axis-jaxrpc-1.4.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.commons-discovery-0.4.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.commons-logging-4.0.6.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.wsdl4j-1.6.2.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
+            <web-service-clients>
+                <web-service-client>
+                    <web-service-client-name>webservice.php</web-service-client-name>
+                    <web-service-stub-type>jaxrpc_static_client</web-service-stub-type>
+                    <client-source-url>http://10.42.0.1/phpserver/webservice.php?wsdl</client-source-url>
+                </web-service-client>
+            </web-service-clients>
             <source-roots>
                 <root id="src.dir" name="Source Packages"/>
             </source-roots>

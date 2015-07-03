@@ -72,8 +72,11 @@ public class CrearCuentaServlet extends HttpServlet {
         RequestDispatcher rd = null;
         String monto = request.getParameter("txtInicial");
         HttpSession session = request.getSession();
+        
+        String banco = session.getAttribute("banco").toString();
         String usuario = session.getAttribute("usuario").toString();
         
+        if(banco.equals("bancoJava")){
         if(Double.parseDouble(monto)<=0){
             // Error //
             request.setAttribute("result", "Error: El monto debe de ser mayor o igual a $500.00");
@@ -87,9 +90,29 @@ public class CrearCuentaServlet extends HttpServlet {
             String idCuenta = admon.getCadenaEtiquetas(respuesta, "<idCuenta>");
             String resDep = depositoInicial(Integer.parseInt(idCuenta),Double.parseDouble(monto));
             
-            request.getRequestDispatcher("/menu.jsp").forward(request, response);
+            request.setAttribute("result", "Cuenta creada! cuenta: " + idCuenta);
+            request.getRequestDispatcher("/menuCuenta.jsp").forward(request, response);
         }
-        
+        }else if (banco.equals("bancoASP")){ //no crea cuentas
+            //int idCliente = Integer.parseInt((String)session.getAttribute("idCliente"));
+        }else if (banco.equals("bancoPHP")){
+            String res="";
+            try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                PHP.Webservice webservice = new PHP.Webservice_Impl();
+                PHP.WebservicePortType _serviciosPHP = webservice.getWebservicePort();
+                res = _serviciosPHP.aperturaCuenta(Integer.parseInt(usuario), Double.parseDouble(monto));
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+            
+            if (res.equals("ok")){
+                request.setAttribute("result", "Cuenta creada: " + res);
+                request.getRequestDispatcher("/menuCuenta.jsp").forward(request, response);
+            }else {
+                request.setAttribute("result", "Error al crear cuenta: " + res);
+                request.getRequestDispatcher("/menuCuenta.jsp").forward(request, response);
+            }
+        }
         //processRequest(request, response);
     }
 
@@ -121,7 +144,7 @@ public class CrearCuentaServlet extends HttpServlet {
         return port.depositoInicial(idCuenta, monto);
     }
 
-    
+   
    
 
 }

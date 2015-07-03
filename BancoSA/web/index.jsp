@@ -74,8 +74,7 @@
 
                             <c:choose>
                                 <c:when test="${usuario == '' || usuario == null}">
-                                    
-                                    </c:when>
+                                </c:when>
                                     <c:otherwise>
                                     <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
                                     <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
@@ -118,6 +117,17 @@
                                     <tr>
                                         <td > <label>Contraseña:</label></td>
                                         <td><input type="password" name="txtPass" id="txtPass" required=""> </td>
+                                    </tr>
+                                    <tr><td><br></td><td></td></tr>
+                                    <tr>
+                                        <td> <label>Banco</label></td>
+                                        <td>
+                                            <select name="listaBancos">
+                                                <option value="bancoJava">Banco Java</option>
+                                                <option value="bancoASP">Banco ASP.NET</option>
+                                                <option value="bancoPHP">Banco PHP</option>
+                                            </select>
+                                        </td>
                                     </tr>
                                     <tr><td><br></td><td></td></tr>
                                     <tr>

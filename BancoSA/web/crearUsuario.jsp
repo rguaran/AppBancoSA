@@ -93,7 +93,7 @@
                 <form name="frmcrearusuario" action="CrearUsuario" method="post" >
                     <table width="100%">
                         <tr>
-                            <td > <label >DPI:</label></td>
+                            <td > <label >DPI(ASP:monto|PHP:usuario):</label></td>
                             <td> <input type="text" name="txtDPI" required=""></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
@@ -113,18 +113,29 @@
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td > <label >Dirección:</label></td>
+                            <td > <label >Dirección(ASP:contra):</label></td>
                             <td> <input type="text" name="txtDireccion" required=""></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
-                            <td > <label >Teléfono:</label></td>
+                            <td > <label >Teléfono(ASP:cuenta|PHP:password):</label></td>
                             <td> <input type="text" name="txtTelefono" required=""></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td > <label >Fecha de Nacimiento:</label></td>
                             <td> <input type="date" name="txtFechaNac" required=""></td>
+                        </tr>
+                        <tr><td><br></td><td></td></tr>
+                        <tr>
+                            <td> <label>Banco</label></td>
+                            <td>
+                                <select name="listaBancos">
+                                    <option value="bancoJava">Banco Java</option>
+                                    <option value="bancoASP">Banco ASP.NET</option>
+                                    <option value="bancoPHP">Banco PHP</option>
+                                </select>
+                            </td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>

@@ -26,6 +26,22 @@
             <isset property="conf.dir"/>
         </condition>
     </target>
+    <target name="wsimport-client-WebService1" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/WebService1"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WebService1" destdir="${build.generated.dir}/jax-wsCache/WebService1" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/WebService1/wsdl/192.168.43.7_18900/WebService1.asmx.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://192.168.43.7:18900/WebService1.asmx?WSDL" xnocompile="true" xendorsed="true" package="clienteASP">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/WebService1/wsdl/192.168.43.7_18900/WebService1.asmx.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/WebService1"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/WebService1">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-WebService1" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/clienteASP"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/WebService1"/>
+    </target>
     <target name="wsimport-client-Servicios" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/Servicios"/>
         <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/Servicios" destdir="${build.generated.dir}/jax-wsCache/Servicios" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/Servicios/wsdl/10.42.0.66_8080/Servicios/Servicios.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://10.42.0.66:8080/Servicios/Servicios?wsdl" xnocompile="true" xendorsed="true" package="WSclientes">
@@ -42,5 +58,5 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/WSclientes"/>
         <delete dir="${build.generated.dir}/jax-wsCache/Servicios"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-Servicios"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-WebService1, wsimport-client-Servicios"/>
 </project>

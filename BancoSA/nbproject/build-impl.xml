@@ -881,7 +881,29 @@ exists or setup the property manually. For example like this:
     <target depends="init" if="no.dist.ear.dir" name="deps-module-jar" unless="no.deps"/>
     <target depends="init" if="dist.ear.dir" name="deps-ear-jar" unless="no.deps"/>
     <target depends="init, deps-module-jar, deps-ear-jar" name="deps-jar" unless="no.deps"/>
-    <target depends="init,deps-jar,wsimport-client-generate" name="-pre-pre-compile">
+    <target depends="init" name="wscompile-init">
+        <taskdef classname="com.sun.xml.rpc.tools.ant.Wscompile" classpath="${wscompile.classpath}" name="wscompile"/>
+        <taskdef classname="org.netbeans.modules.websvc.jaxrpc.ant.WsClientUpToDate" classpath="${wsclientuptodate.classpath}" name="wsclientuptodate"/>
+        <mkdir dir="${build.web.dir}/WEB-INF/wsdl"/>
+        <mkdir dir="${webinf.dir}/wsdl"/>
+        <mkdir dir="${build.classes.dir}"/>
+        <mkdir dir="${build.generated.sources.dir}/jax-rpc"/>
+        <mkdir dir="${build.generated.dir}/jax-rpc-binaries"/>
+        <wsclientuptodate property="wscompile.client.webservice.php.notrequired" sourcewsdl="${webinf.dir}/wsdl/webservice.php.wsdl" targetdir="${build.generated.sources.dir}/jax-rpc"/>
+    </target>
+    <target depends="wscompile-init" name="webservice.php-client-wscompile" unless="wscompile.client.webservice.php.notrequired">
+        <property location="${webinf.dir}/wsdl" name="config_target"/>
+        <copy encoding="UTF-8" file="${webinf.dir}/wsdl/webservice.php-config.xml" filtering="on" tofile="${build.generated.sources.dir}/jax-rpc/wsdl/webservice.php-config.xml">
+            <filterset>
+                <filter token="CONFIG_ABSOLUTE_PATH" value="${config_target}"/>
+            </filterset>
+        </copy>
+        <wscompile base="${build.generated.dir}/jax-rpc-binaries" classpath="${wscompile.classpath}:${javac.classpath}" client="true" config="${build.generated.sources.dir}/jax-rpc/wsdl/webservice.php-config.xml" debug="${wscompile.client.webservice.php.debug}" features="${wscompile.client.webservice.php.features}" fork="true" httpproxy="${wscompile.client.webservice.php.proxy}" import="false" keep="true" mapping="${build.generated.sources.dir}/jax-rpc/wsdl/webservice.php-mapping.xml" optimize="${wscompile.client.webservice.php.optimize}" sourceBase="${build.generated.sources.dir}/jax-rpc" verbose="${wscompile.client.webservice.php.verbose}" xPrintStackTrace="${wscompile.client.webservice.php.xPrintStackTrace}" xSerializable="${wscompile.client.webservice.php.xSerializable}"/>
+    </target>
+    <target depends="webservice.php-client-wscompile" name="web-service-client-generate">
+        <copy file="${build.generated.sources.dir}/jax-rpc/wsdl/webservice.php-mapping.xml" tofile="${build.web.dir}/WEB-INF/webservice.php-mapping.xml"/>
+    </target>
+    <target depends="init,deps-jar,web-service-client-generate,wsimport-client-generate" name="-pre-pre-compile">
         <mkdir dir="${build.classes.dir}"/>
     </target>
     <target name="-pre-compile">
@@ -1026,6 +1048,12 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.jstl-1.2.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.itextpdf-5.5.6.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <copyfiles files="${file.reference.mail.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${libs.jaxrpc16.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.axis-1.4_1.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.axis-jaxrpc-1.4.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.commons-discovery-0.4.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.commons-logging-4.0.6.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.wsdl4j-1.6.2.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
@@ -1033,6 +1061,12 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.jstl-1.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.itextpdf-5.5.6.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.mail.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${libs.jaxrpc16.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.axis-1.4_1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.axis-jaxrpc-1.4.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.commons-discovery-0.4.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.commons-logging-4.0.6.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.wsdl4j-1.6.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>
@@ -1193,10 +1227,10 @@ exists or setup the property manually. For example like this:
         </condition>
         <nbjpdaconnect address="${jpda.address}" host="${jpda.host}" listeningcp="${listeningcp}" name="${name}" transport="${jpda.transport}">
             <classpath>
-                <path path="${debug.classpath}:${j2ee.platform.classpath}"/>
+                <path path="${debug.classpath}:${j2ee.platform.classpath}:${ws.debug.classpaths}"/>
             </classpath>
             <sourcepath>
-                <path path="${web.docbase.dir}"/>
+                <path path="${web.docbase.dir}:${ws.web.docbase.dirs}"/>
             </sourcepath>
         </nbjpdaconnect>
     </target>
