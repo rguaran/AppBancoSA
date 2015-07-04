@@ -70,11 +70,16 @@
                     <div class='eleven columns'>
                         <ul class='mainMenu'>
                             <li><a href='index.jsp' title='Home'>Home</a></li>
-                            <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
-                            <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
-                            <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
-                            <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
-                            <li><a href='#' title='Contact'>Contact</a></li>
+                        <c:choose>
+                                <c:when test="${usuario == '' || usuario == null}">
+                                    
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
+                                    <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
+                                    <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
+                                </c:otherwise>
+                        </c:choose>
                         </ul>
                     </div>
                 </div>
@@ -95,32 +100,34 @@
             <div class='container'>
                 <center>
                     <h4>Menu de Cuenta</h4>
-                    <c:choose>
-                        <c:when test="${banco == 'bancoASP'}">
-                        </c:when>
-                        <c:otherwise>
-                            <form>
-                                <table width="100%">
-                                    <tr>
-                                        <td><a href='crearCuenta.jsp' class='button medium green'>Crear Cuenta</a></td>
-                                        <td> </td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>                        
-                                </table>
-                            </form>
-                        </c:otherwise>
-                    </c:choose>
+                    <center>
+                        <form>
+                            <table width="100%">
+                                <tr>
+                                    <td><a href='crearCuenta.jsp' class='button medium green'>Crear Cuenta</a></td>
+                                    <td> </td>
+                                </tr>
+                                <tr><td><br></td><td></td></tr>                        
+                            </table>
+                        </form>
+                    </center>
                     <center>
                         <div>
                             <form action="consultarCuenta" method="GET">
                                 <input type="submit" value="Consultar Cuenta" name="btnTransferencia">
                             </form>
                         </div>
-                        <div>
-                            <form action="ConsultarInfoUsuario" method="GET">
-                                <input type="submit" value="Consultar Info. Usuario" name="btnConsultarIU">
-                            </form>
-                        </div>
+                        <c:choose>
+                            <c:when test="${banco=='bancoASP'}">
+                            </c:when>
+                            <c:otherwise>
+                                <div>
+                                    <form action="ConsultarInfoUsuario" method="GET">
+                                        <input type="submit" value="Consultar Info. Usuario" name="btnConsultarIU">
+                                    </form>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                     </center>
                     <center>
                         <div><font color="red" >${requestScope['result']}</font></div>

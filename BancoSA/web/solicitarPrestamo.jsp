@@ -70,11 +70,16 @@
                     <div class='eleven columns'>
                         <ul class='mainMenu'>
                             <li><a href='index.jsp' title='Home'>Home</a></li>
-                            <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
-                            <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
-                            <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
-                            <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
-                            <li><a href='#' title='Contact'>Contact</a></li>
+                            <c:choose>
+                                <c:when test="${usuario == '' || usuario == null}">
+                                    
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
+                                    <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
+                                    <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
+                                </c:otherwise>
+                        </c:choose>
                         </ul>
                     </div>
                 </div>
@@ -124,7 +129,7 @@
                                     <tr><td><br></td><td></td></tr>
                                     <tr>
                                         <td><label>Cantidad</label> </td>
-                                        <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
+                                        <td><input type="number" required="" pattern="[0-9]+" name="txtMonto" id="txtMonto"></td>
                                     </tr>
                                     <tr><td><br></td><td></td></tr>
                                     <tr>
@@ -139,7 +144,13 @@
                                 <table width="100%">
                                     <tr>
                                         <td> <label>Cuenta</label></td>
-                                        <td><input type="text" required="" name="txtCuenta" id="txtCuenta"></td>
+                                        <td>
+                                            <select name="selectCuentas" id="selectCuentas">
+                                                <c:forEach var="user" items="${listaCuentas}">
+                                                    <option value="${user}">${user}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </td>
                                     </tr>
                                     <tr><td><br></td><td></td></tr>
                                     <tr>
@@ -149,7 +160,7 @@
                                     <tr><td><br></td><td></td></tr>
                                     <tr>
                                         <td> <label>Cantidad Años</label></td>
-                                        <td><input type="number" required="" name="txtAnios" id="txtAnios">
+                                        <td><input type="text" required="" pattern="^[0-9]+" name="txtAnios" id="txtAnios">
                                         </td>
                                     </tr>
                                     <tr><td><br></td><td></td></tr>
@@ -167,7 +178,42 @@
                             </form>
                         </c:when>
                         <c:otherwise>
-
+                            <form name="frmSolicitarPrestamo" action="solicitarPrestamo" method="POST" >
+                                <table width="100%">
+                                    <tr>
+                                        <td> <label>Cuenta</label></td>
+                                        <td>
+                                            <select name="selectCuentas" id="selectCuentas">
+                                                <c:forEach var="user" items="${listaCuentas}">
+                                                    <option value="${user}">${user}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr><td><br></td><td></td></tr>
+                                    <tr>
+                                        <td><label>Monto</label> </td>
+                                        <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
+                                    </tr>
+                                    <tr><td><br></td><td></td></tr>
+                                    <tr>
+                                        <td> <label>Tiempo</label></td>
+                                        <td><input type="text" required="" name="txtAnios" id="txtAnios">
+                                        </td>
+                                    </tr>
+                                    <tr><td><br></td><td></td></tr>
+                                    <tr>
+                                        <td><label>Cuotas</label></td>
+                                        <td><input type="text" required="" name="txtCuotas" id="txtCuotas">
+                                        </td>
+                                    </tr>
+                                    <tr><td><br></td><td></td></tr>
+                                    <tr>
+                                        <td ></td>
+                                        <td><input  type="submit" value="Solicitar" name="btnSolicitar" id="btnSolicitar"></td>
+                                    </tr>
+                                </table>
+                            </form>
                         </c:otherwise>
                     </c:choose>
 

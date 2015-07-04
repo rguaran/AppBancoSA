@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import PHP.Datosusuario;
 import control.Administracion;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,7 +51,9 @@ public class ConsultarInfoUsuario extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
-
+        String banco = session.getAttribute("banco").toString();
+        
+        if (banco.equals("bancoJava")){
         String respuesta;
         respuesta = getIdUsuario(user);
         Administracion admon = new Administracion();
@@ -78,6 +81,25 @@ public class ConsultarInfoUsuario extends HttpServlet {
         request.setAttribute("Imprimir", Imprimir);
 
         request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
+        }else if (banco.equals("bancoPHP")){
+            try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                PHP.Webservice webservice = new PHP.Webservice_Impl();
+                PHP.WebservicePortType _serviciosPHP = webservice.getWebservicePort();
+                Datosusuario resp = _serviciosPHP.mostrarDatos(Integer.parseInt(user));
+
+                String Imprimir = "<center><h4>Usuario " + resp.getUsuario() + "</h4></center><br><br>";
+                Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
+                        + "<tr><td>Nombre</td><td>" + resp.getNombre() + "</td></tr><tr><td>Apellido</td><td>" + resp.getApellido() + "</td></tr><tr><td>"
+                        + "Email</td><td>" + resp.getEmail() + "</td></tr><tr><td>Direccion</td><td>" + resp.getDireccion() + "</td></tr></table>";
+
+                request.setAttribute("Imprimir", Imprimir);
+
+                request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
+
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        }
     }
 
     /**

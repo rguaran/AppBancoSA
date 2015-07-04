@@ -80,9 +80,9 @@ public class ServletLogin extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.setAttribute("usuario", null);
-        session.setAttribute("password", null);
+        //session.setAttribute("password", null);
         session.setAttribute("banco", null);
-        session.setAttribute("idCliente", null);
+        //session.setAttribute("idCliente", null);
         rd = request.getRequestDispatcher("/index.jsp");
 
         rd.forward(request, response);
@@ -124,7 +124,7 @@ public class ServletLogin extends HttpServlet {
             } else {
                 HttpSession session = request.getSession();
                 session.setAttribute("usuario", usuario);
-                session.setAttribute("password", password);
+                //session.setAttribute("password", password);
                 session.setAttribute("banco", banco);
 
                 String confirmado = getCadenaEtiquetas(resp, etqconfirmado);
@@ -139,11 +139,11 @@ public class ServletLogin extends HttpServlet {
 
             if (respuesta) {
                 HttpSession session = request.getSession();
-                session.setAttribute("usuario", usuario);
-                session.setAttribute("password", password);
+                //session.setAttribute("usuario", usuario);
+                //session.setAttribute("password", password);
                 session.setAttribute("banco", banco);
                 int idCliente = idclientes(usuario);
-                session.setAttribute("idCliente", idCliente);
+                session.setAttribute("usuario", idCliente);
 
                 rd = request.getRequestDispatcher("/menu.jsp");
             } else {
@@ -164,7 +164,7 @@ public class ServletLogin extends HttpServlet {
              if (!res.equals("0")){
              HttpSession session = request.getSession();
              session.setAttribute("usuario", res);
-             session.setAttribute("password", password);
+             //session.setAttribute("password", password);
              session.setAttribute("banco", banco);
              rd = request.getRequestDispatcher("/menu.jsp");
              }else{

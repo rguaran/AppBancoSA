@@ -4,6 +4,7 @@
     Author     : Rita
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -67,14 +68,17 @@
                 </div>
 
                 <div class='eleven columns'>
-                    <ul class='mainMenu'>
-                        <li><a href='index.jsp' title='Home'>Home</a></li>
-                        <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
-                        <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
-                        <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
-                        <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
-                        <li><a href='#' title='Contact'>Contact</a></li>
-                    </ul>
+                    <li><a href='index.jsp' title='Home'>Home</a></li>
+                    <c:choose>
+                                <c:when test="${usuario == '' || usuario == null}">
+                                    
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
+                                    <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
+                                    <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
+                                </c:otherwise>
+                        </c:choose>
                 </div>
             </div>
         </nav>
@@ -100,12 +104,18 @@
                                 <input type="submit" value="Solicitar Prestamo" name="btnSolicitarPrestamo">
                             </form>
                     </div></center>
-                
-                    <center><div>
+                <c:choose>
+                    <c:when test="${banco=='bancoJava'}">
+                        <center><div>
                             <form action="seleccionarCuenta" method="GET">
                                 <input type="submit" value="Consultar Prestamo" name="btnSeleccionarPrestamo">
                             </form>
                     </div></center>
+                    </c:when>
+                    <c:otherwise>
+                    </c:otherwise>
+                </c:choose>
+                    
                     
             </center>
             <div><center>${requestScope['result']}</center></div>

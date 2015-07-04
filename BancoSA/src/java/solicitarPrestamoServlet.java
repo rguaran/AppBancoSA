@@ -83,7 +83,7 @@ public class solicitarPrestamoServlet extends HttpServlet {
 
             request.setAttribute("listaCuentas", userr.getCuentas());
 
-        //*************************tipos de prestamos
+            //*************************tipos de prestamos
             String listaidsTiposPrestamo = getIdsTipoPrestamo();
             ArrayList<String> listaTP = admon.getLista(listaidsTiposPrestamo, "<id>");
             String infoTT;
@@ -100,6 +100,30 @@ public class solicitarPrestamoServlet extends HttpServlet {
 
             request.getRequestDispatcher("/solicitarPrestamo.jsp").forward(request, response);
         } else if (banco.equals("bancoPHP")) {
+
+            int[] listaCuentas = {};
+            try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                PHP.Webservice webservice = new PHP.Webservice_Impl();
+                PHP.WebservicePortType _serviciosPHP = webservice.getWebservicePort();
+                listaCuentas = _serviciosPHP.listadoCuentas(Integer.parseInt(user));
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+
+            request.setAttribute("listaCuentas", listaCuentas);
+            request.getRequestDispatcher("/solicitarPrestamo.jsp").forward(request, response);
+        } else if (banco.equals("bancoASP")) {
+
+            String retornoCuentas = retornoCuentas2(Integer.parseInt(user));
+
+            String[] splitAmp = retornoCuentas.split("&");
+            ArrayList<String> listaCuentas = new ArrayList<String>();
+            for (String s : splitAmp) {
+                String[] splitComas = s.split(",");
+                listaCuentas.add(splitComas[0]);
+            }
+
+            request.setAttribute("listaCuentas", listaCuentas);
             request.getRequestDispatcher("/solicitarPrestamo.jsp").forward(request, response);
         }
 
@@ -142,35 +166,63 @@ public class solicitarPrestamoServlet extends HttpServlet {
             }
 
             request.getRequestDispatcher("/menuPrestamo.jsp").forward(request, response);
-            
+
         } else if (banco.equals("bancoPHP")) { ///Banco PHP
-            String valorCuenta = request.getParameter("txtCuenta");
+            String valorCuenta = request.getParameter("selectCuentas");
             String valorAnios = request.getParameter("txtAnios");
             String cantidad = request.getParameter("txtMonto");
             String valorCuotas = request.getParameter("txtCuotas");
 
-            String res ="";
-            String result="";
+            String res = "";
+            String result = "";
             try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
                 PHP.Webservice webservice = new PHP.Webservice_Impl();
                 PHP.WebservicePortType _serviciosPHP = webservice.getWebservicePort();
-                res = _serviciosPHP.solicitarPrestamo(Integer.parseInt(user), Integer.parseInt(valorCuenta), Double.parseDouble(cantidad), Integer.parseInt(valorAnios),Integer.parseInt(valorCuotas));
-                
-                if (res.equals("ok")){
-                    result = "<font color=\"blue\">Prestamo solicitado, espera la aprobación.</font>";
-                    request.setAttribute("result", result);
-                }else {
-                    result = "<font color=\"red\">La cantidad especificada no cumple con el rango de ese tipo de prestamo</font>";
+                if (Double.parseDouble(cantidad) > 0) {
+                    res = _serviciosPHP.solicitarPrestamo(Integer.parseInt(user), Integer.parseInt(valorCuenta), Double.parseDouble(cantidad), Integer.parseInt(valorAnios), Integer.parseInt(valorCuotas));
+
+                    if (res.equals("ok")) {
+                        result = "<font color=\"blue\">Prestamo solicitado, espera la aprobación.</font>";
+                        request.setAttribute("result", result);
+                    } else {
+                        result = "<font color=\"red\">La cantidad especificada no cumple con el rango de ese tipo de prestamo</font>";
+                        request.setAttribute("result", result);
+                    }
+                } else {
+                    result = "<font color=\"red\">La cantidad especificada no cumple con el rango de prestamo</font>";
                     request.setAttribute("result", result);
                 }
-                
+
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
+
+            request.getRequestDispatcher("/menuPrestamo.jsp").forward(request, response);
+
+        } else { //banco ASP
+            String valorCuenta = request.getParameter("selectCuentas");
+            String valorAnios = request.getParameter("txtAnios");
+            String cantidad = request.getParameter("txtMonto");
+            String valorCuotas = request.getParameter("txtCuotas");
+            String result = "";
+
+            if (Double.parseDouble(cantidad) > 0) {
+                boolean res = solicitudPrestamo(Integer.parseInt(user), Integer.parseInt(valorCuenta), Integer.parseInt(cantidad), Integer.parseInt(valorAnios), Integer.parseInt(valorCuotas));
+
+                if (res) {
+                    result = "<font color=\"blue\">Prestamo solicitado, espera la aprobación.</font>";
+                    request.setAttribute("result", result);
+                } else {
+                    result = "<font color=\"red\">La cantidad especificada no cumple con el rango de ese tipo de prestamo</font>";
+                    request.setAttribute("result", result);
+                }
+
+            } else {
+                result = "<font color=\"red\">La cantidad especificada no cumple con el rango de ese tipo de prestamo</font>";
+                request.setAttribute("result", result);
+            }
             
             request.getRequestDispatcher("/menuPrestamo.jsp").forward(request, response);
-        } else { //banco ASP
-        
         }
 
     }
@@ -219,6 +271,24 @@ public class solicitarPrestamoServlet extends HttpServlet {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
         return port.getDesgloseTipoPrestamo(idTipoPrestamo);
+    }
+
+    private static boolean solicitudPrestamo(int idCliente, int cuenta, int monto, int tiempo, int cuotasTotales) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap12();
+        return port.solicitudPrestamo(idCliente, cuenta, monto, tiempo, cuotasTotales);
+    }
+
+    private static String retornoCuentas(int idcliente) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap12();
+        return port.retornoCuentas(idcliente);
+    }
+
+    private static String retornoCuentas2(int idcliente) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap12();
+        return port.retornoCuentas2(idcliente);
     }
 
 }

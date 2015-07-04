@@ -159,12 +159,6 @@ public class TransaccionInterbancoServlet extends HttpServlet {
         return port.getCuentasUsuario(idUsuario);
     }
 
-    private static boolean transferencia(int cuenta1, int cuenta2, int monto) {
-        clienteASP.WebService1 service = new clienteASP.WebService1();
-        clienteASP.WebService1Soap port = service.getWebService1Soap12();
-        return port.transferencia(cuenta1, cuenta2, monto);
-    }
-
     
 
 }
