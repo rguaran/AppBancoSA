@@ -72,10 +72,9 @@ public class autorizarPrestamoServlet extends HttpServlet {
         ArrayList<String> listaIDSPrestamos  = admon.getLista(resIDSPrestamos, "<id>");
         
         String Imprimir = "<form name=\"frmAutorizar\" action=\"AutorizarServlet\" method=\"POST\">"
-                 + "<table width=\"100%\"><tr><th>ID Prestamo</th><th>Autorizar</th><th>Ver Detalle</th></tr>";
+                 + "<table width=\"100%\"><tr><th>ID Prestamo</th><th>Autorizar</th></tr>";
         for(String s: listaIDSPrestamos){
-            Imprimir += "<tr><td>"+s+"</td><td><input  type=\"submit\" value=\"Autorizar "+ s +"\" name=\"btnAutorizar\" id=\"btnAutorizar\"></td>"+
-                    "<td><input  type=\"submit\" value=\"Ver "+s+"\" name=\"btnVer\" id=\"btnVer\"></td>"+"</tr>";
+            Imprimir += "<tr><td>"+s+"</td><td><input  type=\"submit\" value=\"Autorizar "+ s +"\" name=\"btnAutorizar\" id=\"btnAutorizar\"></td>"+"</tr>";
         }
         Imprimir += "</table></form>";
         Imprimir += "<form name=\"frmVer\" action=\"InfoPrestamo\" method=\"POST\">"

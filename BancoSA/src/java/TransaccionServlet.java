@@ -56,24 +56,47 @@ public class TransaccionServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
+        String banco = session.getAttribute("banco").toString();
 
-        String respuesta;
-        respuesta = getIdUsuario(user);
-        String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
-        respuesta = getCuentasUsuario(Integer.parseInt(idUsuario));
-        ArrayList<String> listacuentas = admon.getLista(respuesta, "<cuenta>");
+        if (banco.equals("bancoJava")) {
+            String respuesta;
+            respuesta = getIdUsuario(user);
+            String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
+            respuesta = getCuentasUsuario(Integer.parseInt(idUsuario));
+            ArrayList<String> listacuentas = admon.getLista(respuesta, "<cuenta>");
 
-        Usuario userr = new Usuario();
-        userr.setNombreUsuario(user);
+            Usuario userr = new Usuario();
+            userr.setNombreUsuario(user);
 
-        Cuenta cuenta;
-        for (String s : listacuentas) {
-            cuenta = new Cuenta();
-            cuenta.setIdCuenta(Integer.parseInt(s));
-            userr.CrearCuenta(cuenta);
+            Cuenta cuenta;
+            for (String s : listacuentas) {
+                cuenta = new Cuenta();
+                cuenta.setIdCuenta(Integer.parseInt(s));
+                userr.CrearCuenta(cuenta);
+            }
+
+            request.setAttribute("listaCuentas", userr.getCuentas());
+        } else if (banco.equals("bancoASP")) {
+            String retornoCuentas = retornoCuentas2(Integer.parseInt(user));
+            String[] splitAmp = retornoCuentas.split("&");
+            ArrayList<String> listaCuentas = new ArrayList<String>();
+            for( String s: splitAmp ){
+                String[] splitComas = s.split(",");
+                listaCuentas.add(splitComas[0]);
+            }
+            request.setAttribute("listaCuentas", listaCuentas);
+        } else {
+            //Banco PHP//
+            int[] listaCuentas = {};
+            try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                PHP.Webservice webservice = new PHP.Webservice_Impl();
+                PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
+                listaCuentas = serviciosPHP.listadoCuentas(Integer.parseInt(user));
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+            request.setAttribute("listaCuentas", listaCuentas);
         }
-
-        request.setAttribute("listaCuentas", userr.getCuentas());
 
         request.getRequestDispatcher("/realizarTransaccion.jsp").forward(request, response);
     }
@@ -91,38 +114,77 @@ public class TransaccionServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
-
+        String banco = session.getAttribute("banco").toString();
         String valorDDLCuenta = request.getParameter("selectCuentas");
         String cantidad = request.getParameter("txtMonto");
         String cuentaDestino = request.getParameter("txtCuentaDestino");
 
         String respuesta = "";
-        
+
         if (Integer.parseInt(cuentaDestino) == Integer.parseInt(valorDDLCuenta)) {
             respuesta = "<font color=\"red\">La cuenta destino no puede ser igual que la cuenta origen</font>";
             request.setAttribute("result", respuesta);
         } else {
-            String residTipoTrans = getIdTipoTrans("Envio local");
-            String idTT = admon.getCadenaEtiquetas(residTipoTrans, "<id>");
 
-            String resTransferecia = transferirSaldoLocal(Integer.parseInt(valorDDLCuenta), Integer.parseInt(cuentaDestino), Double.parseDouble(cantidad), Integer.parseInt(idTT));
+            if (banco.equals("bancoJava")) {
+                String residTipoTrans = getIdTipoTrans("Envio local");
+                String idTT = admon.getCadenaEtiquetas(residTipoTrans, "<id>");
+                String resTransferecia = transferirSaldoLocal(Integer.parseInt(valorDDLCuenta), Integer.parseInt(cuentaDestino), Double.parseDouble(cantidad), Integer.parseInt(idTT));
+                String bandera = admon.getCadenaEtiquetas(resTransferecia, "<bandera>");
 
-            String bandera = admon.getCadenaEtiquetas(resTransferecia, "<bandera>");
-            
-
-            if (bandera.equals("1")) { //monto>saldo
-                respuesta = "<font color=\"red\">El monto a pagar es mayor al saldo disponible</font>";
-                request.setAttribute("result", respuesta);
-            } else if (bandera.equals("2")) { // la cuenta destino no existe
-                respuesta = "<font color=\"red\">La cuenta destino no existe</font>";
-                request.setAttribute("result", respuesta);
-            } else if (bandera.equals("3")) { //exito en operacion
-                respuesta = "<font color=\"blue\">La operación se realizó con éxito";
-                String saldorestante = admon.getCadenaEtiquetas(resTransferecia, "<saldo>");
-                NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
-                respuesta += ", su saldo restante es de " + formatoSaldo.format(Double.parseDouble(saldorestante)) + "</font>";
-                request.setAttribute("result", respuesta);
+                if (bandera.equals("1")) { //monto>saldo
+                    respuesta = "<font color=\"red\">El monto a pagar es mayor al saldo disponible</font>";
+                    request.setAttribute("result", respuesta);
+                } else if (bandera.equals("2")) { // la cuenta destino no existe
+                    respuesta = "<font color=\"red\">La cuenta destino no existe</font>";
+                    request.setAttribute("result", respuesta);
+                } else if (bandera.equals("3")) { //exito en operacion
+                    respuesta = "<font color=\"blue\">La operación se realizó con éxito";
+                    String saldorestante = admon.getCadenaEtiquetas(resTransferecia, "<saldo>");
+                    NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
+                    respuesta += ", su saldo restante es de " + formatoSaldo.format(Double.parseDouble(saldorestante)) + "</font>";
+                    request.setAttribute("result", respuesta);
+                }
+            } else if (banco.equals("bancoASP")) {
+                double saldo = saldoActual(Integer.parseInt(user), Integer.parseInt(valorDDLCuenta));
+                int montoReal = (int) (Double.parseDouble(cantidad));
+                int destino = Integer.parseInt(cuentaDestino);
+                if (saldo >= Double.parseDouble(cantidad)) {
+                    boolean res = transferencia(Integer.parseInt(valorDDLCuenta), destino, montoReal);
+                    if (res) {
+                        respuesta = "<font color=\"blue\">Saldo transferido con exito</font>";
+                        request.setAttribute("result", respuesta);
+                    } else {
+                        respuesta = "<font color=\"red\">Cuenta inexistente</font>";
+                        request.setAttribute("result", respuesta);
+                    }
+                } else {
+                    respuesta = "<font color=\"red\">Saldo insuficiente</font>";
+                    request.setAttribute("result", respuesta);
+                }
+            } else {
+                // Banco PHP //
+                try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                    PHP.Webservice webservice = new PHP.Webservice_Impl();
+                    PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
+                    String monto = serviciosPHP.verificarCuentaMonto(Integer.parseInt(user), Integer.parseInt(valorDDLCuenta), Double.parseDouble(cantidad));
+                    if (monto.equals("ok")) {
+                        String res = serviciosPHP.transaccionCuentas(Integer.parseInt(user), Integer.parseInt(valorDDLCuenta), Integer.parseInt(cuentaDestino), Double.parseDouble(cantidad));
+                        if (res.equals("ok")) {
+                            respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
+                        } else {
+                            respuesta = "<font color=\"red\">Cuenta de destino inexistente</font>";
+                        }
+                        request.setAttribute("result", respuesta);
+                    } else {
+                        respuesta = "<font color=\"red\">Saldo insuficiente</font>";
+                        request.setAttribute("result", respuesta);
+                    }
+                } catch (Exception ex) {
+                    java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
             }
+
         }
         request.getRequestDispatcher("/menuTransaccion.jsp").forward(request, response);
     }
@@ -159,6 +221,24 @@ public class TransaccionServlet extends HttpServlet {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
         return port.getIdTipoTrans(tipo);
+    }
+
+    private static boolean transferencia(int cuenta1, int cuenta2, int monto) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap();
+        return port.transferencia(cuenta1, cuenta2, monto);
+    }
+
+    private static int saldoActual(int idcliente, int cuenta) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap();
+        return port.saldoActual(idcliente, cuenta);
+    }
+
+    private static String retornoCuentas2(int idcliente) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap();
+        return port.retornoCuentas2(idcliente);
     }
 
 }

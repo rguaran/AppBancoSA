@@ -95,125 +95,90 @@
             <div class='container'>
                 <center>
                     <h4>Realizar Transacción Interbancaria</h4>
-                    <c:choose>
-                        <c:when test="${banco == 'bancoJava'}">
-                            <form name="frmTransaccion" action="TransaccionInterbanco" method="POST" >
-                                <table width="100%">
-                                    <tr>
-                                        <td> <label>Cuenta Origen</label></td>
-                                        <td>
-                                            <select name="selectCuentas" id="selectCuentas">
+                    <form name="frmTransaccion" action="TransaccionInterbanco" method="POST" >
+                        <table width="100%">
+                            <tr>
+                                <td> <label>Cuenta Origen</label></td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${banco == 'bancoJava'}">
+                                            <select name="selectCuentas" id="listaCuentas">
                                                 <c:forEach var="user" items="${listaCuentas}">
                                                     <option value="${user.getIdCuenta()}">${user.getIdCuenta()}</option>
                                                 </c:forEach>
                                             </select>
-                                        </td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Cuenta Destino</label> </td>
-                                        <td><input type="text" required="" name="txtCuentaDestino" id="txtCuentaDestino"></td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Monto</label> </td>
-                                        <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Banco Destino</label> </td>
-                                        <td>
+                                        </c:when>
+                                        <c:when test="${banco == 'bancoPHP'}">
+                                            <select name="selectCuentas" id="listaCuentas">
+                                                <c:forEach var="user" items="${listaCuentas}">
+                                                    <option value="${user}">${user}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <select name="selectCuentas" id="listaCuentas">
+                                                <c:forEach var="user" items="${listaCuentas}">
+                                                    <option value="${user}">${user}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                            <tr><td><br></td><td></td></tr>
+                            <tr><td><br></td><td></td></tr>
+                            <tr>
+                                <td><label>Cuenta Destino</label> </td>
+                                <td><input type="text" required="" name="txtCuentaDestino" id="txtCuentaDestino"></td>
+                            </tr>
+                            <tr><td><br></td><td></td></tr>
+                            <tr><td><br></td><td></td></tr>
+                            <tr>
+                                <td><label>Monto</label> </td>
+                                <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
+                            </tr>
+                            <tr><td><br></td><td></td></tr>
+                            <tr>
+                                <td><label>Banco Destino</label> </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${banco == 'bancoJava'}">
                                             <select name="listaBancos">
                                                 <option value="bancoASP">Banco ASP.NET</option>
                                                 <option value="bancoPHP">Banco PHP</option>
                                             </select>
-                                        </td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td ></td>
-                                        <td><input  type="submit" value="Aceptar" name="btnAceptar" id="btnAceptar"></td>
-                                    </tr>
-                                </table>
-                            </form>
+                                        </c:when>
+                                        <c:when test="${banco == 'bancoPHP'}">
+                                            <select name="listaBancos">
+                                                <option value="bancoASP">Banco ASP.NET</option>
+                                                <option value="bancoJava">Banco Java</option>
+                                            </select>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <select name="listaBancos">
+                                                <option value="bancoJava">Banco Java</option>
+                                                <option value="bancoPHP">Banco PHP</option>
+                                            </select>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                            <tr><td><br></td><td></td></tr>
+                            <tr>
+                                <td ></td>
+                                <td><input  type="submit" value="Aceptar" name="btnAceptar" id="btnAceptar"></td>
+                            </tr>
+                        </table>
+                    </form>
+                    <c:choose>
+                        <c:when test="${banco == 'bancoJava'}">
+
                         </c:when>
                         <c:when test="${banco == 'bancoPHP'}">
-                            <form name="frmTransaccion" action="TransaccionInterbanco" method="POST" >
-                                <table width="100%">
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Cuenta Origen</label> </td>
-                                        <td><input type="text" required="" name="txtCuentaOrigen" id="txtCuentaOrigen"></td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Cuenta Destino</label> </td>
-                                        <td><input type="text" required="" name="txtCuentaDestino" id="txtCuentaDestino"></td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Monto</label> </td>
-                                        <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Banco Destino</label> </td>
-                                        <td>
-                                            <select name="listaBancos">
-                                                <option value="bancoJava">Banco Java</option>
-                                                <option value="bancoASP">Banco ASP.NET</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td ></td>
-                                        <td><input  type="submit" value="Aceptar" name="btnAceptar" id="btnAceptar"></td>
-                                    </tr>
-                                </table>
-                            </form>
+
                         </c:when>
                         <c:otherwise>
-                            <form name="frmTransaccion" action="TransaccionInterbanco" method="POST" >
-                                <table width="100%">
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Cuenta Origen</label> </td>
-                                        <td><input type="text" required="" name="txtCuentaOrigen" id="txtCuentaOrigen"></td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Cuenta Destino</label> </td>
-                                        <td><input type="text" required="" name="txtCuentaDestino" id="txtCuentaDestino"></td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Monto</label> </td>
-                                        <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td><label>Banco Destino</label> </td>
-                                        <td>
-                                            <select name="listaBancos">
-                                                <option value="bancoJava">Banco Java</option>
-                                                <option value="bancoPHP">Banco PHP</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr><td><br></td><td></td></tr>
-                                    <tr>
-                                        <td ></td>
-                                        <td><input  type="submit" value="Aceptar" name="btnAceptar" id="btnAceptar"></td>
-                                    </tr>
-                                </table>
-                            </form>
+
                         </c:otherwise>
                     </c:choose>
 
