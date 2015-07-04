@@ -107,7 +107,7 @@ public class TransaccionInterbancoServlet extends HttpServlet {
             if (bancoDestino.equals("bancoPHP")) {
                 //String respuesta = getIdUsuario(user);
                 //String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
-                
+                String respuesta;
                 try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
                     PHP.Webservice webservice = new PHP.Webservice_Impl();
                     PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
@@ -115,8 +115,13 @@ public class TransaccionInterbancoServlet extends HttpServlet {
                 } catch (Exception ex) {
                     java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                 }
+                if( true ){
+                    // Realiza la transaccion //
+                }else{
+                    // No realiza la transaccion //
+                }
             } else {
-
+                // ENTONCES ES BANCO ASP //
             }
 
         } else if (banco.equals("bancoASP")) {
@@ -152,6 +157,12 @@ public class TransaccionInterbancoServlet extends HttpServlet {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
         return port.getCuentasUsuario(idUsuario);
+    }
+
+    private static boolean transferencia(int cuenta1, int cuenta2, int monto) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap12();
+        return port.transferencia(cuenta1, cuenta2, monto);
     }
 
     

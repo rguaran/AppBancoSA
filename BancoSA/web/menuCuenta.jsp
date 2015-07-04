@@ -116,6 +116,11 @@
                                 <input type="submit" value="Consultar Cuenta" name="btnTransferencia">
                             </form>
                         </div>
+                        <div>
+                            <form action="ConsultarInfoUsuario" method="GET">
+                                <input type="submit" value="Consultar Info. Usuario" name="btnConsultarIU">
+                            </form>
+                        </div>
                     </center>
                     <center>
                         <div><font color="red" >${requestScope['result']}</font></div>

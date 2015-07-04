@@ -7,21 +7,20 @@
 import control.Administracion;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Rita
+ * @author MarioR
  */
-@WebServlet(urlPatterns = {"/autorizarPrestamo"})
-public class autorizarPrestamoServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/ConsultarInfoUsuario"})
+public class ConsultarInfoUsuario extends HttpServlet {
 
-    Administracion admon = new Administracion();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,11 +33,7 @@ public class autorizarPrestamoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-        } finally {
-            out.close();
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,7 +48,36 @@ public class autorizarPrestamoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String user = session.getAttribute("usuario").toString();
+
+        String respuesta;
+        respuesta = getIdUsuario(user);
+        Administracion admon = new Administracion();
+        String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
+        String infoUsuario = getInfoUsuario(Integer.valueOf(idUsuario));
+        String dpi = admon.getCadenaEtiquetas(infoUsuario, "<dpi>");
+        String nombre = admon.getCadenaEtiquetas(infoUsuario, "<nombre>");
+        String apellido = admon.getCadenaEtiquetas(infoUsuario, "<apellido>");
+        String telefono = admon.getCadenaEtiquetas(infoUsuario, "<telefono>");
+        String dir = admon.getCadenaEtiquetas(infoUsuario, "<direccion>");
+        String correo = admon.getCadenaEtiquetas(infoUsuario, "<correo>");
+        String nombreUsuario = admon.getCadenaEtiquetas(infoUsuario, "<nombreusuario>");
+        
+        String Imprimir = "<center><h4>Id de Usuario "+idUsuario+"</h4></center><br><br>";
+        Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
+                + "<tr><td>DPI:</td><td>" + dpi + 
+                "</td></tr><tr><td>Nombres:</td><td>" + nombre +
+                "</td></tr><tr><td>Apellidos:</td><td>" + apellido + 
+                "</td></tr><tr><td>Telefono:</td><td>" + telefono + 
+                "</td></tr><tr><td>Direccion:</td><td>"+dir+
+                "</td></tr><tr><td>Correo:</td><td>"+correo+
+                "</td></tr><tr><td>Nombre de Usuario:</td><td>"+nombreUsuario+
+                "</td></tr></table>";
+
+        request.setAttribute("Imprimir", Imprimir);
+
+        request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
     }
 
     /**
@@ -68,27 +92,6 @@ public class autorizarPrestamoServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String resIDSPrestamos = getPrestamosAAprobar();
-        ArrayList<String> listaIDSPrestamos  = admon.getLista(resIDSPrestamos, "<id>");
-        
-        String Imprimir = "<form name=\"frmAutorizar\" action=\"AutorizarServlet\" method=\"POST\">"
-                 + "<table width=\"100%\"><tr><th>ID Prestamo</th><th>Autorizar</th><th>Ver Detalle</th></tr>";
-        for(String s: listaIDSPrestamos){
-            Imprimir += "<tr><td>"+s+"</td><td><input  type=\"submit\" value=\"Autorizar "+ s +"\" name=\"btnAutorizar\" id=\"btnAutorizar\"></td>"+
-                    "<td><input  type=\"submit\" value=\"Ver "+s+"\" name=\"btnVer\" id=\"btnVer\"></td>"+"</tr>";
-        }
-        Imprimir += "</table></form>";
-        Imprimir += "<form name=\"frmVer\" action=\"InfoPrestamo\" method=\"POST\">"
-                 + "<table width=\"100%\"><tr><th>Ver Detalle</th></tr>";
-        for(String s: listaIDSPrestamos){
-            Imprimir += "<tr><td><input  type=\"submit\" value=\"Ver "+s+"\" name=\"btnVer\" id=\"btnVer\"></td>"+"</tr>";
-        }
-        Imprimir += "</table></form>";
-        
-        request.setAttribute("Imprimir", Imprimir);
-         
-        request.getRequestDispatcher("/mostrarConsultaResult.jsp").forward(request, response);
-        
     }
 
     /**
@@ -101,10 +104,16 @@ public class autorizarPrestamoServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private static String getPrestamosAAprobar() {
+    private static String getIdUsuario(java.lang.String usuario) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
-        return port.getPrestamosAAprobar();
+        return port.getIdUsuario(usuario);
+    }
+
+    private static String getInfoUsuario(int idUsuario) {
+        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
+        WSclientes.Servicios port = service.getServiciosPort();
+        return port.getInfoUsuario(idUsuario);
     }
 
 }
