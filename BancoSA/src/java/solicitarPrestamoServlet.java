@@ -25,8 +25,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(urlPatterns = {"/solicitarPrestamo"})
 public class solicitarPrestamoServlet extends HttpServlet {
+
     Administracion admon = new Administracion();
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,43 +62,47 @@ public class solicitarPrestamoServlet extends HttpServlet {
         //RequestDispatcher rd = null;
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
-                
-        String respuesta;
-        respuesta = getIdUsuario(user);
-        String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
-        respuesta = getCuentasUsuario(Integer.parseInt(idUsuario));
-        ArrayList<String> listacuentas = admon.getLista(respuesta, "<cuenta>");
-        
-        Usuario userr = new Usuario();
-        userr.setNombreUsuario(user);
-        
-        Cuenta cuenta;
-        for (String s : listacuentas ){
-            cuenta = new Cuenta();
-            cuenta.setIdCuenta(Integer.parseInt(s));
-            userr.CrearCuenta(cuenta);
-        }
-        
-        request.setAttribute("listaCuentas", userr.getCuentas());
-        
+        String banco = session.getAttribute("banco").toString();
+
+        if (banco.equals("bancoJava")) {
+            String respuesta;
+            respuesta = getIdUsuario(user);
+            String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
+            respuesta = getCuentasUsuario(Integer.parseInt(idUsuario));
+            ArrayList<String> listacuentas = admon.getLista(respuesta, "<cuenta>");
+
+            Usuario userr = new Usuario();
+            userr.setNombreUsuario(user);
+
+            Cuenta cuenta;
+            for (String s : listacuentas) {
+                cuenta = new Cuenta();
+                cuenta.setIdCuenta(Integer.parseInt(s));
+                userr.CrearCuenta(cuenta);
+            }
+
+            request.setAttribute("listaCuentas", userr.getCuentas());
+
         //*************************tipos de prestamos
-        
-        String listaidsTiposPrestamo = getIdsTipoPrestamo();
-        ArrayList<String> listaTP = admon.getLista(listaidsTiposPrestamo, "<id>");
-        String infoTT; 
-        
-        ArrayList<TipoPrestamo> TPs = new ArrayList<TipoPrestamo>();
-        TipoPrestamo tp;
-        for (String s : listaTP){
-            infoTT = getInfoTipoPrestamo(Integer.parseInt(s));
-            tp = new TipoPrestamo(Integer.parseInt(s), infoTT);
-            TPs.add(tp);
+            String listaidsTiposPrestamo = getIdsTipoPrestamo();
+            ArrayList<String> listaTP = admon.getLista(listaidsTiposPrestamo, "<id>");
+            String infoTT;
+
+            ArrayList<TipoPrestamo> TPs = new ArrayList<TipoPrestamo>();
+            TipoPrestamo tp;
+            for (String s : listaTP) {
+                infoTT = getInfoTipoPrestamo(Integer.parseInt(s));
+                tp = new TipoPrestamo(Integer.parseInt(s), infoTT);
+                TPs.add(tp);
+            }
+
+            request.setAttribute("listaTP", TPs);
+
+            request.getRequestDispatcher("/solicitarPrestamo.jsp").forward(request, response);
+        } else if (banco.equals("bancoPHP")) {
+            request.getRequestDispatcher("/solicitarPrestamo.jsp").forward(request, response);
         }
-        
-        request.setAttribute("listaTP", TPs);
-        
-        request.getRequestDispatcher("/solicitarPrestamo.jsp").forward(request, response);
-        
+
     }
 
     /**
@@ -113,41 +118,61 @@ public class solicitarPrestamoServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
+        String banco = session.getAttribute("banco").toString();
+
+        if (banco.equals("bancoJava")) { // Banco Java
+            String valorDDLCuenta = request.getParameter("selectCuentas");
+            String valorDDLTP = request.getParameter("selectTP");
+            String cantidad = request.getParameter("txtMonto");
+
+            String resTipo = getDesgloseTipoPrestamo(Integer.parseInt(valorDDLTP));
+            int minimo = Integer.parseInt(admon.getCadenaEtiquetas(resTipo, "<minimo>"));
+            int maximo = Integer.parseInt(admon.getCadenaEtiquetas(resTipo, "<maximo>"));
+            int tasa = Integer.parseInt(admon.getCadenaEtiquetas(resTipo, "<tasa>"));
+            double monto = Double.parseDouble(cantidad);
+
+            String result = "";
+            if (!(minimo <= monto && monto <= maximo)) {
+                result = "<font color=\"red\">La cantidad especificada no cumple con el rango de ese tipo de prestamo</font>";
+                request.setAttribute("result", result);
+            } else {
+                String resSolicitar = solicitarPrestamo(Integer.parseInt(valorDDLCuenta), Double.parseDouble(cantidad), 0, Integer.parseInt(valorDDLTP));
+                result = "<font color=\"blue\">Prestamo solicitado, espera la aprobación. Prestamo " + resSolicitar + " </font>";
+                request.setAttribute("result", result);
+            }
+
+            request.getRequestDispatcher("/menuPrestamo.jsp").forward(request, response);
+            
+        } else if (banco.equals("bancoPHP")) { ///Banco PHP
+            String valorCuenta = request.getParameter("txtCuenta");
+            String valorAnios = request.getParameter("txtAnios");
+            String cantidad = request.getParameter("txtMonto");
+            String valorCuotas = request.getParameter("txtCuotas");
+
+            String res ="";
+            String result="";
+            try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                PHP.Webservice webservice = new PHP.Webservice_Impl();
+                PHP.WebservicePortType _serviciosPHP = webservice.getWebservicePort();
+                res = _serviciosPHP.solicitarPrestamo(Integer.parseInt(user), Integer.parseInt(valorCuenta), Double.parseDouble(cantidad), Integer.parseInt(valorAnios),Integer.parseInt(valorCuotas));
+                
+                if (res.equals("ok")){
+                    result = "<font color=\"blue\">Prestamo solicitado, espera la aprobación.</font>";
+                    request.setAttribute("result", result);
+                }else {
+                    result = "<font color=\"red\">La cantidad especificada no cumple con el rango de ese tipo de prestamo</font>";
+                    request.setAttribute("result", result);
+                }
+                
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+            
+            request.getRequestDispatcher("/menuPrestamo.jsp").forward(request, response);
+        } else { //banco ASP
         
-        String valorDDLCuenta = request.getParameter("selectCuentas");
-        String valorDDLTP = request.getParameter("selectTP");
-        String cantidad = request.getParameter("txtMonto");
-        
-        String resTipo = getDesgloseTipoPrestamo(Integer.parseInt(valorDDLTP));
-        int minimo = Integer.parseInt(admon.getCadenaEtiquetas(resTipo, "<minimo>"));
-        int maximo = Integer.parseInt(admon.getCadenaEtiquetas(resTipo, "<maximo>"));
-        int tasa = Integer.parseInt(admon.getCadenaEtiquetas(resTipo, "<tasa>"));
-        double monto = Double.parseDouble(cantidad);
-        
-        String result="";
-        if( !(minimo <= monto && monto <= maximo) ){
-            result = "<font color=\"red\">La cantidad especificada no cumple con el rango de ese tipo de prestamo</font>";
-            request.setAttribute("result", result);
-        }else{
-            String resSolicitar = solicitarPrestamo(Integer.parseInt(valorDDLCuenta), Double.parseDouble(cantidad),0, Integer.parseInt(valorDDLTP));
-             result = "<font color=\"blue\">Prestamo solicitado, espera la aprobación. Prestamo "+resSolicitar+" </font>";
-             request.setAttribute("result", result);
         }
-        
-        
-        
-        
-        /*String idPrestamo = admon.getCadenaEtiquetas(resSolicitar, "");
-        
-        if (resSolicitar.equals("true")){
-            result = "<font color=\"blue\">Prestamo solicitado, espera la aprobación</font>";
-        }else if (resSolicitar.equals("false")){
-            result = "<font color=\"red\">Prestamo No se pudo solicitar</font>";
-        }*/
-        
-       
-        
-        request.getRequestDispatcher("/menuPrestamo.jsp").forward(request, response);
+
     }
 
     /**

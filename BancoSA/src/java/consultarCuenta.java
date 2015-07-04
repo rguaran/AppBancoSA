@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import PHP.Datosusuario;
 import control.Administracion;
 import control.Cuenta;
 import control.Usuario;
@@ -56,27 +57,49 @@ public class consultarCuenta extends HttpServlet {
 
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
+        String banco = session.getAttribute("banco").toString();
 
-        String respuesta;
-        respuesta = getIdUsuario(user);
-        Administracion admon = new Administracion();
-        String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
-        respuesta = getCuentasUsuario(Integer.parseInt(idUsuario));
-        ArrayList<String> listacuentas = admon.getLista(respuesta, "<cuenta>");
+        if (banco.equals("bancoJava")) {
+            String respuesta;
+            respuesta = getIdUsuario(user);
+            Administracion admon = new Administracion();
+            String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
+            respuesta = getCuentasUsuario(Integer.parseInt(idUsuario));
+            ArrayList<String> listacuentas = admon.getLista(respuesta, "<cuenta>");
 
-        Usuario userr = new Usuario();
-        userr.setNombreUsuario(user);
+            Usuario userr = new Usuario();
+            userr.setNombreUsuario(user);
 
-        Cuenta cuenta;
-        for (String s : listacuentas) {
-            cuenta = new Cuenta();
-            cuenta.setIdCuenta(Integer.parseInt(s));
-            userr.CrearCuenta(cuenta);
+            Cuenta cuenta;
+            for (String s : listacuentas) {
+                cuenta = new Cuenta();
+                cuenta.setIdCuenta(Integer.parseInt(s));
+                userr.CrearCuenta(cuenta);
+            }
+
+            request.setAttribute("listaCuentas", userr.getCuentas());
+
+            request.getRequestDispatcher("/consultarCuenta.jsp").forward(request, response);
+        } else if (banco.equals("bancoPHP")) {
+            try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                PHP.Webservice webservice = new PHP.Webservice_Impl();
+                PHP.WebservicePortType _serviciosPHP = webservice.getWebservicePort();
+                Datosusuario resp = _serviciosPHP.mostrarDatos(Integer.parseInt(user));
+
+                String Imprimir = "<center><h4>Usuario " + resp.getUsuario() + "</h4></center><br><br>";
+                Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
+                        + "<tr><td>Nombre</td><td>" + resp.getNombre() + "</td></tr><tr><td>Apellido</td><td>" + resp.getApellido() + "</td></tr><tr><td>"
+                        + "Email</td><td>" + resp.getEmail() + "</td></tr><tr><td>Direccion</td><td>" + resp.getDireccion() + "</td></tr></table>";
+
+                request.setAttribute("Imprimir", Imprimir);
+
+                request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
+
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+
         }
-
-        request.setAttribute("listaCuentas", userr.getCuentas());
-
-        request.getRequestDispatcher("/consultarCuenta.jsp").forward(request, response);
     }
 
     /**
@@ -98,11 +121,11 @@ public class consultarCuenta extends HttpServlet {
         String fechaCreacion = admon.getCadenaEtiquetas(resultado, "<fecha>");
         String numPres = admon.getCadenaEtiquetas(resultado, "<prestamos>");
         String numSeg = admon.getCadenaEtiquetas(resultado, "<seguros>");
-        NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es","MX"));
+        NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
 
-        String Imprimir = "<center><h4>Cuenta No. "+idCuenta+"</h4></center><br><br>";
+        String Imprimir = "<center><h4>Cuenta No. " + idCuenta + "</h4></center><br><br>";
         Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
-                + "<tr><td>Fecha de creacion:</td><td>" + fechaCreacion + "</td></tr><tr><td>Saldo</td><td>" + formatoSaldo.format( Double.parseDouble(saldo) ) + "</td></tr><tr><td>"
+                + "<tr><td>Fecha de creacion:</td><td>" + fechaCreacion + "</td></tr><tr><td>Saldo</td><td>" + formatoSaldo.format(Double.parseDouble(saldo)) + "</td></tr><tr><td>"
                 + "Total de prestamos realizados</td><td>" + numPres + "</td></tr><tr><td>Total de seguros realizados</td><td>" + numSeg + "</td></tr></table>";
 
         request.setAttribute("Imprimir", Imprimir);
@@ -128,17 +151,14 @@ public class consultarCuenta extends HttpServlet {
         return port.getCuentasUsuario(idUsuario);
     }
 
-
-/**
- * Returns a short description of the servlet.
- *
- * @return a String containing servlet description
- */
-@Override
-        public String getServletInfo() {
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    
 
 }
