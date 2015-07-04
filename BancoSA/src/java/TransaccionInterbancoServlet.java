@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 public class TransaccionInterbancoServlet extends HttpServlet {
 
     Administracion admon = new Administracion();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,7 +40,7 @@ public class TransaccionInterbancoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-           
+
         } finally {
             out.close();
         }
@@ -75,13 +76,9 @@ public class TransaccionInterbancoServlet extends HttpServlet {
             cuenta.setIdCuenta(Integer.parseInt(s));
             userr.CrearCuenta(cuenta);
         }
-        
-        String resListaBancos = "";
-        ArrayList<String> listabancos = admon.getLista(resListaBancos, "");
 
         request.setAttribute("listaCuentas", userr.getCuentas());
-        request.setAttribute("listaBancos", listabancos);
-        
+
         request.getRequestDispatcher("/realizarTInterbanco.jsp").forward(request, response);
     }
 
@@ -96,7 +93,43 @@ public class TransaccionInterbancoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String user = session.getAttribute("usuario").toString();
+        String banco = session.getAttribute("banco").toString();
+        String monto, cuentaDestino, cuentaOrigen, bancoDestino;
+        Administracion admon = new Administracion();
+        if (banco.equals("bancoJava")) {
+            cuentaDestino = request.getParameter("txtCuentaDestino");
+            monto = request.getParameter("txtMonto");
+            bancoDestino = request.getParameter("listaBancos");
+
+            // Miramos si consumimos web service de php o de asp //
+            if (bancoDestino.equals("bancoPHP")) {
+                //String respuesta = getIdUsuario(user);
+                //String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
+                
+                try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                    PHP.Webservice webservice = new PHP.Webservice_Impl();
+                    PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
+                    
+                } catch (Exception ex) {
+                    java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
+            } else {
+
+            }
+
+        } else if (banco.equals("bancoASP")) {
+
+        } else {
+            // Banco PHP //
+            monto = request.getParameter("txtMonto");
+            cuentaOrigen = request.getParameter("txtCuentaOrigen");
+            cuentaDestino = request.getParameter("txtCuentaDestino");
+
+            // Seleccionamos el banco destino //
+        }
+
     }
 
     /**
@@ -120,5 +153,7 @@ public class TransaccionInterbancoServlet extends HttpServlet {
         WSclientes.Servicios port = service.getServiciosPort();
         return port.getCuentasUsuario(idUsuario);
     }
+
+    
 
 }

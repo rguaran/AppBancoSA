@@ -39,8 +39,8 @@
       </wsimport-options>
     </client>
     <client name="Servicios">
-      <wsdl-url>http://10.42.0.66:8080/Servicios/Servicios?wsdl</wsdl-url>
-      <local-wsdl-file>10.42.0.66_8080/Servicios/Servicios.wsdl</local-wsdl-file>
+      <wsdl-url>http://192.168.43.176:8080/Servicios/Servicios?wsdl</wsdl-url>
+      <local-wsdl-file>192.168.43.176_8080/Servicios/Servicios.wsdl</local-wsdl-file>
       <package-name forceReplace="true">WSclientes</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
@@ -58,7 +58,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://10.42.0.66:8080/Servicios/Servicios?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://192.168.43.176:8080/Servicios/Servicios?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
