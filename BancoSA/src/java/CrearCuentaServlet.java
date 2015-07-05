@@ -93,8 +93,18 @@ public class CrearCuentaServlet extends HttpServlet {
             request.setAttribute("result", "Cuenta creada! cuenta: " + idCuenta);
             request.getRequestDispatcher("/menuCuenta.jsp").forward(request, response);
         }
-        }else if (banco.equals("bancoASP")){ //no crea cuentas
-            //int idCliente = Integer.parseInt((String)session.getAttribute("idCliente"));
+        }else if (banco.equals("bancoASP")){ //Banco ASP
+            String cuenta = request.getParameter("txtCuenta");
+            boolean resCuenta = agregarCuenta(Integer.parseInt(usuario), Integer.parseInt(monto), Integer.parseInt(cuenta));
+            
+            if (resCuenta){
+                request.setAttribute("result", "Cuenta creada!");
+                request.getRequestDispatcher("/menuCuenta.jsp").forward(request, response);
+            }else {
+                request.setAttribute("result", "Error al crear cuenta");
+                request.getRequestDispatcher("/menuCuenta.jsp").forward(request, response);
+            }
+            
         }else if (banco.equals("bancoPHP")){
             String res="";
             try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
@@ -142,6 +152,12 @@ public class CrearCuentaServlet extends HttpServlet {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
         return port.depositoInicial(idCuenta, monto);
+    }
+
+    private static boolean agregarCuenta(int idcliente, int monto, int cuenta) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap12();
+        return port.agregarCuenta(idcliente, monto, cuenta);
     }
 
    

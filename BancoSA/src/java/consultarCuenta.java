@@ -5,6 +5,7 @@
  */
 
 import PHP.Datosusuario;
+import PHP.Saldousuario;
 import control.Administracion;
 import control.Cuenta;
 import control.Usuario;
@@ -81,23 +82,30 @@ public class consultarCuenta extends HttpServlet {
 
             request.getRequestDispatcher("/consultarCuenta.jsp").forward(request, response);
         } else if (banco.equals("bancoPHP")) {
+            int[] listaCuentas = {};
             try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
                 PHP.Webservice webservice = new PHP.Webservice_Impl();
                 PHP.WebservicePortType _serviciosPHP = webservice.getWebservicePort();
-                Datosusuario resp = _serviciosPHP.mostrarDatos(Integer.parseInt(user));
-
-                String Imprimir = "<center><h4>Usuario " + resp.getUsuario() + "</h4></center><br><br>";
-                Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
-                        + "<tr><td>Nombre</td><td>" + resp.getNombre() + "</td></tr><tr><td>Apellido</td><td>" + resp.getApellido() + "</td></tr><tr><td>"
-                        + "Email</td><td>" + resp.getEmail() + "</td></tr><tr><td>Direccion</td><td>" + resp.getDireccion() + "</td></tr></table>";
-
-                request.setAttribute("Imprimir", Imprimir);
-
-                request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
-
+                listaCuentas = _serviciosPHP.listadoCuentas(Integer.parseInt(user));
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
+
+            request.setAttribute("listaCuentas", listaCuentas);
+            request.getRequestDispatcher("/consultarCuenta.jsp").forward(request, response);
+
+        } else { //Banco ASP
+            String retornoCuentas = retornoCuentas2(Integer.parseInt(user));
+
+            String[] splitAmp = retornoCuentas.split("&");
+            ArrayList<String> listaCuentas = new ArrayList<String>();
+            for (String s : splitAmp) {
+                String[] splitComas = s.split(",");
+                listaCuentas.add(splitComas[0]);
+            }
+
+            request.setAttribute("listaCuentas", listaCuentas);
+            request.getRequestDispatcher("/consultarCuenta.jsp").forward(request, response);
 
         }
     }
@@ -114,23 +122,72 @@ public class consultarCuenta extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Administracion admon = new Administracion();
-        String idCuenta = request.getParameter("selectCuentas");
-        String resultado = verInfoCuenta(Integer.parseInt(idCuenta));
-        String saldo = admon.getCadenaEtiquetas(resultado, "<saldo>");
-        String fechaCreacion = admon.getCadenaEtiquetas(resultado, "<fecha>");
-        String numPres = admon.getCadenaEtiquetas(resultado, "<prestamos>");
-        String numSeg = admon.getCadenaEtiquetas(resultado, "<seguros>");
-        NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
+        String user = session.getAttribute("usuario").toString();
+        String banco = session.getAttribute("banco").toString();
 
-        String Imprimir = "<center><h4>Cuenta No. " + idCuenta + "</h4></center><br><br>";
-        Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
-                + "<tr><td>Fecha de creacion:</td><td>" + fechaCreacion + "</td></tr><tr><td>Saldo</td><td>" + formatoSaldo.format(Double.parseDouble(saldo)) + "</td></tr><tr><td>"
-                + "Total de prestamos realizados</td><td>" + numPres + "</td></tr><tr><td>Total de seguros realizados</td><td>" + numSeg + "</td></tr></table>";
+        if (banco.equals("bancoJava")) {
+            Administracion admon = new Administracion();
+            String idCuenta = request.getParameter("selectCuentas");
+            String resultado = verInfoCuenta(Integer.parseInt(idCuenta));
+            String saldo = admon.getCadenaEtiquetas(resultado, "<saldo>");
+            String fechaCreacion = admon.getCadenaEtiquetas(resultado, "<fecha>");
+            String numPres = admon.getCadenaEtiquetas(resultado, "<prestamos>");
+            String numSeg = admon.getCadenaEtiquetas(resultado, "<seguros>");
+            NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
 
-        request.setAttribute("Imprimir", Imprimir);
+            String Imprimir = "<center><h4>Cuenta No. " + idCuenta + "</h4></center><br><br>";
+            Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
+                    + "<tr><td>Fecha de creacion:</td><td>" + fechaCreacion + "</td></tr><tr><td>Saldo</td><td>" + formatoSaldo.format(Double.parseDouble(saldo)) + "</td></tr><tr><td>"
+                    + "Total de prestamos realizados</td><td>" + numPres + "</td></tr><tr><td>Total de seguros realizados</td><td>" + numSeg + "</td></tr></table>";
 
-        request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
+            request.setAttribute("Imprimir", Imprimir);
+
+            request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
+        } else if (banco.equals("bancoPHP")) { //Banco PHP
+            String idCuenta = request.getParameter("selectCuentas");
+
+            try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                PHP.Webservice webservice = new PHP.Webservice_Impl();
+                PHP.WebservicePortType _serviciosPHP = webservice.getWebservicePort();
+                Saldousuario saldo = _serviciosPHP.consultarSaldo(Integer.parseInt(user), Integer.parseInt(idCuenta));
+                NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
+                String Imprimir = "<center><h4>Cuenta No. " + idCuenta + "</h4></center><br><br>";
+                Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
+                        + "<tr><td>Mensaje </td><td>" + saldo.getMsj_respuesta() + "</td></tr><tr><td>Saldo</td><td>" + formatoSaldo.format(saldo.getSaldo()) + "</td></tr><tr><td>"
+                        + "Direccion</td><td>" + saldo.getDireccion() + "</td></tr></table>";
+
+                request.setAttribute("Imprimir", Imprimir);
+
+                request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
+
+            } catch (Exception ex) {
+                java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+        } else { //Banco ASP
+            String idCuenta = request.getParameter("selectCuentas");
+            String retornoCuentas = retornoCuentas2(Integer.parseInt(user));
+
+            String[] splitAmp = retornoCuentas.split("&");
+            ArrayList<String> listaCuentas = new ArrayList<String>();
+            ArrayList<String> listaSaldos = new ArrayList<String>();
+            for (String s : splitAmp) {
+                String[] splitComas = s.split(",");
+                listaCuentas.add(splitComas[0]);
+                listaSaldos.add(splitComas[1]);
+            }
+
+            int pos = listaCuentas.indexOf(idCuenta);
+            Double saldo = Double.parseDouble(listaSaldos.get(pos));
+            NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
+            String Imprimir = "<center><h4>Cuenta No. " + idCuenta + "</h4></center><br><br>";
+            Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
+                    + "<tr><td>Saldo </td><td>" + formatoSaldo.format(saldo) + "</td></tr></table>";
+
+            request.setAttribute("Imprimir", Imprimir);
+
+            request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
+
+        }
     }
 
     private static String verInfoCuenta(int cuenta) {
@@ -160,5 +217,11 @@ public class consultarCuenta extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private static String retornoCuentas2(int idcliente) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap12();
+        return port.retornoCuentas2(idcliente);
+    }
 
 }

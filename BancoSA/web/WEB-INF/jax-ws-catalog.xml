@@ -12,4 +12,7 @@
     <system systemId="http://10.42.0.66:8080/Servicios/Servicios?xsd=1" uri="wsdl/10.42.0.66_8080/Servicios/Servicios.xsd_1.xsd"/>
     <system systemId="http://192.168.137.43:18900/WebService1.asmx" uri="wsdl/192.168.137.43_18900/WebService1.asmx"/>
     <system systemId="http://192.168.43.7:18900/WebService1.asmx?WSDL" uri="wsdl/192.168.43.7_18900/WebService1.asmx.wsdl"/>
+    <system systemId="http://192.168.1.9:8080/Servicios/Servicios?wsdl" uri="wsdl/192.168.1.9_8080/Servicios/Servicios.wsdl"/>
+    <system systemId="http://192.168.1.9:8080/Servicios/Servicios?xsd=1" uri="wsdl/192.168.1.9_8080/Servicios/Servicios.xsd_1.xsd"/>
+    <system systemId="http://192.168.1.5:18900/WebService1.asmx?WSDL" uri="wsdl/192.168.1.5_18900/WebService1.asmx.wsdl"/>
 </catalog>

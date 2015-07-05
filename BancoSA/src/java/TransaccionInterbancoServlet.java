@@ -285,6 +285,7 @@ public class TransaccionInterbancoServlet extends HttpServlet {
         return port.getCuentasUsuario(idUsuario);
     }
 
+<<<<<<< HEAD
     private static String realizarTransferencia(int idCuentaEmisor, double monto, int idBanco) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
@@ -338,5 +339,8 @@ public class TransaccionInterbancoServlet extends HttpServlet {
         WSclientes.Servicios port = service.getServiciosPort();
         return port.transferirBancosaPHP(idCuentaDestino, monto);
     }
+=======
+    
+>>>>>>> origin/master
 
 }

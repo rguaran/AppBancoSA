@@ -14,6 +14,19 @@
    <xsd:element name="usuario" type="xsd:string"/>
   </xsd:all>
  </xsd:complexType>
+ <xsd:complexType name="ArrayInt">
+  <xsd:complexContent>
+   <xsd:restriction base="SOAP-ENC:Array">
+    <xsd:attribute ref="SOAP-ENC:arrayType" wsdl:arrayType="xsd:int[]"/>
+   </xsd:restriction>
+  </xsd:complexContent>
+ </xsd:complexType>
+ <xsd:complexType name="idCuentas">
+  <xsd:all>
+   <xsd:element name="cantidad" type="xsd:int"/>
+   <xsd:element name="array" type="tns:ArrayInt"/>
+  </xsd:all>
+ </xsd:complexType>
  <xsd:complexType name="saldousuario">
   <xsd:all>
    <xsd:element name="saldo" type="xsd:double"/>
@@ -95,6 +108,16 @@
   <part name="monto" type="xsd:double" /></message>
 <message name="retiroResponse">
   <part name="result" type="xsd:string" /></message>
+<message name="abonarRequest">
+  <part name="idcliente" type="xsd:int" />
+  <part name="idcuenta" type="xsd:int" />
+  <part name="monto" type="xsd:double" /></message>
+<message name="abonarResponse">
+  <part name="result" type="xsd:string" /></message>
+<message name="listadoCuentasRequest">
+  <part name="idcliente" type="xsd:int" /></message>
+<message name="listadoCuentasResponse">
+  <part name="return" type="tns:ArrayInt" /></message>
 <portType name="webservicePortType">
   <operation name="iniciarSesion">
     <documentation>Devuelve informacion del login de un usuario</documentation>
@@ -156,6 +179,16 @@
     <input message="tns:retiroRequest"/>
     <output message="tns:retiroResponse"/>
   </operation>
+  <operation name="abonar">
+    <documentation>Abona el monto que fue transferido a la cuenta</documentation>
+    <input message="tns:abonarRequest"/>
+    <output message="tns:abonarResponse"/>
+  </operation>
+  <operation name="listadoCuentas">
+    <documentation>Devuelve IDS de las cuentas de un usuario</documentation>
+    <input message="tns:listadoCuentasRequest"/>
+    <output message="tns:listadoCuentasResponse"/>
+  </operation>
 </portType>
 <binding name="webserviceBinding" type="tns:webservicePortType">
   <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -215,14 +248,24 @@
     <output><soap:body use="encoded" namespace="urn:webservice" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
   </operation>
   <operation name="retiro">
-    <soap:operation soapAction="urn:webserviceverificarCuentaMonto" style="rpc"/>
+    <soap:operation soapAction="urn:webserviceretiro" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:webservice" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:webservice" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="abonar">
+    <soap:operation soapAction="urn:webserviceabonar" style="rpc"/>
+    <input><soap:body use="encoded" namespace="urn:webservice" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:webservice" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="listadoCuentas">
+    <soap:operation soapAction="urn:webservicelistadoCuentas" style="rpc"/>
     <input><soap:body use="encoded" namespace="urn:webservice" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
     <output><soap:body use="encoded" namespace="urn:webservice" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
   </operation>
 </binding>
 <service name="webservice">
   <port name="webservicePort" binding="tns:webserviceBinding">
-    <soap:address location="http://10.42.0.1/phpserver/webservice.php"/>
+    <soap:address location="http://192.168.1.8/phpserver/webservice.php"/>
   </port>
 </service>
 </definitions>
