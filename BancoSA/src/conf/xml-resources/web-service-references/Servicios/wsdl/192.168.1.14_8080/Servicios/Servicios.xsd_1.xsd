@@ -1,0 +1,686 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.1-b419 (branches/2.3.1.x-7937; 2014-08-04T08:11:03+0000) JAXWS-RI/2.2.10-b140803.1500 JAXWS-API/2.2.11 JAXB-RI/2.2.10-b140802.1033 JAXB-API/2.2.12-b140109.1041 svn-revision#unknown. --><xs:schema xmlns:tns="http://services/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://services/">
+
+<xs:element name="ConfirmarCuenta" type="tns:ConfirmarCuenta"/>
+
+<xs:element name="ConfirmarCuentaResponse" type="tns:ConfirmarCuentaResponse"/>
+
+<xs:element name="Login" type="tns:Login"/>
+
+<xs:element name="LoginResponse" type="tns:LoginResponse"/>
+
+<xs:element name="RealizarTransaccion" type="tns:RealizarTransaccion"/>
+
+<xs:element name="RealizarTransaccionResponse" type="tns:RealizarTransaccionResponse"/>
+
+<xs:element name="Registro" type="tns:Registro"/>
+
+<xs:element name="RegistroResponse" type="tns:RegistroResponse"/>
+
+<xs:element name="VerInfoCuenta" type="tns:VerInfoCuenta"/>
+
+<xs:element name="VerInfoCuentaResponse" type="tns:VerInfoCuentaResponse"/>
+
+<xs:element name="aprobarPrestamo" type="tns:aprobarPrestamo"/>
+
+<xs:element name="aprobarPrestamoResponse" type="tns:aprobarPrestamoResponse"/>
+
+<xs:element name="aprobarSeguro" type="tns:aprobarSeguro"/>
+
+<xs:element name="aprobarSeguroResponse" type="tns:aprobarSeguroResponse"/>
+
+<xs:element name="cerrarSesion" type="tns:cerrarSesion"/>
+
+<xs:element name="cerrarSesionResponse" type="tns:cerrarSesionResponse"/>
+
+<xs:element name="crearCuenta" type="tns:crearCuenta"/>
+
+<xs:element name="crearCuentaResponse" type="tns:crearCuentaResponse"/>
+
+<xs:element name="depositoInicial" type="tns:depositoInicial"/>
+
+<xs:element name="depositoInicialResponse" type="tns:depositoInicialResponse"/>
+
+<xs:element name="getCuentasUsuario" type="tns:getCuentasUsuario"/>
+
+<xs:element name="getCuentasUsuarioResponse" type="tns:getCuentasUsuarioResponse"/>
+
+<xs:element name="getDesgloseTipoPrestamo" type="tns:getDesgloseTipoPrestamo"/>
+
+<xs:element name="getDesgloseTipoPrestamoResponse" type="tns:getDesgloseTipoPrestamoResponse"/>
+
+<xs:element name="getIdBanco" type="tns:getIdBanco"/>
+
+<xs:element name="getIdBancoResponse" type="tns:getIdBancoResponse"/>
+
+<xs:element name="getIdTipoTrans" type="tns:getIdTipoTrans"/>
+
+<xs:element name="getIdTipoTransResponse" type="tns:getIdTipoTransResponse"/>
+
+<xs:element name="getIdUsuario" type="tns:getIdUsuario"/>
+
+<xs:element name="getIdUsuarioResponse" type="tns:getIdUsuarioResponse"/>
+
+<xs:element name="getIdsBancos" type="tns:getIdsBancos"/>
+
+<xs:element name="getIdsBancosResponse" type="tns:getIdsBancosResponse"/>
+
+<xs:element name="getIdsEstado" type="tns:getIdsEstado"/>
+
+<xs:element name="getIdsEstadoResponse" type="tns:getIdsEstadoResponse"/>
+
+<xs:element name="getIdsTipoPrestamo" type="tns:getIdsTipoPrestamo"/>
+
+<xs:element name="getIdsTipoPrestamoResponse" type="tns:getIdsTipoPrestamoResponse"/>
+
+<xs:element name="getIdsTipoSeguro" type="tns:getIdsTipoSeguro"/>
+
+<xs:element name="getIdsTipoSeguroResponse" type="tns:getIdsTipoSeguroResponse"/>
+
+<xs:element name="getIdsTipoTrans" type="tns:getIdsTipoTrans"/>
+
+<xs:element name="getIdsTipoTransResponse" type="tns:getIdsTipoTransResponse"/>
+
+<xs:element name="getIdsUsuarios" type="tns:getIdsUsuarios"/>
+
+<xs:element name="getIdsUsuariosResponse" type="tns:getIdsUsuariosResponse"/>
+
+<xs:element name="getInfoPrestamo" type="tns:getInfoPrestamo"/>
+
+<xs:element name="getInfoPrestamoCualquiera" type="tns:getInfoPrestamoCualquiera"/>
+
+<xs:element name="getInfoPrestamoCualquieraResponse" type="tns:getInfoPrestamoCualquieraResponse"/>
+
+<xs:element name="getInfoPrestamoResponse" type="tns:getInfoPrestamoResponse"/>
+
+<xs:element name="getInfoSeguro" type="tns:getInfoSeguro"/>
+
+<xs:element name="getInfoSeguroResponse" type="tns:getInfoSeguroResponse"/>
+
+<xs:element name="getInfoTipoPrestamo" type="tns:getInfoTipoPrestamo"/>
+
+<xs:element name="getInfoTipoPrestamoResponse" type="tns:getInfoTipoPrestamoResponse"/>
+
+<xs:element name="getInfoTransaccion" type="tns:getInfoTransaccion"/>
+
+<xs:element name="getInfoTransaccionResponse" type="tns:getInfoTransaccionResponse"/>
+
+<xs:element name="getInfoUsuario" type="tns:getInfoUsuario"/>
+
+<xs:element name="getInfoUsuarioResponse" type="tns:getInfoUsuarioResponse"/>
+
+<xs:element name="getPrestamosAAprobar" type="tns:getPrestamosAAprobar"/>
+
+<xs:element name="getPrestamosAAprobarResponse" type="tns:getPrestamosAAprobarResponse"/>
+
+<xs:element name="getPrestamosPorAprobar" type="tns:getPrestamosPorAprobar"/>
+
+<xs:element name="getPrestamosPorAprobarResponse" type="tns:getPrestamosPorAprobarResponse"/>
+
+<xs:element name="getPrestamosTodos" type="tns:getPrestamosTodos"/>
+
+<xs:element name="getPrestamosTodosResponse" type="tns:getPrestamosTodosResponse"/>
+
+<xs:element name="getSaldo" type="tns:getSaldo"/>
+
+<xs:element name="getSaldoResponse" type="tns:getSaldoResponse"/>
+
+<xs:element name="getSegurosPorAprobar" type="tns:getSegurosPorAprobar"/>
+
+<xs:element name="getSegurosPorAprobarResponse" type="tns:getSegurosPorAprobarResponse"/>
+
+<xs:element name="getTiposSeguro" type="tns:getTiposSeguro"/>
+
+<xs:element name="getTiposSeguroResponse" type="tns:getTiposSeguroResponse"/>
+
+<xs:element name="getTransaccionesCuenta" type="tns:getTransaccionesCuenta"/>
+
+<xs:element name="getTransaccionesCuentaResponse" type="tns:getTransaccionesCuentaResponse"/>
+
+<xs:element name="hello" type="tns:hello"/>
+
+<xs:element name="helloResponse" type="tns:helloResponse"/>
+
+<xs:element name="pagarPrestamo" type="tns:pagarPrestamo"/>
+
+<xs:element name="pagarPrestamoResponse" type="tns:pagarPrestamoResponse"/>
+
+<xs:element name="realizarTransferencia" type="tns:realizarTransferencia"/>
+
+<xs:element name="realizarTransferenciaResponse" type="tns:realizarTransferenciaResponse"/>
+
+<xs:element name="solicitarPrestamo" type="tns:solicitarPrestamo"/>
+
+<xs:element name="solicitarPrestamoResponse" type="tns:solicitarPrestamoResponse"/>
+
+<xs:element name="solicitarSeguro" type="tns:solicitarSeguro"/>
+
+<xs:element name="solicitarSeguroResponse" type="tns:solicitarSeguroResponse"/>
+
+<xs:element name="transferirBancosaASP" type="tns:transferirBancosaASP"/>
+
+<xs:element name="transferirBancosaASPResponse" type="tns:transferirBancosaASPResponse"/>
+
+<xs:element name="transferirBancosaPHP" type="tns:transferirBancosaPHP"/>
+
+<xs:element name="transferirBancosaPHPResponse" type="tns:transferirBancosaPHPResponse"/>
+
+<xs:element name="transferirSaldoLocal" type="tns:transferirSaldoLocal"/>
+
+<xs:element name="transferirSaldoLocalResponse" type="tns:transferirSaldoLocalResponse"/>
+
+<xs:complexType name="getInfoPrestamoCualquiera">
+<xs:sequence>
+<xs:element name="idPrestamo" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoPrestamoCualquieraResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdBanco">
+<xs:sequence>
+<xs:element name="banco" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdBancoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="transferirSaldoLocal">
+<xs:sequence>
+<xs:element name="idCuenta" type="xs:int"/>
+<xs:element name="idDestino" type="xs:int"/>
+<xs:element name="monto" type="xs:double"/>
+<xs:element name="idTT" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="transferirSaldoLocalResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoTipoPrestamo">
+<xs:sequence>
+<xs:element name="idTipoPrestamo" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoTipoPrestamoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="depositoInicial">
+<xs:sequence>
+<xs:element name="idCuenta" type="xs:int"/>
+<xs:element name="monto" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="depositoInicialResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="realizarTransferencia">
+<xs:sequence>
+<xs:element name="idCuentaEmisor" type="xs:int"/>
+<xs:element name="monto" type="xs:double"/>
+<xs:element name="idBanco" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="realizarTransferenciaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPrestamosAAprobar">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getPrestamosAAprobarResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getTransaccionesCuenta">
+<xs:sequence>
+<xs:element name="idCuenta" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getTransaccionesCuentaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoUsuario">
+<xs:sequence>
+<xs:element name="idUsuario" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoUsuarioResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoPrestamo">
+<xs:sequence>
+<xs:element name="idCuenta" type="xs:int"/>
+<xs:element name="idPrestamo" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoPrestamoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="solicitarSeguro">
+<xs:sequence>
+<xs:element name="idCuenta" type="xs:int"/>
+<xs:element name="cantidad" type="xs:double"/>
+<xs:element name="cuotas" type="xs:int"/>
+<xs:element name="prima" type="xs:double"/>
+<xs:element name="pago" type="xs:string" minOccurs="0"/>
+<xs:element name="idTS" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="solicitarSeguroResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdsTipoSeguro">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getIdsTipoSeguroResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getSegurosPorAprobar">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getSegurosPorAprobarResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdsUsuarios">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getIdsUsuariosResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdsTipoTrans">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getIdsTipoTransResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getDesgloseTipoPrestamo">
+<xs:sequence>
+<xs:element name="idTipoPrestamo" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getDesgloseTipoPrestamoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pagarPrestamo">
+<xs:sequence>
+<xs:element name="idCuenta" type="xs:int"/>
+<xs:element name="idPrestamo" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="pagarPrestamoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearCuenta">
+<xs:sequence>
+<xs:element name="crearCuenta" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="crearCuentaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdUsuario">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdUsuarioResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdTipoTrans">
+<xs:sequence>
+<xs:element name="tipo" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdTipoTransResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getTiposSeguro">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getTiposSeguroResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cerrarSesion">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cerrarSesionResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoTransaccion">
+<xs:sequence>
+<xs:element name="idTrans" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoTransaccionResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPrestamosPorAprobar">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getPrestamosPorAprobarResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdsEstado">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getIdsEstadoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="transferirBancosaASP">
+<xs:sequence>
+<xs:element name="idCuentaDestino" type="xs:int"/>
+<xs:element name="monto" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="transferirBancosaASPResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Registro">
+<xs:sequence>
+<xs:element name="DPI" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="apellido" type="xs:string" minOccurs="0"/>
+<xs:element name="correo" type="xs:string" minOccurs="0"/>
+<xs:element name="direccion" type="xs:string" minOccurs="0"/>
+<xs:element name="telefono" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaNac" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RegistroResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ConfirmarCuenta">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ConfirmarCuentaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Login">
+<xs:sequence>
+<xs:element name="usuario" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="LoginResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="aprobarPrestamo">
+<xs:sequence>
+<xs:element name="idPrestamo" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="aprobarPrestamoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getPrestamosTodos">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getPrestamosTodosResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getSaldo">
+<xs:sequence>
+<xs:element name="idCuenta" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getSaldoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:double" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="transferirBancosaPHP">
+<xs:sequence>
+<xs:element name="idCuentaDestino" type="xs:int"/>
+<xs:element name="monto" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="transferirBancosaPHPResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdsBancos">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getIdsBancosResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="solicitarPrestamo">
+<xs:sequence>
+<xs:element name="idCuenta" type="xs:int"/>
+<xs:element name="cantidad" type="xs:double"/>
+<xs:element name="cuotas" type="xs:int"/>
+<xs:element name="idTipoPrestamo" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="solicitarPrestamoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RealizarTransaccion">
+<xs:sequence>
+<xs:element name="cuenta" type="xs:int"/>
+<xs:element name="monto" type="xs:double"/>
+<xs:element name="fecha" type="xs:string" minOccurs="0"/>
+<xs:element name="idSeguro" type="xs:int"/>
+<xs:element name="idPrestamo" type="xs:int"/>
+<xs:element name="idTT" type="xs:int"/>
+<xs:element name="idCuentaDestino" type="xs:int"/>
+<xs:element name="idBanco" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RealizarTransaccionResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="VerInfoCuenta">
+<xs:sequence>
+<xs:element name="cuenta" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="VerInfoCuentaResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoSeguro">
+<xs:sequence>
+<xs:element name="idCuenta" type="xs:int"/>
+<xs:element name="idPrestamo" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getInfoSeguroResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getIdsTipoPrestamo">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="getIdsTipoPrestamoResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="hello">
+<xs:sequence>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="helloResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getCuentasUsuario">
+<xs:sequence>
+<xs:element name="idUsuario" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="getCuentasUsuarioResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="aprobarSeguro">
+<xs:sequence>
+<xs:element name="idSeguro" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="aprobarSeguroResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

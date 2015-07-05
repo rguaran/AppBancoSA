@@ -34,7 +34,7 @@ public class ConsultarInfoUsuario extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -52,36 +52,36 @@ public class ConsultarInfoUsuario extends HttpServlet {
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
         String banco = session.getAttribute("banco").toString();
-        
-        if (banco.equals("bancoJava")){
-        String respuesta;
-        respuesta = getIdUsuario(user);
-        Administracion admon = new Administracion();
-        String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
-        String infoUsuario = getInfoUsuario(Integer.valueOf(idUsuario));
-        String dpi = admon.getCadenaEtiquetas(infoUsuario, "<dpi>");
-        String nombre = admon.getCadenaEtiquetas(infoUsuario, "<nombre>");
-        String apellido = admon.getCadenaEtiquetas(infoUsuario, "<apellido>");
-        String telefono = admon.getCadenaEtiquetas(infoUsuario, "<telefono>");
-        String dir = admon.getCadenaEtiquetas(infoUsuario, "<direccion>");
-        String correo = admon.getCadenaEtiquetas(infoUsuario, "<correo>");
-        String nombreUsuario = admon.getCadenaEtiquetas(infoUsuario, "<nombreusuario>");
-        
-        String Imprimir = "<center><h4>Id de Usuario "+idUsuario+"</h4></center><br><br>";
-        Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
-                + "<tr><td>DPI:</td><td>" + dpi + 
-                "</td></tr><tr><td>Nombres:</td><td>" + nombre +
-                "</td></tr><tr><td>Apellidos:</td><td>" + apellido + 
-                "</td></tr><tr><td>Telefono:</td><td>" + telefono + 
-                "</td></tr><tr><td>Direccion:</td><td>"+dir+
-                "</td></tr><tr><td>Correo:</td><td>"+correo+
-                "</td></tr><tr><td>Nombre de Usuario:</td><td>"+nombreUsuario+
-                "</td></tr></table>";
 
-        request.setAttribute("Imprimir", Imprimir);
+        if (banco.equals("bancoJava")) {
+            String respuesta;
+            respuesta = getIdUsuario(user);
+            Administracion admon = new Administracion();
+            String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
+            String infoUsuario = getInfoUsuario(Integer.valueOf(idUsuario));
+            String dpi = admon.getCadenaEtiquetas(infoUsuario, "<dpi>");
+            String nombre = admon.getCadenaEtiquetas(infoUsuario, "<nombre>");
+            String apellido = admon.getCadenaEtiquetas(infoUsuario, "<apellido>");
+            String telefono = admon.getCadenaEtiquetas(infoUsuario, "<telefono>");
+            String dir = admon.getCadenaEtiquetas(infoUsuario, "<direccion>");
+            String correo = admon.getCadenaEtiquetas(infoUsuario, "<correo>");
+            String nombreUsuario = admon.getCadenaEtiquetas(infoUsuario, "<nombreusuario>");
 
-        request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
-        }else if (banco.equals("bancoPHP")){
+            String Imprimir = "<center><h4>Id de Usuario " + idUsuario + "</h4></center><br><br>";
+            Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
+                    + "<tr><td>DPI:</td><td>" + dpi
+                    + "</td></tr><tr><td>Nombres:</td><td>" + nombre
+                    + "</td></tr><tr><td>Apellidos:</td><td>" + apellido
+                    + "</td></tr><tr><td>Telefono:</td><td>" + telefono
+                    + "</td></tr><tr><td>Direccion:</td><td>" + dir
+                    + "</td></tr><tr><td>Correo:</td><td>" + correo
+                    + "</td></tr><tr><td>Nombre de Usuario:</td><td>" + nombreUsuario
+                    + "</td></tr></table>";
+
+            request.setAttribute("Imprimir", Imprimir);
+
+            request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
+        } else if (banco.equals("bancoPHP")) {
             try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
                 PHP.Webservice webservice = new PHP.Webservice_Impl();
                 PHP.WebservicePortType _serviciosPHP = webservice.getWebservicePort();
@@ -99,6 +99,20 @@ public class ConsultarInfoUsuario extends HttpServlet {
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
+        } else {
+            // banco ASP //
+            String idCliente = user;
+            Administracion admon = new Administracion();
+            String datos = datos(Integer.parseInt(idCliente));
+            String nombre = admon.getCadenaEtiquetas(datos, "<nombre>");
+            String correo = admon.getCadenaEtiquetas(datos, "<correo>");
+            String Imprimir = "<center><h4>Id de cliente" + user + "</h4></center><br><br>";
+            Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
+                    + "<tr><td>Nombre</td><td>" + nombre + "</td></tr><tr><td>Correo</td><td>" + correo + "</td></tr></table>";
+
+            request.setAttribute("Imprimir", Imprimir);
+
+            request.getRequestDispatcher("mostrarConsultaResult.jsp").forward(request, response);
         }
     }
 
@@ -113,7 +127,7 @@ public class ConsultarInfoUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     /**
@@ -136,6 +150,12 @@ public class ConsultarInfoUsuario extends HttpServlet {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
         return port.getInfoUsuario(idUsuario);
+    }
+
+    private static String datos(int idcliente) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap();
+        return port.datos(idcliente);
     }
 
 }

@@ -1,0 +1,1053 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="texto">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nombre" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="contra" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="textoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="textoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="texto2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nombre" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="contra" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="texto2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="texto2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="aperturaCuenta">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nombre" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="apellido" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="contra" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="correo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="cuenta" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="monto" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="aperturaCuentaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="aperturaCuentaResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="login">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="correo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="contra" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="loginResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="loginResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="idclientes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="correo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="idclientesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idclientesResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="numero_cuenta">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idcliente" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="numero_cuentaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="numero_cuentaResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="saldo_actual">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idcliente" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="cuenta" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="saldo_actualResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="saldo_actualResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="solicitud_prestamo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_cliente" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="cuenta" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="monto" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="tiempo" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="cuotas_totales" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="solicitud_prestamoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="solicitud_prestamoResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="estados_prestamos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_cliente2" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="estados_prestamosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="estados_prestamosResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="estados_prestamos2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id_cliente2" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="estados_prestamos2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="estados_prestamos2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="transferencia">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="cuenta1" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="cuenta2" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="monto" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="transferenciaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="transferenciaResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="abonar">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="destino" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="monto" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="abonarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="abonarResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="historial_transaccion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="cuenta" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="correo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="historial_transaccionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="historial_transaccionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="historial_transaccion2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="cuenta" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="correo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="historial_transaccion2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="historial_transaccion2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="autorizacion_prestamos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idprestamos" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="correo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="cantidad" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="cuenta" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="estado" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="autorizacion_prestamosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="autorizacion_prestamosResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="filtro_fecha">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="fecha" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="filtro_fechaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filtro_fechaResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="datos">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idcliente" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="datosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="datosResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="datos2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idcliente" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="datos2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="datos2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="agregar_cuenta">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idcliente" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="monto" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="cuenta" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="agregar_cuentaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="agregar_cuentaResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="retorno_cuentas">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idcliente" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="retorno_cuentasResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="retorno_cuentasResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="retorno_cuentas2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idcliente" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="retorno_cuentas2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="retorno_cuentas2Result" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="retiro">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="cuenta" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="monto" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="retiroResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="retiroResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="cambio_contraseña">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idcliente" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="contra" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="cambio_contraseñaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="cambio_contraseñaResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="textoSoapIn">
+    <wsdl:part name="parameters" element="tns:texto" />
+  </wsdl:message>
+  <wsdl:message name="textoSoapOut">
+    <wsdl:part name="parameters" element="tns:textoResponse" />
+  </wsdl:message>
+  <wsdl:message name="texto2SoapIn">
+    <wsdl:part name="parameters" element="tns:texto2" />
+  </wsdl:message>
+  <wsdl:message name="texto2SoapOut">
+    <wsdl:part name="parameters" element="tns:texto2Response" />
+  </wsdl:message>
+  <wsdl:message name="aperturaCuentaSoapIn">
+    <wsdl:part name="parameters" element="tns:aperturaCuenta" />
+  </wsdl:message>
+  <wsdl:message name="aperturaCuentaSoapOut">
+    <wsdl:part name="parameters" element="tns:aperturaCuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="loginSoapIn">
+    <wsdl:part name="parameters" element="tns:login" />
+  </wsdl:message>
+  <wsdl:message name="loginSoapOut">
+    <wsdl:part name="parameters" element="tns:loginResponse" />
+  </wsdl:message>
+  <wsdl:message name="idclientesSoapIn">
+    <wsdl:part name="parameters" element="tns:idclientes" />
+  </wsdl:message>
+  <wsdl:message name="idclientesSoapOut">
+    <wsdl:part name="parameters" element="tns:idclientesResponse" />
+  </wsdl:message>
+  <wsdl:message name="numero_cuentaSoapIn">
+    <wsdl:part name="parameters" element="tns:numero_cuenta" />
+  </wsdl:message>
+  <wsdl:message name="numero_cuentaSoapOut">
+    <wsdl:part name="parameters" element="tns:numero_cuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="saldo_actualSoapIn">
+    <wsdl:part name="parameters" element="tns:saldo_actual" />
+  </wsdl:message>
+  <wsdl:message name="saldo_actualSoapOut">
+    <wsdl:part name="parameters" element="tns:saldo_actualResponse" />
+  </wsdl:message>
+  <wsdl:message name="solicitud_prestamoSoapIn">
+    <wsdl:part name="parameters" element="tns:solicitud_prestamo" />
+  </wsdl:message>
+  <wsdl:message name="solicitud_prestamoSoapOut">
+    <wsdl:part name="parameters" element="tns:solicitud_prestamoResponse" />
+  </wsdl:message>
+  <wsdl:message name="estados_prestamosSoapIn">
+    <wsdl:part name="parameters" element="tns:estados_prestamos" />
+  </wsdl:message>
+  <wsdl:message name="estados_prestamosSoapOut">
+    <wsdl:part name="parameters" element="tns:estados_prestamosResponse" />
+  </wsdl:message>
+  <wsdl:message name="estados_prestamos2SoapIn">
+    <wsdl:part name="parameters" element="tns:estados_prestamos2" />
+  </wsdl:message>
+  <wsdl:message name="estados_prestamos2SoapOut">
+    <wsdl:part name="parameters" element="tns:estados_prestamos2Response" />
+  </wsdl:message>
+  <wsdl:message name="transferenciaSoapIn">
+    <wsdl:part name="parameters" element="tns:transferencia" />
+  </wsdl:message>
+  <wsdl:message name="transferenciaSoapOut">
+    <wsdl:part name="parameters" element="tns:transferenciaResponse" />
+  </wsdl:message>
+  <wsdl:message name="abonarSoapIn">
+    <wsdl:part name="parameters" element="tns:abonar" />
+  </wsdl:message>
+  <wsdl:message name="abonarSoapOut">
+    <wsdl:part name="parameters" element="tns:abonarResponse" />
+  </wsdl:message>
+  <wsdl:message name="historial_transaccionSoapIn">
+    <wsdl:part name="parameters" element="tns:historial_transaccion" />
+  </wsdl:message>
+  <wsdl:message name="historial_transaccionSoapOut">
+    <wsdl:part name="parameters" element="tns:historial_transaccionResponse" />
+  </wsdl:message>
+  <wsdl:message name="historial_transaccion2SoapIn">
+    <wsdl:part name="parameters" element="tns:historial_transaccion2" />
+  </wsdl:message>
+  <wsdl:message name="historial_transaccion2SoapOut">
+    <wsdl:part name="parameters" element="tns:historial_transaccion2Response" />
+  </wsdl:message>
+  <wsdl:message name="autorizacion_prestamosSoapIn">
+    <wsdl:part name="parameters" element="tns:autorizacion_prestamos" />
+  </wsdl:message>
+  <wsdl:message name="autorizacion_prestamosSoapOut">
+    <wsdl:part name="parameters" element="tns:autorizacion_prestamosResponse" />
+  </wsdl:message>
+  <wsdl:message name="filtro_fechaSoapIn">
+    <wsdl:part name="parameters" element="tns:filtro_fecha" />
+  </wsdl:message>
+  <wsdl:message name="filtro_fechaSoapOut">
+    <wsdl:part name="parameters" element="tns:filtro_fechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="datosSoapIn">
+    <wsdl:part name="parameters" element="tns:datos" />
+  </wsdl:message>
+  <wsdl:message name="datosSoapOut">
+    <wsdl:part name="parameters" element="tns:datosResponse" />
+  </wsdl:message>
+  <wsdl:message name="datos2SoapIn">
+    <wsdl:part name="parameters" element="tns:datos2" />
+  </wsdl:message>
+  <wsdl:message name="datos2SoapOut">
+    <wsdl:part name="parameters" element="tns:datos2Response" />
+  </wsdl:message>
+  <wsdl:message name="agregar_cuentaSoapIn">
+    <wsdl:part name="parameters" element="tns:agregar_cuenta" />
+  </wsdl:message>
+  <wsdl:message name="agregar_cuentaSoapOut">
+    <wsdl:part name="parameters" element="tns:agregar_cuentaResponse" />
+  </wsdl:message>
+  <wsdl:message name="retorno_cuentasSoapIn">
+    <wsdl:part name="parameters" element="tns:retorno_cuentas" />
+  </wsdl:message>
+  <wsdl:message name="retorno_cuentasSoapOut">
+    <wsdl:part name="parameters" element="tns:retorno_cuentasResponse" />
+  </wsdl:message>
+  <wsdl:message name="retorno_cuentas2SoapIn">
+    <wsdl:part name="parameters" element="tns:retorno_cuentas2" />
+  </wsdl:message>
+  <wsdl:message name="retorno_cuentas2SoapOut">
+    <wsdl:part name="parameters" element="tns:retorno_cuentas2Response" />
+  </wsdl:message>
+  <wsdl:message name="retiroSoapIn">
+    <wsdl:part name="parameters" element="tns:retiro" />
+  </wsdl:message>
+  <wsdl:message name="retiroSoapOut">
+    <wsdl:part name="parameters" element="tns:retiroResponse" />
+  </wsdl:message>
+  <wsdl:message name="cambio_contraseñaSoapIn">
+    <wsdl:part name="parameters" element="tns:cambio_contraseña" />
+  </wsdl:message>
+  <wsdl:message name="cambio_contraseñaSoapOut">
+    <wsdl:part name="parameters" element="tns:cambio_contraseñaResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WebService1Soap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="texto">
+      <wsdl:input message="tns:textoSoapIn" />
+      <wsdl:output message="tns:textoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="texto2">
+      <wsdl:input message="tns:texto2SoapIn" />
+      <wsdl:output message="tns:texto2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="aperturaCuenta">
+      <wsdl:input message="tns:aperturaCuentaSoapIn" />
+      <wsdl:output message="tns:aperturaCuentaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <wsdl:input message="tns:loginSoapIn" />
+      <wsdl:output message="tns:loginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="idclientes">
+      <wsdl:input message="tns:idclientesSoapIn" />
+      <wsdl:output message="tns:idclientesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="numero_cuenta">
+      <wsdl:input message="tns:numero_cuentaSoapIn" />
+      <wsdl:output message="tns:numero_cuentaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="saldo_actual">
+      <wsdl:input message="tns:saldo_actualSoapIn" />
+      <wsdl:output message="tns:saldo_actualSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="solicitud_prestamo">
+      <wsdl:input message="tns:solicitud_prestamoSoapIn" />
+      <wsdl:output message="tns:solicitud_prestamoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="estados_prestamos">
+      <wsdl:input message="tns:estados_prestamosSoapIn" />
+      <wsdl:output message="tns:estados_prestamosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="estados_prestamos2">
+      <wsdl:input message="tns:estados_prestamos2SoapIn" />
+      <wsdl:output message="tns:estados_prestamos2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="transferencia">
+      <wsdl:input message="tns:transferenciaSoapIn" />
+      <wsdl:output message="tns:transferenciaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="abonar">
+      <wsdl:input message="tns:abonarSoapIn" />
+      <wsdl:output message="tns:abonarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="historial_transaccion">
+      <wsdl:input message="tns:historial_transaccionSoapIn" />
+      <wsdl:output message="tns:historial_transaccionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="historial_transaccion2">
+      <wsdl:input message="tns:historial_transaccion2SoapIn" />
+      <wsdl:output message="tns:historial_transaccion2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="autorizacion_prestamos">
+      <wsdl:input message="tns:autorizacion_prestamosSoapIn" />
+      <wsdl:output message="tns:autorizacion_prestamosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="filtro_fecha">
+      <wsdl:input message="tns:filtro_fechaSoapIn" />
+      <wsdl:output message="tns:filtro_fechaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="datos">
+      <wsdl:input message="tns:datosSoapIn" />
+      <wsdl:output message="tns:datosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="datos2">
+      <wsdl:input message="tns:datos2SoapIn" />
+      <wsdl:output message="tns:datos2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="agregar_cuenta">
+      <wsdl:input message="tns:agregar_cuentaSoapIn" />
+      <wsdl:output message="tns:agregar_cuentaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="retorno_cuentas">
+      <wsdl:input message="tns:retorno_cuentasSoapIn" />
+      <wsdl:output message="tns:retorno_cuentasSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="retorno_cuentas2">
+      <wsdl:input message="tns:retorno_cuentas2SoapIn" />
+      <wsdl:output message="tns:retorno_cuentas2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="retiro">
+      <wsdl:input message="tns:retiroSoapIn" />
+      <wsdl:output message="tns:retiroSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="cambio_contraseña">
+      <wsdl:input message="tns:cambio_contraseñaSoapIn" />
+      <wsdl:output message="tns:cambio_contraseñaSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WebService1Soap" type="tns:WebService1Soap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="texto">
+      <soap:operation soapAction="http://tempuri.org/texto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="texto2">
+      <soap:operation soapAction="http://tempuri.org/texto2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="aperturaCuenta">
+      <soap:operation soapAction="http://tempuri.org/aperturaCuenta" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap:operation soapAction="http://tempuri.org/login" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="idclientes">
+      <soap:operation soapAction="http://tempuri.org/idclientes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="numero_cuenta">
+      <soap:operation soapAction="http://tempuri.org/numero_cuenta" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="saldo_actual">
+      <soap:operation soapAction="http://tempuri.org/saldo_actual" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="solicitud_prestamo">
+      <soap:operation soapAction="http://tempuri.org/solicitud_prestamo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="estados_prestamos">
+      <soap:operation soapAction="http://tempuri.org/estados_prestamos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="estados_prestamos2">
+      <soap:operation soapAction="http://tempuri.org/estados_prestamos2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transferencia">
+      <soap:operation soapAction="http://tempuri.org/transferencia" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="abonar">
+      <soap:operation soapAction="http://tempuri.org/abonar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="historial_transaccion">
+      <soap:operation soapAction="http://tempuri.org/historial_transaccion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="historial_transaccion2">
+      <soap:operation soapAction="http://tempuri.org/historial_transaccion2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="autorizacion_prestamos">
+      <soap:operation soapAction="http://tempuri.org/autorizacion_prestamos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="filtro_fecha">
+      <soap:operation soapAction="http://tempuri.org/filtro_fecha" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="datos">
+      <soap:operation soapAction="http://tempuri.org/datos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="datos2">
+      <soap:operation soapAction="http://tempuri.org/datos2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="agregar_cuenta">
+      <soap:operation soapAction="http://tempuri.org/agregar_cuenta" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retorno_cuentas">
+      <soap:operation soapAction="http://tempuri.org/retorno_cuentas" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retorno_cuentas2">
+      <soap:operation soapAction="http://tempuri.org/retorno_cuentas2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retiro">
+      <soap:operation soapAction="http://tempuri.org/retiro" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cambio_contraseña">
+      <soap:operation soapAction="http://tempuri.org/cambio_contraseña" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WebService1Soap12" type="tns:WebService1Soap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="texto">
+      <soap12:operation soapAction="http://tempuri.org/texto" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="texto2">
+      <soap12:operation soapAction="http://tempuri.org/texto2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="aperturaCuenta">
+      <soap12:operation soapAction="http://tempuri.org/aperturaCuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="login">
+      <soap12:operation soapAction="http://tempuri.org/login" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="idclientes">
+      <soap12:operation soapAction="http://tempuri.org/idclientes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="numero_cuenta">
+      <soap12:operation soapAction="http://tempuri.org/numero_cuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="saldo_actual">
+      <soap12:operation soapAction="http://tempuri.org/saldo_actual" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="solicitud_prestamo">
+      <soap12:operation soapAction="http://tempuri.org/solicitud_prestamo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="estados_prestamos">
+      <soap12:operation soapAction="http://tempuri.org/estados_prestamos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="estados_prestamos2">
+      <soap12:operation soapAction="http://tempuri.org/estados_prestamos2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transferencia">
+      <soap12:operation soapAction="http://tempuri.org/transferencia" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="abonar">
+      <soap12:operation soapAction="http://tempuri.org/abonar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="historial_transaccion">
+      <soap12:operation soapAction="http://tempuri.org/historial_transaccion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="historial_transaccion2">
+      <soap12:operation soapAction="http://tempuri.org/historial_transaccion2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="autorizacion_prestamos">
+      <soap12:operation soapAction="http://tempuri.org/autorizacion_prestamos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="filtro_fecha">
+      <soap12:operation soapAction="http://tempuri.org/filtro_fecha" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="datos">
+      <soap12:operation soapAction="http://tempuri.org/datos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="datos2">
+      <soap12:operation soapAction="http://tempuri.org/datos2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="agregar_cuenta">
+      <soap12:operation soapAction="http://tempuri.org/agregar_cuenta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retorno_cuentas">
+      <soap12:operation soapAction="http://tempuri.org/retorno_cuentas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retorno_cuentas2">
+      <soap12:operation soapAction="http://tempuri.org/retorno_cuentas2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retiro">
+      <soap12:operation soapAction="http://tempuri.org/retiro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cambio_contraseña">
+      <soap12:operation soapAction="http://tempuri.org/cambio_contraseña" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WebService1">
+    <wsdl:port name="WebService1Soap" binding="tns:WebService1Soap">
+      <soap:address location="http://25.10.98.251:18900/WebService1.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WebService1Soap12" binding="tns:WebService1Soap12">
+      <soap12:address location="http://25.10.98.251:18900/WebService1.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -94,18 +94,14 @@
             <center>
                 <h4>Autorizar Seguro o Prestamo</h4>
                 
-                <form name="frmSolicitarPrestamo" method="POST" >
-                    <table width="100%">
-                        <tr>
-                            <td ></td>
-                            <td><input  type="submit" value="Autorizar Seguro" name="btnObtenerSeguros" id="btnObtenerSeguros"></td>
-                        </tr>
-                    </table>
-                </form>
+                
                 <center>
                     <div>
                         <form action="autorizarPrestamo" method="POST">
                             <input type="submit" value="Autorizar Prestamo" name="btnAutorizarPrestamo">
+                        </form>
+                        <form action="consultarPrestamos" method="POST">
+                            <input type="submit" value="Ver Info prestamos" name="btnVerInfo">
                         </form>
                     </div>
                 </center>

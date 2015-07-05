@@ -68,8 +68,9 @@
                 </div>
 
                 <div class='eleven columns'>
-                    <li><a href='index.jsp' title='Home'>Home</a></li>
-                    <c:choose>
+                    <ul class='mainMenu'>
+                        <li><a href='index.jsp' title='Home'>Home</a></li>
+                        <c:choose>
                                 <c:when test="${usuario == '' || usuario == null}">
                                     
                                 </c:when>
@@ -79,6 +80,7 @@
                                     <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
                                 </c:otherwise>
                         </c:choose>
+                    </ul>
                 </div>
             </div>
         </nav>

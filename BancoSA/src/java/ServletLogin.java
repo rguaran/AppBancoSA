@@ -79,9 +79,11 @@ public class ServletLogin extends HttpServlet {
         RequestDispatcher rd = null;
 
         HttpSession session = request.getSession();
+        cerrarSesion(session.getAttribute("usuario").toString());
         session.setAttribute("usuario", null);
         //session.setAttribute("password", null);
         session.setAttribute("banco", null);
+        
         //session.setAttribute("idCliente", null);
         rd = request.getRequestDispatcher("/index.jsp");
 
@@ -205,6 +207,12 @@ public class ServletLogin extends HttpServlet {
         clienteASP.WebService1 service = new clienteASP.WebService1();
         clienteASP.WebService1Soap port = service.getWebService1Soap12();
         return port.idclientes(correo);
+    }
+
+    private static boolean cerrarSesion(java.lang.String usuario) {
+        WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
+        WSclientes.Servicios port = service.getServiciosPort();
+        return port.cerrarSesion(usuario);
     }
 
 }

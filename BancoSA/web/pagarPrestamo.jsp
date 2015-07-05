@@ -105,7 +105,7 @@
                         <tr><td><br></td></tr>
                         <tr>
                             <td>
-                                <input type="text" name="txtPrestamo" id="txtPrestamo" required=""> </td>
+                                <input type="number" name="txtPrestamo" id="txtPrestamo" required=""> </td>
                             <td></td>
                         </tr>
                         <tr><td><br></td></tr>

@@ -117,17 +117,13 @@
                                 <input type="submit" value="Consultar Cuenta" name="btnTransferencia">
                             </form>
                         </div>
-                        <c:choose>
-                            <c:when test="${banco=='bancoASP'}">
-                            </c:when>
-                            <c:otherwise>
+                       
                                 <div>
                                     <form action="ConsultarInfoUsuario" method="GET">
                                         <input type="submit" value="Consultar Info. Usuario" name="btnConsultarIU">
                                     </form>
                                 </div>
-                            </c:otherwise>
-                        </c:choose>
+                           
                     </center>
                     <center>
                         <div><font color="red" >${requestScope['result']}</font></div>

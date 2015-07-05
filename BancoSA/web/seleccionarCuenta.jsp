@@ -116,7 +116,7 @@
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td> <label>Consultar</label></td>
-                            <td><input type="text" name="txtConsultar" id="txtConsultar" required=""></td>
+                            <td><input type="number" name="txtConsultar" id="txtConsultar" required=""></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>

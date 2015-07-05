@@ -80,7 +80,7 @@ public class TransaccionServlet extends HttpServlet {
             String retornoCuentas = retornoCuentas2(Integer.parseInt(user));
             String[] splitAmp = retornoCuentas.split("&");
             ArrayList<String> listaCuentas = new ArrayList<String>();
-            for( String s: splitAmp ){
+            for (String s : splitAmp) {
                 String[] splitComas = s.split(",");
                 listaCuentas.add(splitComas[0]);
             }
@@ -119,73 +119,79 @@ public class TransaccionServlet extends HttpServlet {
         String cantidad = request.getParameter("txtMonto");
         String cuentaDestino = request.getParameter("txtCuentaDestino");
 
+        Double valDouble = Double.parseDouble(cantidad);
         String respuesta = "";
-
-        if (Integer.parseInt(cuentaDestino) == Integer.parseInt(valorDDLCuenta)) {
-            respuesta = "<font color=\"red\">La cuenta destino no puede ser igual que la cuenta origen</font>";
+        if (valDouble <= 0) {
+            respuesta = "<font color=\"red\">El monto debe de ser mayor a cero</font>";
             request.setAttribute("result", respuesta);
         } else {
+            if (Integer.parseInt(cuentaDestino) == Integer.parseInt(valorDDLCuenta)) {
+                respuesta = "<font color=\"red\">La cuenta destino no puede ser igual que la cuenta origen</font>";
+                request.setAttribute("result", respuesta);
+            } else {
 
-            if (banco.equals("bancoJava")) {
-                String residTipoTrans = getIdTipoTrans("Envio local");
-                String idTT = admon.getCadenaEtiquetas(residTipoTrans, "<id>");
-                String resTransferecia = transferirSaldoLocal(Integer.parseInt(valorDDLCuenta), Integer.parseInt(cuentaDestino), Double.parseDouble(cantidad), Integer.parseInt(idTT));
-                String bandera = admon.getCadenaEtiquetas(resTransferecia, "<bandera>");
+                if (banco.equals("bancoJava")) {
+                    String residTipoTrans = getIdTipoTrans("Envio local");
+                    String idTT = admon.getCadenaEtiquetas(residTipoTrans, "<id>");
+                    String resTransferecia = transferirSaldoLocal(Integer.parseInt(valorDDLCuenta), Integer.parseInt(cuentaDestino), Double.parseDouble(cantidad), Integer.parseInt(idTT));
+                    String bandera = admon.getCadenaEtiquetas(resTransferecia, "<bandera>");
 
-                if (bandera.equals("1")) { //monto>saldo
-                    respuesta = "<font color=\"red\">El monto a pagar es mayor al saldo disponible</font>";
-                    request.setAttribute("result", respuesta);
-                } else if (bandera.equals("2")) { // la cuenta destino no existe
-                    respuesta = "<font color=\"red\">La cuenta destino no existe</font>";
-                    request.setAttribute("result", respuesta);
-                } else if (bandera.equals("3")) { //exito en operacion
-                    respuesta = "<font color=\"blue\">La operación se realizó con éxito";
-                    String saldorestante = admon.getCadenaEtiquetas(resTransferecia, "<saldo>");
-                    NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
-                    respuesta += ", su saldo restante es de " + formatoSaldo.format(Double.parseDouble(saldorestante)) + "</font>";
-                    request.setAttribute("result", respuesta);
-                }
-            } else if (banco.equals("bancoASP")) {
-                double saldo = saldoActual(Integer.parseInt(user), Integer.parseInt(valorDDLCuenta));
-                int montoReal = (int) (Double.parseDouble(cantidad));
-                int destino = Integer.parseInt(cuentaDestino);
-                if (saldo >= Double.parseDouble(cantidad)) {
-                    boolean res = transferencia(Integer.parseInt(valorDDLCuenta), destino, montoReal);
-                    if (res) {
-                        respuesta = "<font color=\"blue\">Saldo transferido con exito</font>";
+                    if (bandera.equals("1")) { //monto>saldo
+                        respuesta = "<font color=\"red\">El monto a pagar es mayor al saldo disponible</font>";
                         request.setAttribute("result", respuesta);
-                    } else {
-                        respuesta = "<font color=\"red\">Cuenta inexistente</font>";
+                    } else if (bandera.equals("2")) { // la cuenta destino no existe
+                        respuesta = "<font color=\"red\">La cuenta destino no existe</font>";
+                        request.setAttribute("result", respuesta);
+                    } else if (bandera.equals("3")) { //exito en operacion
+                        respuesta = "<font color=\"blue\">La operación se realizó con éxito";
+                        String saldorestante = admon.getCadenaEtiquetas(resTransferecia, "<saldo>");
+                        NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
+                        respuesta += ", su saldo restante es de " + formatoSaldo.format(Double.parseDouble(saldorestante)) + "</font>";
                         request.setAttribute("result", respuesta);
                     }
-                } else {
-                    respuesta = "<font color=\"red\">Saldo insuficiente</font>";
-                    request.setAttribute("result", respuesta);
-                }
-            } else {
-                // Banco PHP //
-                try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
-                    PHP.Webservice webservice = new PHP.Webservice_Impl();
-                    PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
-                    String monto = serviciosPHP.verificarCuentaMonto(Integer.parseInt(user), Integer.parseInt(valorDDLCuenta), Double.parseDouble(cantidad));
-                    if (monto.equals("ok")) {
-                        String res = serviciosPHP.transaccionCuentas(Integer.parseInt(user), Integer.parseInt(valorDDLCuenta), Integer.parseInt(cuentaDestino), Double.parseDouble(cantidad));
-                        if (res.equals("ok")) {
-                            respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
+                } else if (banco.equals("bancoASP")) {
+                    double saldo = saldoActual(Integer.parseInt(user), Integer.parseInt(valorDDLCuenta));
+                    int montoReal = (int) (Double.parseDouble(cantidad));
+                    int destino = Integer.parseInt(cuentaDestino);
+                    if (saldo >= Double.parseDouble(cantidad)) {
+                        boolean res = transferencia(Integer.parseInt(valorDDLCuenta), destino, montoReal);
+                        if (res) {
+                            respuesta = "<font color=\"blue\">Saldo transferido con exito</font>";
+                            request.setAttribute("result", respuesta);
                         } else {
-                            respuesta = "<font color=\"red\">Cuenta de destino inexistente</font>";
+                            respuesta = "<font color=\"red\">Cuenta inexistente</font>";
+                            request.setAttribute("result", respuesta);
                         }
-                        request.setAttribute("result", respuesta);
                     } else {
                         respuesta = "<font color=\"red\">Saldo insuficiente</font>";
                         request.setAttribute("result", respuesta);
                     }
-                } catch (Exception ex) {
-                    java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                } else {
+                    // Banco PHP //
+                    try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                        PHP.Webservice webservice = new PHP.Webservice_Impl();
+                        PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
+                        String monto = serviciosPHP.verificarCuentaMonto(Integer.parseInt(user), Integer.parseInt(valorDDLCuenta), Double.parseDouble(cantidad));
+                        if (monto.equals("ok")) {
+                            String res = serviciosPHP.transaccionCuentas(Integer.parseInt(user), Integer.parseInt(valorDDLCuenta), Integer.parseInt(cuentaDestino), Double.parseDouble(cantidad));
+                            if (res.equals("ok")) {
+                                respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
+                            } else {
+                                respuesta = "<font color=\"red\">Cuenta de destino inexistente</font>";
+                            }
+                            request.setAttribute("result", respuesta);
+                        } else {
+                            respuesta = "<font color=\"red\">Saldo insuficiente</font>";
+                            request.setAttribute("result", respuesta);
+                        }
+                    } catch (Exception ex) {
+                        java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    }
                 }
-            }
 
+            }
         }
+
         request.getRequestDispatcher("/menuTransaccion.jsp").forward(request, response);
     }
 

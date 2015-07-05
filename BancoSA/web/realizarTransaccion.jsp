@@ -70,11 +70,16 @@
                     <div class='eleven columns'>
                         <ul class='mainMenu'>
                             <li><a href='index.jsp' title='Home'>Home</a></li>
-                            <li><a href='menuSeguro.jsp' title='Seguros'>Seguros</a></li>
-                            <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
-                            <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
-                            <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
-                            <li><a href='#' title='Contact'>Contact</a></li>
+                            <c:choose>
+                                <c:when test="${usuario == '' || usuario == null}">
+                                    
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
+                                    <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
+                                    <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
+                                </c:otherwise>
+                        </c:choose>
                         </ul>
                     </div>
                 </div>
@@ -90,26 +95,9 @@
             </div>	
         </header>
 
-<<<<<<< HEAD
-=======
-                <div class='eleven columns'>
-                    <ul class='mainMenu'>
-                        <li><a href='index.jsp' title='Home'>Home</a></li>
-                        <c:choose>
-                                <c:when test="${usuario == '' || usuario == null}">
-                                    
-                                </c:when>
-                                <c:otherwise>
-                                    <li><a href='menuPrestamo.jsp' title='Prestamos'>Préstamos</a></li>
-                                    <li><a href='menuTransaccion.jsp' title='Transacciones'>Transacciones</a></li>
-                                    <li><a href='menuCuenta.jsp' title='Cuenta'>Cuenta</a></li>
-                                </c:otherwise>
-                        </c:choose>
-                    </ul>
-                </div>
-            </div>
-        </nav>
->>>>>>> origin/master
+
+               
+
 
         <section class='gray'>
             <div class='container'>
@@ -148,7 +136,7 @@
                             <tr><td><br></td><td></td></tr>
                             <tr>
                                 <td><label id="lblTrans">Monto</label> </td>
-                                <td><input type="text" required="" name="txtMonto" id="txtMonto"></td>
+                                <td><input type="number" required="" name="txtMonto" id="txtMonto"></td>
                             </tr>
                             <tr><td><br></td><td></td></tr>
                             <tr>

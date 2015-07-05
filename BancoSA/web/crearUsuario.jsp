@@ -109,12 +109,12 @@
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td > <label >Correo:</label></td>
-                            <td> <input type="text" name="txtCorreo" required=""></td>
+                            <td> <input type="email" name="txtCorreo" required=""></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>
                             <td > <label >Dirección(ASP:contra):</label></td>
-                            <td> <input type="text" name="txtDireccion" required=""></td>
+                            <td> <input type="text" name="txtDireccion"  required=""></td>
                         </tr>
                         <tr><td><br></td><td></td></tr>
                         <tr>

@@ -91,19 +91,27 @@ public class InfoPrestamo extends HttpServlet {
         String fecha = admon.getCadenaEtiquetas(respuesta, "<fecha>");
         String tasa = admon.getCadenaEtiquetas(respuesta, "<tasa>");
         String estado = admon.getCadenaEtiquetas(respuesta, "<estado>");
+        String cpagadas = admon.getCadenaEtiquetas(respuesta, "<cpagadas>");
+        String cpendientes = admon.getCadenaEtiquetas(respuesta, "<cpendientes>");
+        String tpagado = admon.getCadenaEtiquetas(respuesta, "<tpagado>");
+        String tpendiente = admon.getCadenaEtiquetas(respuesta, "<tpendiente>");
         String anios = String.valueOf( Double.parseDouble(numCuotas) / 12 );
-        String valorCuota = String.valueOf( Double.parseDouble(cantidad) / Double.parseDouble( numCuotas ) );
+        String valorCuota = String.valueOf( Double.parseDouble(cantidad) / Double.parseDouble( numCuotas ) + (Double.parseDouble(cantidad) / Double.parseDouble( numCuotas ))*Double.parseDouble(tasa)/100 );
         NumberFormat formatoSaldo = NumberFormat.getCurrencyInstance(new Locale("es","MX"));
         String Imprimir = "<center><h4>Prestamo No. "+idPrestamo+"</h4></center><br><br>";
         Imprimir += "<table width=\"100%\"><tr><th></th><th></th></tr>"
                 + "<tr><td><b>Rango de prestamo:<b> Minimo: " + formatoSaldo.format( Double.parseDouble(minimo) ) + ". Maximo: " + formatoSaldo.format( Double.parseDouble(maximo) ) + "</td><td>"+
                 "</td></tr><tr><td>Cantidad a prestar: " + formatoSaldo.format( Double.parseDouble(cantidad) ) + "</td><td>"+
-                "</td></tr><tr><td>Pagando: " + numCuotas + " numero de cuotas</td><td>"+
+                "</td></tr><tr><td>Pagando una cantidad de: " + numCuotas + " cuotas</td><td>"+
                 "</td></tr><tr><td>Siendo un total de: " + anios + " años</td><td>"+
                 "</td></tr><tr><td>A una tasa de: " + tasa + "%</td><td>"+
                 "</td></tr><tr><td>Pagando el total de: " + formatoSaldo.format( Double.parseDouble(valorCuota) ) + " por cuota </td><td>"+
                 "</td></tr><tr><td>Solicitado el: " + fecha + "</td><td>"+
                 "</td></tr><tr><td>Teniendo un estado: " + estado + "</td><td>"+
+                "</td></tr><tr><td>Cuotas pagadas: " + cpagadas + "</td><td>"+
+                "</td></tr><tr><td>Cuotas pendientes: " + cpendientes + "</td><td>"+
+                "</td></tr><tr><td>Total pagado: " + tpagado + "</td><td>"+
+                "</td></tr><tr><td>Total pendiente: " + tpendiente + "</td><td>"+
                 "</td></tr></table>";
 
         request.setAttribute("Imprimir", Imprimir);
@@ -125,6 +133,12 @@ public class InfoPrestamo extends HttpServlet {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
         return port.getInfoPrestamoCualquiera(idPrestamo);
+    }
+
+    private static String datos(int idcliente) {
+        clienteASP.WebService1 service = new clienteASP.WebService1();
+        clienteASP.WebService1Soap port = service.getWebService1Soap();
+        return port.datos(idcliente);
     }
 
 }

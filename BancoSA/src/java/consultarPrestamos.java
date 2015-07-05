@@ -16,12 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Rita
+ * @author MarioR
  */
-@WebServlet(urlPatterns = {"/autorizarPrestamo"})
-public class autorizarPrestamoServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/consultarPrestamos"})
+public class consultarPrestamos extends HttpServlet {
 
-    Administracion admon = new Administracion();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,11 +33,7 @@ public class autorizarPrestamoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-        } finally {
-            out.close();
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,22 +62,18 @@ public class autorizarPrestamoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String resIDSPrestamos = getPrestamosAAprobar();
+        String resIDSPrestamos = getPrestamosTodos();
+        Administracion admon = new Administracion();
         ArrayList<String> listaIDSPrestamos  = admon.getLista(resIDSPrestamos, "<id>");
-        
-        String Imprimir = "<form name=\"frmAutorizar\" action=\"AutorizarServlet\" method=\"POST\">"
-                 + "<table width=\"100%\"><tr><th>ID Prestamo</th><th>Autorizar</th></tr>";
+        String Imprimir="";
+        Imprimir += "<form name=\"frmVer\" action=\"InfoPrestamo\" method=\"POST\">"
+                 + "<table width=\"100%\"><tr><th>Ver Detalle</th></tr>";
         for(String s: listaIDSPrestamos){
-            Imprimir += "<tr><td>"+s+"</td><td><input  type=\"submit\" value=\"Autorizar "+ s +"\" name=\"btnAutorizar\" id=\"btnAutorizar\"></td>"+"</tr>";
+            Imprimir += "<tr><td><input  type=\"submit\" value=\"Ver "+s+"\" name=\"btnVer\" id=\"btnVer\"></td>"+"</tr>";
         }
         Imprimir += "</table></form>";
-        
-        
         request.setAttribute("Imprimir", Imprimir);
-         
         request.getRequestDispatcher("/mostrarConsultaResult.jsp").forward(request, response);
-        
     }
 
     /**
@@ -95,10 +86,10 @@ public class autorizarPrestamoServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private static String getPrestamosAAprobar() {
+    private static String getPrestamosTodos() {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
-        return port.getPrestamosAAprobar();
+        return port.getPrestamosTodos();
     }
 
 }

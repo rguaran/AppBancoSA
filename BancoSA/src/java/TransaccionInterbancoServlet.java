@@ -61,9 +61,6 @@ public class TransaccionInterbancoServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String user = session.getAttribute("usuario").toString();
         String banco = session.getAttribute("banco").toString();
-        if (banco.equals("bancoJava")) {
-
-        }
 
         if (banco.equals("bancoJava")) {
             String respuesta;
@@ -131,26 +128,80 @@ public class TransaccionInterbancoServlet extends HttpServlet {
         bancoDestino = request.getParameter("listaBancos");
         cuentaEmisor = request.getParameter("selectCuentas");
         double montoReal = Double.parseDouble(monto);
-        if (banco.equals("bancoJava")) {
-            int idCuentaEmisor = Integer.parseInt(cuentaEmisor);
-            int idBanco = 0;
-            // Miramos si consumimos web service de php o de asp //
-            String respuesta = getIdUsuario(user);
-            String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
-            if (bancoDestino.equals("bancoPHP")) {
-                idBanco = getIdBanco("Banco PHP");
-                if (getSaldo(Integer.parseInt(cuentaEmisor)) >= Double.parseDouble(monto)) {
-                    // Realiza la transaccion //
+        String respuesta;
+        if (montoReal <= 0) {
+            respuesta = "<font color=\"red\">El monto debe de ser mayor a cero</font>";
+            request.setAttribute("result", respuesta);
+        } else {
+            if (banco.equals("bancoJava")) {
+                int idCuentaEmisor = Integer.parseInt(cuentaEmisor);
+                int idBanco = 0;
+                // Miramos si consumimos web service de php o de asp //
+                respuesta = getIdUsuario(user);
+                String idUsuario = admon.getCadenaEtiquetas(respuesta, "<Id>");
+                if (bancoDestino.equals("bancoPHP")) {
+                    idBanco = getIdBanco("Banco PHP");
+                    if (getSaldo(Integer.parseInt(cuentaEmisor)) >= Double.parseDouble(monto)) {
+                        // Realiza la transaccion //
+                        try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                            PHP.Webservice webservice = new PHP.Webservice_Impl();
+                            PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
+
+                            respuesta = serviciosPHP.abonar2(Integer.parseInt(cuentaDestino), Double.parseDouble(monto));
+                            if (!respuesta.equals("ok")) {
+                                respuesta = "<font color=\"red\">Cuenta inexistente</font>";
+                                request.setAttribute("result", respuesta);
+                            } else {
+                                realizarTransferencia(idCuentaEmisor, montoReal, idBanco);
+                                respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
+                                request.setAttribute("result", respuesta);
+                            }
+                        } catch (Exception ex) {
+                            java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        // No realiza la transaccion //
+                        respuesta = "<font color=\"red\">Saldo insuficiente para realizar esta transferencia</font>";
+                        request.setAttribute("result", respuesta);
+                    }
+                } else {
+                    // DESDE JAVA A BANCO ASP //
+                    idBanco = getIdBanco("Banco ASP");
+                    if (getSaldo(Integer.parseInt(cuentaEmisor)) >= Double.parseDouble(monto)) {
+                        int cd = Integer.parseInt(cuentaDestino);
+                        int mon = (int) montoReal;
+                        //boolean res = transferencia(Integer.parseInt(cuentaEmisor), cd, mon, 500);
+                        boolean res = abonar(cd, mon);
+                        if (res == true) {
+                            realizarTransferencia(idCuentaEmisor, montoReal, idBanco);
+                            respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
+                            request.setAttribute("result", respuesta);
+                        } else {
+                            // No realiza la transaccion //
+                            respuesta = "<font color=\"red\">Error en transaccion, verificar datos.</font>";
+                            request.setAttribute("result", respuesta);
+                        }
+                    } else {
+                        // No realiza la transaccion //
+                        respuesta = "<font color=\"red\">Saldo insuficiente para realizar esta transferencia</font>";
+                        request.setAttribute("result", respuesta);
+                    }
+
+                }
+
+            } else if (banco.equals("bancoASP")) {
+                if (bancoDestino.equals("bancoPHP")) {
+                    // DE BANCO ASP A BANCO PHP //                
                     try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
                         PHP.Webservice webservice = new PHP.Webservice_Impl();
                         PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
-
+                        int idUser = Integer.parseInt(user);
                         respuesta = serviciosPHP.abonar2(Integer.parseInt(cuentaDestino), Double.parseDouble(monto));
                         if (!respuesta.equals("ok")) {
                             respuesta = "<font color=\"red\">Cuenta inexistente</font>";
                             request.setAttribute("result", respuesta);
                         } else {
-                            realizarTransferencia(idCuentaEmisor, montoReal, idBanco);
+                            retiro(Integer.parseInt(cuentaEmisor), (int) (Double.parseDouble(monto)));
                             respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
                             request.setAttribute("result", respuesta);
                         }
@@ -158,20 +209,47 @@ public class TransaccionInterbancoServlet extends HttpServlet {
                         java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
                     }
                 } else {
-                    // No realiza la transaccion //
-                    respuesta = "<font color=\"red\">Saldo insuficiente para realizar esta transferencia</font>";
-                    request.setAttribute("result", respuesta);
+                    // DE BANCO ASP A BANCO JAVA //
+                    String res = transferirBancosaASP(Integer.parseInt(cuentaDestino), Double.parseDouble(monto));
+                    if (res.equals("1")) {
+                        respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
+                        request.setAttribute("result", respuesta);
+                        retiro(Integer.parseInt(cuentaEmisor), (int) (Double.parseDouble(monto)));
+                    } else {
+                        respuesta = "<font color=\"red\">Cuenta inexistente</font>";
+                        request.setAttribute("result", respuesta);
+                    }
                 }
             } else {
-                // DESDE JAVA A BANCO ASP //
-                idBanco = getIdBanco("Banco ASP");
-                if (getSaldo(Integer.parseInt(cuentaEmisor)) >= Double.parseDouble(monto)) {
+                // Banco PHP //
+                if (bancoDestino.equals("bancoJava")) {
+                    String res = transferirBancosaPHP(Integer.parseInt(cuentaDestino), Double.parseDouble(monto));
+                    if (res.equals("1")) {
+                        respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
+                        request.setAttribute("result", respuesta);
+                        try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                            PHP.Webservice webservice = new PHP.Webservice_Impl();
+                            PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
+                            serviciosPHP.retiro(Integer.parseInt(user), Integer.parseInt(cuentaEmisor), montoReal);
+                        } catch (Exception ex) {
+                            java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        respuesta = "<font color=\"red\">Cuenta inexistente</font>";
+                        request.setAttribute("result", respuesta);
+                    }
+                } else {
                     int cd = Integer.parseInt(cuentaDestino);
                     int mon = (int) montoReal;
-                    //boolean res = transferencia(Integer.parseInt(cuentaEmisor), cd, mon, 500);
                     boolean res = abonar(cd, mon);
                     if (res == true) {
-                        realizarTransferencia(idCuentaEmisor, montoReal, idBanco);
+                        try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
+                            PHP.Webservice webservice = new PHP.Webservice_Impl();
+                            PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
+                            serviciosPHP.retiro(Integer.parseInt(user), Integer.parseInt(cuentaEmisor), montoReal);
+                        } catch (Exception ex) {
+                            java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                        }
                         respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
                         request.setAttribute("result", respuesta);
                     } else {
@@ -179,86 +257,10 @@ public class TransaccionInterbancoServlet extends HttpServlet {
                         respuesta = "<font color=\"red\">Error en transaccion, verificar datos.</font>";
                         request.setAttribute("result", respuesta);
                     }
-                } else {
-                    // No realiza la transaccion //
-                    respuesta = "<font color=\"red\">Saldo insuficiente para realizar esta transferencia</font>";
-                    request.setAttribute("result", respuesta);
-                }
-
-            }
-
-        } else if (banco.equals("bancoASP")) {
-            String respuesta;
-            if (bancoDestino.equals("bancoPHP")) {
-                // DE BANCO ASP A BANCO PHP //                
-                try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
-                    PHP.Webservice webservice = new PHP.Webservice_Impl();
-                    PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
-                    int idUser = Integer.parseInt(user);
-                    respuesta = serviciosPHP.abonar2(Integer.parseInt(cuentaDestino), Double.parseDouble(monto));
-                    if (!respuesta.equals("ok")) {
-                        respuesta = "<font color=\"red\">Cuenta inexistente</font>";
-                        request.setAttribute("result", respuesta);
-                    } else {
-                        retiro(Integer.parseInt(cuentaEmisor), (int) (Double.parseDouble(monto)));
-                        respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
-                        request.setAttribute("result", respuesta);
-                    }
-                } catch (Exception ex) {
-                    java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                }
-            } else {
-                // DE BANCO ASP A BANCO JAVA //
-                String res = transferirBancosaASP(Integer.parseInt(cuentaDestino), Double.parseDouble(monto));
-                if (res.equals("1")) {
-                    respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
-                    request.setAttribute("result", respuesta);
-                    retiro(Integer.parseInt(cuentaEmisor), (int) (Double.parseDouble(monto)));
-                } else {
-                    respuesta = "<font color=\"red\">Cuenta inexistente</font>";
-                    request.setAttribute("result", respuesta);
-                }
-            }
-        } else {
-            // Banco PHP //
-            String respuesta;
-            if (bancoDestino.equals("bancoJava")) {
-                String res = transferirBancosaPHP(Integer.parseInt(cuentaDestino), Double.parseDouble(monto));
-                if (res.equals("1")) {
-                    respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
-                    request.setAttribute("result", respuesta);
-                    try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
-                        PHP.Webservice webservice = new PHP.Webservice_Impl();
-                        PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
-                        serviciosPHP.retiro(Integer.parseInt(user), Integer.parseInt(cuentaEmisor), montoReal);
-                    } catch (Exception ex) {
-                        java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                    }
-                } else {
-                    respuesta = "<font color=\"red\">Cuenta inexistente</font>";
-                    request.setAttribute("result", respuesta);
-                }
-            } else {
-                int cd = Integer.parseInt(cuentaDestino);
-                int mon = (int) montoReal;
-                boolean res = abonar(cd, mon);
-                if (res == true) {
-                    try { // This code block invokes the WebservicePort:iniciarSesion operation on web service
-                        PHP.Webservice webservice = new PHP.Webservice_Impl();
-                        PHP.WebservicePortType serviciosPHP = webservice.getWebservicePort();
-                        serviciosPHP.retiro(Integer.parseInt(user), Integer.parseInt(cuentaEmisor), montoReal);
-                    } catch (Exception ex) {
-                        java.util.logging.Logger.getLogger(PHP.Webservice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-                    }
-                    respuesta = "<font color=\"blue\">Saldo transferido exitosamente</font>";
-                    request.setAttribute("result", respuesta);
-                } else {
-                    // No realiza la transaccion //
-                    respuesta = "<font color=\"red\">Error en transaccion, verificar datos.</font>";
-                    request.setAttribute("result", respuesta);
                 }
             }
         }
+
         request.getRequestDispatcher("/menuTransaccion.jsp").forward(request, response);
 
     }
@@ -285,7 +287,6 @@ public class TransaccionInterbancoServlet extends HttpServlet {
         return port.getCuentasUsuario(idUsuario);
     }
 
-<<<<<<< HEAD
     private static String realizarTransferencia(int idCuentaEmisor, double monto, int idBanco) {
         WSclientes.Servicios_Service service = new WSclientes.Servicios_Service();
         WSclientes.Servicios port = service.getServiciosPort();
@@ -339,8 +340,5 @@ public class TransaccionInterbancoServlet extends HttpServlet {
         WSclientes.Servicios port = service.getServiciosPort();
         return port.transferirBancosaPHP(idCuentaDestino, monto);
     }
-=======
-    
->>>>>>> origin/master
 
 }
